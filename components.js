@@ -245,7 +245,7 @@ function injectFooter() {
                     <div class="footer-newsletter-card">
                         <h4 class="footer-newsletter-title">Stay Updated</h4>
                         <p class="footer-newsletter-desc">Get new arrivals, care tips, and exclusive offers direct to your inbox.</p>
-                        <form onsubmit="event.preventDefault(); alert('You\\'re subscribed! 🐠'); this.reset();" class="footer-newsletter-form">
+                        <form onsubmit="event.preventDefault(); alert('You\'re subscribed to AquaWorld updates!'); this.reset();" class="footer-newsletter-form">
                             <input type="email" placeholder="your@email.com" class="footer-newsletter-input" required>
                             <button type="submit" class="footer-newsletter-btn">Subscribe</button>
                         </form>

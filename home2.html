@@ -8,115 +8,396 @@
     <link rel="icon" type="image/svg+xml" href="favicon.svg">
     <link rel="stylesheet" href="style.css">
     <style>
-        /* ── Premium Hero: Split with Container Alignment ── */
+        /* ── Premium Hero: Editorial Luxury with Bioluminescent Particles ── */
         .hero2 {
             min-height: calc(100vh - var(--navbar-height));
             display: flex;
             align-items: center;
             position: relative;
             overflow: hidden;
-            background: linear-gradient(160deg, #071A20 0%, #0A2C38 60%, #0B4E5E 100%);
-            padding: 4rem 0;
+            background: radial-gradient(circle at 15% 30%, rgba(14, 165, 183, 0.28) 0%, transparent 55%),
+                        radial-gradient(circle at 85% 70%, rgba(45, 212, 191, 0.22) 0%, transparent 60%),
+                        linear-gradient(155deg, #041318 0%, #07222B 45%, #0B3340 100%);
+            padding: 5rem 0;
         }
 
-        .hero2::before {
-            content: '';
+        /* ── Unique Bioluminescent Plankton & Light Orb Particles ── */
+        .plankton-wrap {
             position: absolute;
-            top: 0; left: 0; right: 0; bottom: 0;
-            background: radial-gradient(ellipse at 20% 50%, rgba(11,123,140,0.25) 0%, transparent 70%);
+            inset: 0;
             pointer-events: none;
+            overflow: hidden;
+            z-index: 1;
+        }
+
+        .plankton-orb {
+            position: absolute;
+            border-radius: 50%;
+            pointer-events: none;
+            will-change: transform, opacity;
+        }
+
+        .plankton-micro {
+            background: radial-gradient(circle, #FFFFFF 0%, #67E8F9 40%, rgba(14, 165, 183, 0.5) 70%, transparent 100%);
+            box-shadow: 0 0 12px #00E5FF, 0 0 24px rgba(0, 229, 255, 0.7);
+            animation: driftWave linear infinite, planktonTwinkle 3.5s ease-in-out infinite alternate;
+        }
+
+        .plankton-mid {
+            background: radial-gradient(circle at 35% 35%, rgba(255, 255, 255, 0.95) 0%, rgba(45, 212, 191, 0.6) 45%, rgba(14, 165, 183, 0.2) 75%, transparent 100%);
+            border: 1px solid rgba(103, 232, 249, 0.5);
+            box-shadow: inset 0 0 8px rgba(255, 255, 255, 0.6), 0 0 20px rgba(45, 212, 191, 0.45);
+            animation: driftWave linear infinite, bioFloat 6s ease-in-out infinite alternate;
+        }
+
+        .plankton-macro {
+            background: radial-gradient(circle, rgba(14, 165, 183, 0.35) 0%, rgba(45, 212, 191, 0.15) 50%, transparent 80%);
+            filter: blur(8px);
+            animation: driftSlow linear infinite, macroPulse 8s ease-in-out infinite alternate;
+        }
+
+        @keyframes driftWave {
+            0% {
+                transform: translateY(105vh) translateX(0) scale(0.65);
+                opacity: 0;
+            }
+            12% {
+                opacity: 0.9;
+            }
+            50% {
+                transform: translateY(50vh) translateX(25px) scale(1);
+                opacity: 0.85;
+            }
+            85% {
+                opacity: 0.75;
+            }
+            100% {
+                transform: translateY(-10vh) translateX(-20px) scale(1.15);
+                opacity: 0;
+            }
+        }
+
+        @keyframes driftSlow {
+            0% {
+                transform: translateY(100vh) translateX(0);
+                opacity: 0;
+            }
+            20% {
+                opacity: 0.55;
+            }
+            80% {
+                opacity: 0.55;
+            }
+            100% {
+                transform: translateY(-15vh) translateX(30px);
+                opacity: 0;
+            }
+        }
+
+        @keyframes planktonTwinkle {
+            0% { transform: scale(0.85); opacity: 0.5; }
+            50% { transform: scale(1.35); opacity: 1; filter: brightness(1.3); }
+            100% { transform: scale(0.9); opacity: 0.6; }
+        }
+
+        @keyframes bioFloat {
+            0% { transform: scale(0.9) rotate(0deg); }
+            50% { transform: scale(1.08) rotate(180deg); }
+            100% { transform: scale(0.95) rotate(360deg); }
+        }
+
+        @keyframes macroPulse {
+            0% { transform: scale(0.8); opacity: 0.25; }
+            100% { transform: scale(1.25); opacity: 0.5; }
         }
 
         .hero2-grid {
             display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 3.5rem;
+            grid-template-columns: 1.15fr 0.85fr;
+            gap: 4rem;
             align-items: center;
         }
 
-        .hero2-visual {
-            position: relative;
-            border-radius: var(--radius-2xl);
-            overflow: hidden;
-            box-shadow: var(--shadow-xl);
-            border: 1px solid rgba(167,227,233,0.18);
-            aspect-ratio: 4/3;
-        }
+        .hero2-content { position: relative; z-index: 2; max-width: 600px; }
 
-        .hero2-visual img {
-            width: 100%; height: 100%;
-            object-fit: cover;
-            display: block;
-        }
-
-        .hero2-content { position: relative; z-index: 1; max-width: 560px; }
-
-        .hero2-eyebrow {
-            display: flex;
+        .hero2-pill {
+            display: inline-flex;
             align-items: center;
-            gap: 0.75rem;
-            margin-bottom: 1.5rem;
-        }
-
-        .hero2-line {
-            width: 40px; height: 2px;
-            background: var(--clr-secondary);
-        }
-
-        .hero2-eyebrow span {
-            font-size: 0.8125rem;
-            font-weight: 600;
-            color: var(--clr-secondary);
+            gap: 0.5rem;
+            background: rgba(5, 19, 24, 0.85);
+            border: 1px solid rgba(0, 229, 255, 0.5);
+            color: #00E5FF;
+            font-size: 0.75rem;
+            font-weight: 700;
+            letter-spacing: 0.1em;
             text-transform: uppercase;
-            letter-spacing: 0.12em;
+            padding: 0.45rem 1.25rem;
+            border-radius: var(--radius-full);
+            margin-bottom: 1.75rem;
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            box-shadow: 0 0 16px rgba(0, 229, 255, 0.25);
         }
 
         .hero2-title {
-            font-size: clamp(2.5rem, 5vw, 4.25rem);
+            font-family: var(--font-display);
+            font-size: clamp(2.75rem, 5vw, 4.5rem);
             font-weight: 800;
-            color: #fff;
-            line-height: 1.05;
+            color: #FFFFFF;
+            line-height: 1.08;
             margin-bottom: 1.5rem;
+            letter-spacing: -0.025em;
         }
 
-        .hero2-title em {
-            font-style: normal;
-            color: var(--clr-secondary);
+        .hero2-title .highlight-text {
+            background: linear-gradient(135deg, #00E5FF 0%, #2DD4BF 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
 
         .hero2-desc {
-            font-size: 1.0625rem;
-            color: rgba(255,255,255,0.68);
+            font-size: 1.125rem;
+            color: rgba(220, 243, 246, 0.85);
             line-height: 1.75;
-            margin-bottom: 2.5rem;
+            margin-bottom: 2.25rem;
             font-weight: 400;
         }
 
         .hero2-ctas { display: flex; gap: 1rem; flex-wrap: wrap; }
 
-        .hero2-floating-badge {
+        .hero2-trust-strip {
+            display: flex;
+            align-items: center;
+            gap: 1.75rem;
+            flex-wrap: wrap;
+            margin-top: 2.5rem;
+            padding-top: 1.75rem;
+            border-top: 1px solid rgba(45, 212, 191, 0.2);
+        }
+
+        .hero2-trust-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.8125rem;
+            font-weight: 600;
+            color: #D6F1F5;
+        }
+
+        .hero2-trust-item i {
+            color: #00E5FF;
+        }
+
+        /* ── Right Visual with Floating Specimen Cards ── */
+        .hero2-visual-wrapper {
+            position: relative;
+            z-index: 2;
+        }
+
+        /* ─── Hero 2 Interactive Luxury Slider ────────────── */
+        .hero2-slider {
+            position: relative;
+            border-radius: 2rem;
+            overflow: hidden;
+            border: 1px solid rgba(0, 229, 255, 0.35);
+            box-shadow: 0 30px 60px -15px rgba(0, 0, 0, 0.7), 0 0 35px rgba(14, 165, 183, 0.25);
+            aspect-ratio: 4/3;
+            background: #071D24;
+        }
+
+        .hero2-slide {
             position: absolute;
-            bottom: 2rem;
-            right: 2rem;
-            background: rgba(11,123,140,0.85);
-            backdrop-filter: blur(12px);
-            border: 1px solid rgba(167,227,233,0.2);
-            border-radius: 1rem;
-            padding: 1rem 1.25rem;
-            color: #fff;
-            text-align: center;
-            z-index: 10;
+            inset: 0;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1), transform 1.2s cubic-bezier(0.4, 0, 0.2, 1);
+            transform: scale(1.06);
         }
 
-        .hero2-floating-badge strong {
+        .hero2-slide.active {
+            opacity: 1;
+            visibility: visible;
+            transform: scale(1);
+            z-index: 1;
+        }
+
+        .hero2-slide img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
             display: block;
-            font-size: 1.75rem;
-            font-weight: 800;
         }
 
-        .hero2-floating-badge span {
+        .slide-caption-pill {
+            position: absolute;
+            bottom: 1.25rem;
+            right: 1.25rem;
+            background: rgba(5, 19, 24, 0.88);
+            backdrop-filter: blur(14px);
+            -webkit-backdrop-filter: blur(14px);
+            border: 1px solid rgba(0, 229, 255, 0.45);
+            color: #E0F7FA;
             font-size: 0.75rem;
-            opacity: 0.75;
+            font-weight: 700;
+            padding: 0.35rem 0.95rem;
+            border-radius: var(--radius-full);
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.45);
+            z-index: 2;
+            letter-spacing: 0.04em;
+        }
+
+        .slide-caption-pill i {
+            color: #00E5FF;
+        }
+
+        /* Slider Arrows */
+        .slider-arrow {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background: rgba(5, 19, 24, 0.82);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(0, 229, 255, 0.4);
+            color: #FFFFFF;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.9375rem;
+            cursor: pointer;
+            z-index: 4;
+            transition: all 0.25s ease;
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .hero2-slider:hover .slider-arrow {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .slider-arrow:hover {
+            background: rgba(14, 165, 183, 0.95);
+            border-color: #67E8F9;
+            box-shadow: 0 0 20px rgba(0, 229, 255, 0.6);
+            transform: translateY(-50%) scale(1.1);
+        }
+
+        .slider-prev { left: 1rem; }
+        .slider-next { right: 1rem; }
+
+        /* Slider Dots */
+        .slider-dots {
+            position: absolute;
+            bottom: -3rem;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            z-index: 5;
+            background: rgba(5, 19, 24, 0.85);
+            padding: 0.4rem 0.85rem;
+            border-radius: var(--radius-full);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(0, 229, 255, 0.35);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
+        }
+
+        .slider-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: var(--radius-full);
+            background: rgba(255, 255, 255, 0.35);
+            border: none;
+            cursor: pointer;
+            padding: 0;
+            transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .slider-dot.active {
+            width: 24px;
+            background: linear-gradient(90deg, #00E5FF, #2DD4BF);
+            box-shadow: 0 0 10px rgba(0, 229, 255, 0.6);
+        }
+
+        .hero2-floating-badge-top {
+            position: absolute;
+            top: -1.25rem;
+            right: 1.5rem;
+            background: rgba(5, 19, 24, 0.88);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(0, 229, 255, 0.45);
+            border-radius: var(--radius-lg);
+            padding: 0.75rem 1.25rem;
+            color: #fff;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
+            z-index: 3;
+            animation: floatSlow 5s ease-in-out infinite;
+            white-space: nowrap;
+        }
+
+        .hero2-floating-badge-bottom {
+            position: absolute;
+            bottom: -1.25rem;
+            left: 1.5rem;
+            background: rgba(5, 19, 24, 0.88);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(45, 212, 191, 0.45);
+            border-radius: var(--radius-lg);
+            padding: 0.75rem 1.25rem;
+            color: #fff;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
+            z-index: 3;
+            animation: floatSlow 5s ease-in-out infinite 2.5s;
+            white-space: nowrap;
+        }
+
+        .badge-icon-wrap {
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            background: rgba(14, 165, 183, 0.25);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #00E5FF;
+            font-size: 1rem;
+            flex-shrink: 0;
+            border: 1px solid rgba(0, 229, 255, 0.3);
+        }
+
+        .badge-text-wrap strong {
+            display: block;
+            font-size: 0.9375rem;
+            font-weight: 700;
+            color: #FFFFFF;
+            line-height: 1.2;
+        }
+
+        .badge-text-wrap span {
+            font-size: 0.75rem;
+            color: rgba(220, 243, 246, 0.75);
+        }
+
+        @keyframes floatSlow {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-8px); }
         }
 
         /* ── Magazine Category Grid ── */
@@ -167,11 +448,11 @@
         .cat-tile-span2 { grid-column: span 2; }
         .cat-tile-row2 { grid-row: 2; }
 
-        /* ── Masonry New Arrivals ── */
+        /* ── Fresh New Arrivals ── */
         .masonry-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
-            gap: 1.25rem;
+            gap: 1.5rem;
         }
 
         .masonry-card {
@@ -180,59 +461,377 @@
             position: relative;
             background: var(--bg-surface);
             border: 1px solid var(--border-color);
-            transition: transform 0.3s, box-shadow 0.3s;
+            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.3s;
+            display: flex;
+            flex-direction: column;
         }
 
-        .masonry-card:hover { transform: translateY(-6px); box-shadow: var(--shadow-lg); }
+        .masonry-card:hover { transform: translateY(-5px); box-shadow: var(--shadow-lg); }
 
         .masonry-card-img {
             width: 100%;
-            aspect-ratio: 3/4;
+            height: 220px;
             object-fit: cover;
+            transition: transform 0.5s ease;
         }
 
-        .masonry-card:nth-child(2) .masonry-card-img { aspect-ratio: 3/5; }
-        .masonry-card:nth-child(5) .masonry-card-img { aspect-ratio: 3/5; }
+        .masonry-card:hover .masonry-card-img {
+            transform: scale(1.06);
+        }
 
-        .masonry-card-body { padding: 1rem; }
-        .masonry-card-name { font-size: 0.9375rem; font-weight: 600; color: var(--text-heading); }
-        .masonry-card-type { font-size: 0.75rem; color: var(--clr-primary); font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.25rem; }
-        .masonry-card-price { font-size: 1rem; font-weight: 700; color: var(--clr-primary); margin-top: 0.5rem; }
+        .masonry-card-body { padding: 1.25rem; }
+        .masonry-card-name { font-size: 1rem; font-weight: 600; color: var(--text-heading); margin-bottom: 0.25rem; }
+        .masonry-card-type { font-size: 0.75rem; color: var(--clr-primary); font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; }
+        .masonry-card-price { font-size: 1.0625rem; font-weight: 700; color: var(--clr-primary); margin-top: 0.5rem; }
 
         /* ── Cinematic Species Spotlight ── */
-        .spotlight-section {
+        /* ── Cinematic Species Spotlight ── */
+        .spotlight-showcase-section {
             position: relative;
-            height: 70vh;
+            padding: 5.5rem 0;
             overflow: hidden;
+            background: radial-gradient(circle at 10% 25%, rgba(0, 229, 255, 0.12) 0%, transparent 45%),
+                        radial-gradient(circle at 90% 75%, rgba(255, 112, 67, 0.1) 0%, transparent 50%),
+                        linear-gradient(180deg, #041419 0%, #07222B 50%, #030F13 100%);
+            border-top: 1px solid rgba(0, 229, 255, 0.18);
+            border-bottom: 1px solid rgba(0, 229, 255, 0.18);
+            color: #E2F5F8;
+        }
+
+        .spotlight-top-bar {
             display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1.25rem;
+            margin-bottom: 2.75rem;
+        }
+
+        .spotlight-badge-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.6rem;
+            padding: 0.45rem 1.15rem;
+            border-radius: 9999px;
+            background: rgba(0, 229, 255, 0.1);
+            border: 1px solid rgba(0, 229, 255, 0.4);
+            color: #00E5FF;
+            font-size: 0.75rem;
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            box-shadow: 0 0 16px rgba(0, 229, 255, 0.18);
+        }
+
+        .spotlight-live-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #00E5FF;
+            box-shadow: 0 0 10px #00E5FF, 0 0 20px #00E5FF;
+            animation: dotGlowPulse 1.8s ease-in-out infinite alternate;
+        }
+
+        @keyframes dotGlowPulse {
+            0% { transform: scale(0.9); opacity: 0.7; }
+            100% { transform: scale(1.2); opacity: 1; filter: drop-shadow(0 0 6px #00E5FF); }
+        }
+
+        .spotlight-species-nav {
+            display: flex;
+            gap: 0.75rem;
+            flex-wrap: wrap;
+        }
+
+        .spotlight-nav-btn {
+            display: flex;
+            align-items: center;
+            gap: 0.65rem;
+            padding: 0.4rem 1.15rem 0.4rem 0.45rem;
+            border-radius: 9999px;
+            background: rgba(6, 26, 34, 0.85);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            color: #A0C8D2;
+            font-size: 0.8125rem;
+            font-weight: 600;
+            font-family: var(--font-sans);
+            cursor: pointer;
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+        }
+
+        .spotlight-nav-btn:hover {
+            color: #FFFFFF;
+            background: rgba(14, 45, 58, 0.95);
+            border-color: rgba(0, 229, 255, 0.5);
+            transform: translateY(-2px);
+        }
+
+        .spotlight-nav-btn.active {
+            background: rgba(0, 229, 255, 0.18);
+            border-color: #00E5FF;
+            color: #FFFFFF;
+            box-shadow: 0 0 20px rgba(0, 229, 255, 0.35);
+        }
+
+        .spotlight-nav-btn .nav-thumb {
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 1.5px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .spotlight-grid {
+            display: grid;
+            grid-template-columns: 1.15fr 0.85fr;
+            gap: 3.5rem;
             align-items: center;
         }
 
-        .spotlight-bg {
-            position: absolute;
-            inset: 0;
+        .spotlight-taxonomy {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 0.875rem;
+            flex-wrap: wrap;
         }
 
-        .spotlight-bg img {
-            width: 100%; height: 100%;
-            object-fit: cover;
+        .spotlight-heading {
+            font-size: clamp(2rem, 3.5vw, 2.75rem);
+            font-weight: 800;
+            color: #FFFFFF !important;
+            line-height: 1.15;
+            margin: 0.5rem 0 1.25rem 0;
+            letter-spacing: -0.02em;
+            text-shadow: 0 2px 14px rgba(0, 0, 0, 0.5);
         }
 
-        .spotlight-overlay {
-            position: absolute;
-            inset: 0;
-            background: linear-gradient(to right, rgba(7,20,25,0.90) 0%, rgba(7,20,25,0.40) 60%, transparent 100%);
+        .spotlight-scientific {
+            display: block;
+            font-size: 1.125rem;
+            font-weight: 500;
+            font-style: italic;
+            color: #2DD4BF !important;
+            margin-top: 0.35rem;
+            font-family: var(--font-sans);
+            text-shadow: 0 0 12px rgba(45, 212, 191, 0.3);
         }
 
-        .spotlight-content {
+        .spotlight-desc {
+            font-size: 0.95rem;
+            color: rgba(215, 240, 245, 0.85) !important;
+            line-height: 1.75;
+            margin-bottom: 2rem;
+            font-weight: 400;
+        }
+
+        .spotlight-specs-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            margin-bottom: 2.25rem;
+        }
+
+        .spotlight-spec-card {
+            display: flex;
+            align-items: center;
+            gap: 0.875rem;
+            padding: 0.95rem 1.1rem;
+            background: rgba(6, 26, 34, 0.8) !important;
+            border: 1px solid rgba(0, 229, 255, 0.2) !important;
+            border-radius: 1rem;
+            backdrop-filter: blur(12px);
+            transition: all 0.25s ease;
+        }
+
+        .spotlight-spec-card:hover {
+            background: rgba(10, 38, 50, 0.92) !important;
+            border-color: rgba(0, 229, 255, 0.55) !important;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+        }
+
+        .spotlight-spec-card .spec-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            background: rgba(0, 229, 255, 0.12);
+            border: 1px solid rgba(0, 229, 255, 0.25);
+            color: #00E5FF;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.05rem;
+            flex-shrink: 0;
+        }
+
+        .spotlight-spec-card .spec-title {
+            font-size: 0.6875rem;
+            text-transform: uppercase;
+            letter-spacing: 0.07em;
+            color: #7EA8B4 !important;
+            display: block;
+            margin-bottom: 0.18rem;
+            font-weight: 600;
+        }
+
+        .spotlight-spec-card .spec-val {
+            font-size: 0.9375rem;
+            color: #FFFFFF !important;
+            font-weight: 700;
+        }
+
+        .spotlight-cta-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 1.5rem;
+            padding-top: 1.35rem;
+            border-top: 1px solid rgba(0, 229, 255, 0.18);
+        }
+
+        .spotlight-price-box .price-label {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            color: #7EA8B4 !important;
+            display: block;
+            margin-bottom: 0.25rem;
+            font-weight: 600;
+        }
+
+        .spotlight-price-box .price-figures {
+            display: flex;
+            align-items: baseline;
+            gap: 0.5rem;
+        }
+
+        .spotlight-price-box .current-price {
+            font-size: 2rem;
+            font-weight: 800;
+            color: #00E5FF !important;
+            line-height: 1;
+            text-shadow: 0 0 16px rgba(0, 229, 255, 0.35);
+        }
+
+        .spotlight-price-box .old-price {
+            font-size: 1rem;
+            text-decoration: line-through;
+            color: rgba(160, 200, 210, 0.55) !important;
+            font-weight: 500;
+        }
+
+        .spotlight-btn-group {
+            display: flex;
+            gap: 0.875rem;
+            flex-wrap: wrap;
+        }
+
+        /* Right Visual Column */
+        .spotlight-stage-card {
             position: relative;
-            z-index: 1;
-            max-width: 520px;
+            border-radius: 1.75rem;
+            background: rgba(5, 20, 26, 0.88);
+            border: 1px solid rgba(0, 229, 255, 0.3);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6), 0 0 35px rgba(0, 229, 255, 0.15);
+            padding: 1.25rem;
+            overflow: hidden;
+            backdrop-filter: blur(16px);
+            transition: transform 0.4s ease, box-shadow 0.4s ease, border-color 0.4s ease;
         }
 
-        .spotlight-content .section-label { margin-bottom: 1rem; }
-        .spotlight-content h2 { color: #fff; margin-bottom: 1rem; }
-        .spotlight-content p { color: rgba(255,255,255,0.72); line-height: 1.7; margin-bottom: 2rem; font-weight: 400; }
+        .spotlight-stage-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 25px 60px rgba(0, 0, 0, 0.7), 0 0 45px rgba(0, 229, 255, 0.28);
+            border-color: rgba(0, 229, 255, 0.6);
+        }
+
+        .spotlight-image-holder {
+            position: relative;
+            border-radius: 1.25rem;
+            overflow: hidden;
+            height: 350px;
+            background: #020B0E;
+        }
+
+        .spotlight-main-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.6s ease, opacity 0.35s ease;
+        }
+
+        .spotlight-stage-card:hover .spotlight-main-img {
+            transform: scale(1.04);
+        }
+
+        .stage-floating-badge {
+            position: absolute;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 0.95rem;
+            border-radius: 9999px;
+            background: rgba(3, 15, 20, 0.94) !important;
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.2) !important;
+            box-shadow: 0 8px 22px rgba(0, 0, 0, 0.6);
+            font-size: 0.75rem;
+            font-weight: 700;
+            color: #FFFFFF !important;
+            z-index: 2;
+            transition: all 0.3s ease;
+        }
+
+        .stage-floating-badge.badge-top-left {
+            top: 2rem;
+            left: 2rem;
+            border-color: rgba(255, 176, 133, 0.5) !important;
+        }
+
+        .stage-floating-badge.badge-bottom-right {
+            bottom: 5.8rem;
+            right: 2rem;
+            border-color: rgba(0, 229, 255, 0.5) !important;
+        }
+
+        .stage-quick-banner {
+            margin-top: 1rem;
+            padding: 0.875rem 1.25rem;
+            background: rgba(3, 14, 18, 0.88);
+            border: 1px solid rgba(0, 229, 255, 0.2);
+            border-radius: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-around;
+        }
+
+        .stage-quick-banner .quick-stat-item {
+            text-align: center;
+        }
+
+        .stage-quick-banner .q-label {
+            font-size: 0.6875rem;
+            color: #7EA8B4 !important;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            display: block;
+            margin-bottom: 0.2rem;
+            font-weight: 600;
+        }
+
+        .stage-quick-banner .q-val {
+            font-size: 0.8125rem;
+            font-weight: 700;
+            color: #FFFFFF !important;
+        }
+
+        .stage-quick-banner .quick-stat-divider {
+            width: 1px;
+            height: 24px;
+            background: rgba(0, 229, 255, 0.18);
+        }
 
         /* ── Equipment Strip ── */
         .equip-strip {
@@ -247,21 +846,56 @@
             position: relative;
             aspect-ratio: 3/4;
             cursor: pointer;
+            border: 1px solid var(--border-color);
+            background: #041217;
+            box-shadow: var(--shadow-sm);
+            transition: transform 0.4s ease, box-shadow 0.4s ease, border-color 0.4s ease;
         }
 
-        .equip-card img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s; }
-        .equip-card:hover img { transform: scale(1.08); }
+        .equip-card:hover {
+            transform: translateY(-6px);
+            box-shadow: var(--shadow-lg), 0 0 25px rgba(0, 229, 255, 0.22);
+            border-color: rgba(0, 229, 255, 0.55);
+        }
+
+        .equip-card img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.6s ease;
+        }
+
+        .equip-card:hover img {
+            transform: scale(1.08);
+        }
 
         .equip-card-label {
             position: absolute;
-            bottom: 0; left: 0; right: 0;
-            padding: 1.25rem;
-            background: linear-gradient(to top, rgba(7,20,25,0.9) 0%, transparent 100%);
-            color: #fff;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 1.35rem 1.15rem 1.15rem;
+            background: linear-gradient(to top, rgba(2, 11, 15, 0.96) 0%, rgba(2, 11, 15, 0.7) 60%, transparent 100%);
+            color: #FFFFFF !important;
+            z-index: 2;
         }
 
-        .equip-card-label h4 { font-size: 1rem; font-weight: 600; margin-bottom: 0.25rem; }
-        .equip-card-label span { font-size: 0.8125rem; opacity: 0.7; }
+        .equip-card-label h4 {
+            font-size: 1.05rem;
+            font-weight: 700;
+            color: #FFFFFF !important;
+            margin-bottom: 0.35rem;
+            line-height: 1.25;
+            text-shadow: 0 2px 8px rgba(0, 0, 0, 0.8);
+        }
+
+        .equip-card-label span {
+            font-size: 0.875rem;
+            font-weight: 700;
+            color: #00E5FF !important;
+            display: block;
+            text-shadow: 0 0 12px rgba(0, 229, 255, 0.4);
+        }
 
         /* ── Community Social Proof ── */
         .social-proof {
@@ -274,19 +908,21 @@
         .sp-img-collage {
             display: grid;
             grid-template-columns: 1fr 1fr;
+            grid-template-rows: 150px 150px;
             gap: 0.75rem;
+            max-height: 310px;
         }
 
         .sp-img-collage img {
             border-radius: 1rem;
-            aspect-ratio: 1/1;
             width: 100%;
+            height: 100%;
             object-fit: cover;
         }
 
         .sp-img-collage .img-tall {
             grid-row: span 2;
-            aspect-ratio: 1/2.1;
+            height: 100%;
         }
 
         .sp-stat-grid {
@@ -307,107 +943,170 @@
         .sp-stat-box strong { display: block; font-size: 1.75rem; font-weight: 800; color: var(--clr-primary); }
         .sp-stat-box span { font-size: 0.8125rem; color: var(--text-muted); }
 
-        /* ── Glassmorphism Newsletter ── */
-        .glass-newsletter {
+        /* ── Glassmorphism CTA Section ── */
+        .glass-cta {
             position: relative;
             border-radius: 2rem;
             overflow: hidden;
             padding: 5rem 3rem;
             text-align: center;
+            border: 1px solid rgba(0, 229, 255, 0.35);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.6), 0 0 40px rgba(14, 165, 183, 0.2);
         }
 
-        .glass-newsletter-bg {
+        .glass-cta-bg {
             position: absolute;
             inset: 0;
         }
 
-        .glass-newsletter-bg img {
+        .glass-cta-bg img {
             width: 100%; height: 100%;
             object-fit: cover;
         }
 
-        .glass-newsletter-bg::after {
+        .glass-cta-bg::after {
             content: '';
             position: absolute;
             inset: 0;
-            background: rgba(7,20,25,0.80);
-            backdrop-filter: blur(6px);
+            background: linear-gradient(135deg, rgba(4, 19, 24, 0.88) 0%, rgba(7, 34, 43, 0.82) 50%, rgba(4, 19, 24, 0.92) 100%);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
         }
 
-        .glass-newsletter-content { position: relative; z-index: 1; max-width: 560px; margin: 0 auto; }
-        .glass-newsletter-content h2 { color: #fff; font-size: clamp(1.75rem, 3vw, 2.25rem); margin-bottom: 0.75rem; }
-        .glass-newsletter-content p { color: rgba(255,255,255,0.68); margin-bottom: 2rem; font-weight: 400; }
+        .glass-cta-content { position: relative; z-index: 1; max-width: 680px; margin: 0 auto; }
+        .glass-cta-content h2 { color: #fff; font-size: clamp(2rem, 3.5vw, 2.75rem); font-family: var(--font-display); font-weight: 800; line-height: 1.2; margin-bottom: 1rem; }
+        .glass-cta-content h2 .highlight-text {
+            background: linear-gradient(135deg, #00E5FF 0%, #2DD4BF 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .glass-cta-content p { color: rgba(220, 243, 246, 0.85); font-size: 1.0625rem; line-height: 1.7; margin-bottom: 2rem; font-weight: 400; }
 
-        .glass-form {
+        .glass-cta-perks {
             display: flex;
-            gap: 0.75rem;
-            max-width: 420px;
-            margin: 0 auto;
+            justify-content: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+            margin-bottom: 2.25rem;
         }
 
-        .glass-input {
-            flex: 1;
-            background: rgba(255,255,255,0.1);
-            border: 1px solid rgba(255,255,255,0.2);
-            border-radius: 0.75rem;
-            padding: 0.75rem 1rem;
+        .glass-cta-perk {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
             font-size: 0.875rem;
-            color: #fff;
-            font-family: var(--font-sans);
-            outline: none;
+            font-weight: 600;
+            color: #E0F7FA;
+            background: rgba(5, 19, 24, 0.75);
+            border: 1px solid rgba(0, 229, 255, 0.3);
+            padding: 0.45rem 1.15rem;
+            border-radius: var(--radius-full);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
         }
 
-        .glass-input::placeholder { color: rgba(255,255,255,0.5); }
-        .glass-input:focus { border-color: var(--clr-secondary); }
+        .glass-cta-perk i { color: #00E5FF; }
+
+        .glass-cta-actions {
+            display: flex;
+            gap: 1.25rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
 
         /* Blog Cards */
         .blog-grid-h2 {
             display: grid;
-            grid-template-columns: 2fr 1fr 1fr;
-            gap: 1.25rem;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
         }
 
-        .blog-card-feat {
+        .blog-card-h2 {
             background: var(--bg-surface);
             border: 1px solid var(--border-color);
             border-radius: 1.25rem;
             overflow: hidden;
             display: flex;
             flex-direction: column;
-            transition: box-shadow 0.3s, transform 0.3s;
+            cursor: pointer;
+            transition: box-shadow 0.3s ease, transform 0.3s ease, border-color 0.3s ease;
         }
 
-        .blog-card-feat:hover { transform: translateY(-4px); box-shadow: var(--shadow-lg); }
+        .blog-card-h2:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-lg);
+            border-color: var(--primary);
+        }
 
-        .blog-card-feat .blog-feat-img { aspect-ratio: 16/9; overflow: hidden; }
-        .blog-card-feat .blog-feat-img img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s; }
-        .blog-card-feat:hover .blog-feat-img img { transform: scale(1.04); }
-
-        .blog-card-small {
-            background: var(--bg-surface);
-            border: 1px solid var(--border-color);
-            border-radius: 1.25rem;
+        .blog-card-h2 .blog-card-img-wrap {
+            height: 185px;
             overflow: hidden;
+            position: relative;
+        }
+
+        .blog-card-h2 .blog-card-img-wrap img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .blog-card-h2:hover .blog-card-img-wrap img {
+            transform: scale(1.05);
+        }
+
+        .blog-card-h2 .blog-card-body {
+            padding: 1.35rem;
             display: flex;
             flex-direction: column;
-            transition: box-shadow 0.3s, transform 0.3s;
+            flex: 1;
         }
 
-        .blog-card-small:hover { transform: translateY(-4px); box-shadow: var(--shadow-lg); }
-        .blog-card-small .blog-small-img { aspect-ratio: 16/9; overflow: hidden; }
-        .blog-card-small .blog-small-img img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s; }
-        .blog-card-small:hover .blog-small-img img { transform: scale(1.04); }
+        .blog-card-h2 .blog-card-tags {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 0.75rem;
+            flex-wrap: wrap;
+        }
+
+        .blog-card-h2 .blog-card-title {
+            font-size: 1.05rem;
+            font-weight: 700;
+            color: var(--text-heading);
+            margin-bottom: 0.625rem;
+            line-height: 1.4;
+        }
+
+        .blog-card-h2 .blog-card-excerpt {
+            font-size: 0.875rem;
+            color: var(--text-muted);
+            line-height: 1.6;
+            margin-bottom: 1.25rem;
+            flex: 1;
+        }
+
+        .blog-card-h2 .blog-card-meta {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            font-size: 0.8125rem;
+            color: var(--text-muted);
+            border-top: 1px solid var(--border-color);
+            padding-top: 0.85rem;
+            margin-top: auto;
+        }
 
         @media (max-width: 1024px) {
-            .hero2 { grid-template-columns: 1fr; min-height: auto; }
-            .hero2-right { display: none; }
-            .hero2-left { padding: 4rem 1.5rem; }
+            .hero2-grid { grid-template-columns: 1fr; gap: 3.5rem; }
+            .hero2-visual-wrapper { margin-bottom: 3.5rem; max-width: 580px; margin-left: auto; margin-right: auto; }
             .cat-grid { grid-template-columns: 1fr 1fr; grid-template-rows: 260px 260px; }
             .cat-tile-span2 { grid-column: 1 / -1; }
             .masonry-grid { grid-template-columns: 1fr 1fr; }
             .equip-strip { grid-template-columns: 1fr 1fr; }
             .social-proof { grid-template-columns: 1fr; gap: 2rem; }
             .blog-grid-h2 { grid-template-columns: 1fr; }
+            .spotlight-grid { grid-template-columns: 1fr; gap: 2.5rem; }
+            .spotlight-image-holder { height: 300px; }
         }
 
         @media (max-width: 768px) {
@@ -415,10 +1114,15 @@
             .cat-tile { height: 220px; }
             .cat-tile-span2 { grid-column: 1; }
             .masonry-grid { grid-template-columns: 1fr; }
-            .masonry-card:nth-child(2) .masonry-card-img,
-            .masonry-card:nth-child(5) .masonry-card-img { aspect-ratio: 3/4; }
             .equip-strip { grid-template-columns: 1fr 1fr; }
-            .spotlight-section { height: auto; padding: 4rem 0; }
+            .spotlight-showcase-section { padding: 4rem 0; }
+            .spotlight-specs-grid { grid-template-columns: 1fr; }
+            .spotlight-cta-row { flex-direction: column; align-items: flex-start; }
+            .spotlight-btn-group { width: 100%; }
+            .spotlight-btn-group .btn { flex: 1; text-align: center; justify-content: center; }
+            .spotlight-image-holder { height: 260px; }
+            .stage-floating-badge.badge-top-left { top: 1.25rem; left: 1.25rem; }
+            .stage-floating-badge.badge-bottom-right { bottom: 5.5rem; right: 1.25rem; }
             .glass-form { flex-direction: column; }
             .sp-img-collage { grid-template-columns: 1fr; }
             .sp-img-collage .img-tall { aspect-ratio: 1/1; grid-row: span 1; }
@@ -429,38 +1133,117 @@
 
 <div id="main-nav"></div>
 
-<!-- ─── HERO 2 (Split Screen) ────────────────────── -->
+<!-- ─── HERO 2 (Editorial Luxury with Bioluminescent Plankton Particles) ── -->
 <section class="hero2">
-    <div class="bubble-wrap" aria-hidden="true">
-        <div class="bubble" style="width:100px;height:100px;left:8%;bottom:-60px;animation-duration:13s;"></div>
-        <div class="bubble" style="width:50px;height:50px;left:25%;bottom:-40px;animation-duration:9s;animation-delay:2s;"></div>
-        <div class="bubble" style="width:70px;height:70px;left:45%;bottom:-50px;animation-duration:11s;animation-delay:4s;"></div>
+    <!-- Unique Bioluminescent Plankton & Shimmering Light Orbs -->
+    <div class="plankton-wrap" aria-hidden="true">
+        <!-- Floating macro soft-focus background orbs -->
+        <div class="plankton-orb plankton-macro" style="width:70px;height:70px;left:10%;bottom:0;animation-duration:16s;animation-delay:0s;"></div>
+        <div class="plankton-orb plankton-macro" style="width:90px;height:90px;left:55%;bottom:0;animation-duration:20s;animation-delay:3s;"></div>
+        <div class="plankton-orb plankton-macro" style="width:60px;height:60px;left:82%;bottom:0;animation-duration:14s;animation-delay:6s;"></div>
+        
+        <!-- Bioluminescent midground glowing floaters -->
+        <div class="plankton-orb plankton-mid" style="width:24px;height:24px;left:20%;bottom:0;animation-duration:11s;animation-delay:1s;"></div>
+        <div class="plankton-orb plankton-mid" style="width:32px;height:32px;left:40%;bottom:0;animation-duration:13s;animation-delay:4s;"></div>
+        <div class="plankton-orb plankton-mid" style="width:20px;height:20px;left:70%;bottom:0;animation-duration:9s;animation-delay:2.5s;"></div>
+        <div class="plankton-orb plankton-mid" style="width:28px;height:28px;left:90%;bottom:0;animation-duration:12s;animation-delay:5s;"></div>
+
+        <!-- Micro-shimmer twinkling plankton sparks -->
+        <div class="plankton-orb plankton-micro" style="width:8px;height:8px;left:7%;bottom:0;animation-duration:7s;animation-delay:0.5s;"></div>
+        <div class="plankton-orb plankton-micro" style="width:10px;height:10px;left:28%;bottom:0;animation-duration:8.5s;animation-delay:2s;"></div>
+        <div class="plankton-orb plankton-micro" style="width:6px;height:6px;left:48%;bottom:0;animation-duration:6s;animation-delay:3.8s;"></div>
+        <div class="plankton-orb plankton-micro" style="width:12px;height:12px;left:64%;bottom:0;animation-duration:9s;animation-delay:1.2s;"></div>
+        <div class="plankton-orb plankton-micro" style="width:7px;height:7px;left:78%;bottom:0;animation-duration:7.5s;animation-delay:4.5s;"></div>
+        <div class="plankton-orb plankton-micro" style="width:9px;height:9px;left:94%;bottom:0;animation-duration:8s;animation-delay:0.8s;"></div>
     </div>
-    <div class="container" style="position:relative;z-index:1;width:100%;">
+
+    <div class="container" style="position:relative;z-index:2;width:100%;">
         <div class="hero2-grid">
             <div class="hero2-content animate-fade-in-up">
-                <div class="hero2-eyebrow">
-                    <div class="hero2-line"></div>
-                    <span>Premium Collection 2025</span>
+                <div class="hero2-pill">
+                    <i class="fa-solid fa-gem"></i> Premium Aquatic Collection 2025
                 </div>
                 <h1 class="hero2-title">
-                    Where Every<br>
-                    <em>Drop</em> Tells<br>
-                    A Story
+                    Where Every <span class="highlight-text">Drop</span> Tells A Story
                 </h1>
                 <p class="hero2-desc">
-                    Curated rare species, professional-grade setups, and expert knowledge — crafted for the passionate aquarist who demands the best.
+                    Curated rare species, professional-grade aquascapes, and tailored care — crafted for the passionate aquarist who demands perfection.
                 </p>
                 <div class="hero2-ctas">
-                    <a href="catalog.html" class="btn btn-primary btn-xl">Explore Premium Fish</a>
-                    <a href="equipment.html" class="btn btn-ghost btn-xl" style="border-color:rgba(255,255,255,0.2);color:rgba(255,255,255,0.75);">Shop Equipment</a>
+                    <a href="catalog.html" class="btn btn-primary btn-xl">
+                        <i class="fa-solid fa-fish"></i> Explore Premium Fish <i class="fa-solid fa-arrow-right" style="font-size:0.875rem;"></i>
+                    </a>
+                    <a href="equipment.html" class="btn btn-secondary btn-xl">
+                        <i class="fa-solid fa-sliders"></i> Shop Equipment
+                    </a>
+                </div>
+
+                <div class="hero2-trust-strip">
+                    <div class="hero2-trust-item"><i class="fa-solid fa-certificate"></i> 100% Live Arrival Guarantee</div>
+                    <div class="hero2-trust-item"><i class="fa-solid fa-shield-halved"></i> Ethical Quarantine Sourced</div>
+                    <div class="hero2-trust-item"><i class="fa-solid fa-star"></i> 4.9/5 Aquarist Rating</div>
                 </div>
             </div>
-            <div class="hero2-visual">
-                <img src="https://images.unsplash.com/photo-1535591273668-578e31182c4f?w=1200&q=80" alt="Stunning marine reef aquarium" loading="eager" class="animate-slow-zoom">
-                <div class="hero2-floating-badge" style="position:absolute;bottom:1.5rem;right:1.5rem;background:rgba(11,123,140,0.85);backdrop-filter:blur(12px);border:1px solid rgba(167,227,233,0.2);border-radius:var(--radius-lg);padding:0.75rem 1.25rem;color:#fff;">
-                    <strong style="display:block;font-size:1.5rem;line-height:1;font-weight:800;color:var(--clr-secondary);">500+</strong>
-                    <span style="font-size:0.75rem;opacity:0.85;">Species in stock</span>
+
+            <div class="hero2-visual-wrapper">
+                <!-- Floating top badge (syncs with active slide) -->
+                <div class="hero2-floating-badge-top" id="slider-badge-top">
+                    <div class="badge-icon-wrap" id="slider-badge-icon-top"><i class="fa-solid fa-shield-heart"></i></div>
+                    <div class="badge-text-wrap">
+                        <strong id="slider-badge-title-top">Quarantine Certified</strong>
+                        <span id="slider-badge-sub-top">14-Day Conditioned</span>
+                    </div>
+                </div>
+
+                <!-- Main Hero Slider -->
+                <div class="hero2-slider" id="hero2-slider">
+                    <!-- Slide 1: Marine Reef -->
+                    <div class="hero2-slide active" data-index="0" data-top-title="Quarantine Certified" data-top-sub="14-Day Conditioned" data-top-icon="fa-shield-heart" data-bot-title="500+ Rare Species" data-bot-sub="Direct Global Imports" data-bot-icon="fa-water">
+                        <img src="assets/images/hero2_marine_reef_luxury.jpg" alt="Luxury museum-grade living marine reef sanctuary aquarium" loading="eager">
+                        <div class="slide-caption-pill">
+                            <i class="fa-solid fa-water"></i> Marine Reef Sanctuary
+                        </div>
+                    </div>
+
+                    <!-- Slide 2: Nature Aquascape -->
+                    <div class="hero2-slide" data-index="1" data-top-title="AquaFlora Certified" data-top-sub="100+ Plant Varieties" data-top-icon="fa-leaf" data-bot-title="Living Aquascapes" data-bot-sub="CO2 & Low-Tech Systems" data-bot-icon="fa-seedling">
+                        <img src="assets/images/hero2_planted_aquascape_luxury.jpg" alt="Award-winning Iwagumi nature planted aquascape aquarium" loading="lazy">
+                        <div class="slide-caption-pill">
+                            <i class="fa-solid fa-leaf"></i> Lush Nature Aquascape
+                        </div>
+                    </div>
+
+                    <!-- Slide 3: Freshwater Amazon Biotope -->
+                    <div class="hero2-slide" data-index="2" data-top-title="Zero-Stress Transit" data-top-sub="Oxygenated Packaging" data-top-icon="fa-truck-fast" data-bot-title="Amazonian Biotope" data-bot-sub="Wild & Captive Bred" data-bot-icon="fa-fish-fins">
+                        <img src="assets/images/hero2_amazon_biotope_luxury.jpg" alt="Architectural Amazon river biotope aquarium with wild Discus and Angelfish" loading="lazy">
+                        <div class="slide-caption-pill">
+                            <i class="fa-solid fa-fish"></i> Amazonian Community
+                        </div>
+                    </div>
+
+                    <!-- Slider Arrows -->
+                    <button class="slider-arrow slider-prev" id="slider-prev-btn" aria-label="Previous Slide">
+                        <i class="fa-solid fa-chevron-left"></i>
+                    </button>
+                    <button class="slider-arrow slider-next" id="slider-next-btn" aria-label="Next Slide">
+                        <i class="fa-solid fa-chevron-right"></i>
+                    </button>
+                </div>
+
+                <!-- Slider Pagination Dots (positioned below slider) -->
+                <div class="slider-dots" id="slider-dots">
+                    <button class="slider-dot active" onclick="goToHeroSlide(0)" aria-label="Slide 1"></button>
+                    <button class="slider-dot" onclick="goToHeroSlide(1)" aria-label="Slide 2"></button>
+                    <button class="slider-dot" onclick="goToHeroSlide(2)" aria-label="Slide 3"></button>
+                </div>
+
+                <!-- Floating bottom badge (syncs with active slide) -->
+                <div class="hero2-floating-badge-bottom" id="slider-badge-bottom">
+                    <div class="badge-icon-wrap" id="slider-badge-icon-bot"><i class="fa-solid fa-water"></i></div>
+                    <div class="badge-text-wrap">
+                        <strong id="slider-badge-title-bot">500+ Rare Species</strong>
+                        <span id="slider-badge-sub-bot">Direct Global Imports</span>
+                    </div>
                 </div>
             </div>
         </div>
@@ -478,7 +1261,7 @@
 
         <div class="cat-grid reveal">
             <div class="cat-tile" style="grid-row:1/3;" onclick="location.href='catalog.html'">
-                <img src="https://images.unsplash.com/photo-1516939884455-1445c8652f83?w=900&q=80" alt="Marine reef aquarium with corals">
+                <img src="assets/images/cat_marine_reef.jpg" alt="Vibrant Marine & Reef aquarium with corals, anemones and saltwater fish" loading="lazy">
                 <div class="cat-tile-cover">
                     <div class="cat-tile-cover-inner">
                         <h3>Marine & Reef</h3>
@@ -487,7 +1270,7 @@
                 </div>
             </div>
             <div class="cat-tile" onclick="location.href='catalog.html'">
-                <img src="https://images.unsplash.com/photo-1565118531796-763e5082d113?w=600&q=80" alt="Freshwater tropical fish aquarium">
+                <img src="assets/images/cat_freshwater_fish.jpg" alt="Vibrant freshwater tropical fish including angelfish and tetras" loading="lazy">
                 <div class="cat-tile-cover">
                     <div class="cat-tile-cover-inner">
                         <h3>Freshwater Fish</h3>
@@ -496,7 +1279,7 @@
                 </div>
             </div>
             <div class="cat-tile" onclick="location.href='catalog.html'">
-                <img src="https://images.unsplash.com/photo-1474314170901-f351b68f544f?w=600&q=80" alt="Jellyfish display aquarium">
+                <img src="assets/images/cat_specialty_rare.jpg" alt="Rare exotic Super Red Arowana and Black Diamond stingray" loading="lazy">
                 <div class="cat-tile-cover">
                     <div class="cat-tile-cover-inner">
                         <h3>Specialty & Rare</h3>
@@ -505,7 +1288,7 @@
                 </div>
             </div>
             <div class="cat-tile" onclick="location.href='plants.html'">
-                <img src="https://images.unsplash.com/photo-1518796745738-41048802f99a?w=700&q=80" alt="Lush planted aquascape aquarium">
+                <img src="assets/images/cat_aquatic_plants.jpg" alt="Lush nature planted aquascape aquarium with red rotala and green carpet plants" loading="lazy">
                 <div class="cat-tile-cover">
                     <div class="cat-tile-cover-inner">
                         <h3>Aquatic Plants</h3>
@@ -514,7 +1297,7 @@
                 </div>
             </div>
             <div class="cat-tile" onclick="location.href='equipment.html'">
-                <img src="https://images.unsplash.com/photo-1559827260-dc66d52bef19?w=700&q=80" alt="Premium aquarium equipment setup">
+                <img src="assets/images/cat_aquarium_equipment.jpg" alt="High-tech aquarium equipment setup with LED light, canister filter, and CO2 system" loading="lazy">
                 <div class="cat-tile-cover">
                     <div class="cat-tile-cover-inner">
                         <h3>Equipment & Accessories</h3>
@@ -538,48 +1321,48 @@
         </div>
 
         <div class="masonry-grid reveal">
-            <div class="masonry-card">
-                <img src="https://images.unsplash.com/photo-1544551763-92ab472cad5d?w=600&q=80" alt="Blue Tang fish" class="masonry-card-img">
+            <div class="masonry-card" onclick="location.href='catalog.html'">
+                <img src="assets/images/arr_blue_tang.jpg" alt="Hippo Blue Tang (Paracanthurus hepatus)" class="masonry-card-img" loading="lazy">
                 <div class="masonry-card-body">
                     <div class="masonry-card-type">Marine</div>
                     <div class="masonry-card-name">Hippo Blue Tang</div>
                     <div class="masonry-card-price">₹4,500</div>
                 </div>
             </div>
-            <div class="masonry-card">
-                <img src="https://images.unsplash.com/photo-1602491453631-e2a5ad90a131?w=600&q=80" alt="Altum Angelfish" class="masonry-card-img">
+            <div class="masonry-card" onclick="location.href='catalog.html'">
+                <img src="assets/images/arr_altum_angelfish.jpg" alt="Altum Angelfish (Pterophyllum altum)" class="masonry-card-img" loading="lazy">
                 <div class="masonry-card-body">
                     <div class="masonry-card-type">Freshwater</div>
                     <div class="masonry-card-name">Altum Angelfish</div>
                     <div class="masonry-card-price">₹1,800</div>
                 </div>
             </div>
-            <div class="masonry-card">
-                <img src="https://images.unsplash.com/photo-1519374667756-5f1a2c7b6b35?w=600&q=80" alt="Halfmoon Betta fish" class="masonry-card-img">
+            <div class="masonry-card" onclick="location.href='catalog.html'">
+                <img src="assets/images/arr_halfmoon_betta.jpg" alt="Halfmoon Betta (Betta splendens)" class="masonry-card-img" loading="lazy">
                 <div class="masonry-card-body">
                     <div class="masonry-card-type">Freshwater</div>
                     <div class="masonry-card-name">Halfmoon Betta</div>
                     <div class="masonry-card-price">₹650</div>
                 </div>
             </div>
-            <div class="masonry-card">
-                <img src="https://images.unsplash.com/photo-1498889444388-e67ea62c464b?w=600&q=80" alt="Clownfish anemone" class="masonry-card-img">
+            <div class="masonry-card" onclick="location.href='catalog.html'">
+                <img src="assets/images/arr_tomato_clownfish.jpg" alt="Tomato Clownfish (Amphiprion frenatus)" class="masonry-card-img" loading="lazy">
                 <div class="masonry-card-body">
                     <div class="masonry-card-type">Marine</div>
                     <div class="masonry-card-name">Tomato Clownfish</div>
                     <div class="masonry-card-price">₹1,100</div>
                 </div>
             </div>
-            <div class="masonry-card">
-                <img src="https://images.unsplash.com/photo-1546026423-cc4642628d2b?w=600&q=80" alt="Schooling neon tetras" class="masonry-card-img">
+            <div class="masonry-card" onclick="location.href='catalog.html'">
+                <img src="assets/images/arr_neon_tetra.jpg" alt="Neon Tetra school (Paracheirodon innesi)" class="masonry-card-img" loading="lazy">
                 <div class="masonry-card-body">
                     <div class="masonry-card-type">Freshwater</div>
                     <div class="masonry-card-name">Neon Tetra (pack of 10)</div>
                     <div class="masonry-card-price">₹800</div>
                 </div>
             </div>
-            <div class="masonry-card">
-                <img src="https://images.unsplash.com/photo-1544551763-46a013bb70d5?w=600&q=80" alt="Royal Blue Discus" class="masonry-card-img">
+            <div class="masonry-card" onclick="location.href='catalog.html'">
+                <img src="assets/images/arr_blue_discus.jpg" alt="Cobalt Blue Discus (Symphysodon)" class="masonry-card-img" loading="lazy">
                 <div class="masonry-card-body">
                     <div class="masonry-card-type">Freshwater</div>
                     <div class="masonry-card-name">Cobalt Blue Discus</div>
@@ -590,32 +1373,136 @@
     </div>
 </section>
 
-<!-- ─── CINEMATIC SPECIES SPOTLIGHT ───────────────── -->
-<section class="spotlight-section">
-    <div class="spotlight-bg">
-        <img src="https://images.unsplash.com/photo-1583212292454-1fe6229603b7?w=1600&q=80" alt="Vibrant marine reef with exotic fish">
-    </div>
-    <div class="spotlight-overlay"></div>
+<!-- ─── CINEMATIC SPECIES SPOTLIGHT SHOWCASE ──────── -->
+<section class="spotlight-showcase-section">
     <div class="container">
-        <div class="spotlight-content reveal">
-            <span class="section-label">Species of the Month</span>
-            <h2 style="font-size:clamp(1.75rem,4vw,3rem);font-weight:700;">Flame Angelfish<br><em style="color:var(--clr-secondary);font-style:normal;">Centropyge loricula</em></h2>
-            <p>One of the most vibrant and sought-after dwarf angelfish in the marine hobby. With its brilliant orange-red body and electric blue markings, the Flame Angelfish is a stunning centerpiece for any reef system.</p>
-            <div style="display:flex;gap:1.5rem;flex-wrap:wrap;margin-bottom:2rem;">
-                <div style="color:rgba(255,255,255,0.65);font-size:0.875rem;">
-                    <strong style="color:#fff;display:block;">Origin</strong>Pacific Ocean
+        <!-- Top Switcher Bar / Header -->
+        <div class="spotlight-top-bar reveal">
+            <div class="spotlight-badge-pill">
+                <span class="spotlight-live-dot"></span>
+                <span>SPECIES OF THE MONTH</span>
+            </div>
+            <!-- Interactive Species Selectors -->
+            <div class="spotlight-species-nav" role="tablist">
+                <button type="button" class="spotlight-nav-btn active" data-species="mandarin" onclick="switchSpotlight('mandarin')">
+                    <img src="assets/images/mandarin_dragonet.jpg" alt="Mandarin Dragonet" class="nav-thumb">
+                    <span>Mandarin Dragonet</span>
+                </button>
+                <button type="button" class="spotlight-nav-btn" data-species="picasso-clown" onclick="switchSpotlight('picasso-clown')">
+                    <img src="assets/images/picasso_clownfish.jpg" alt="Picasso Clownfish" class="nav-thumb">
+                    <span>Picasso Clownfish</span>
+                </button>
+                <button type="button" class="spotlight-nav-btn" data-species="discus" onclick="switchSpotlight('discus')">
+                    <img src="assets/images/royal_blue_discus.jpg" alt="Royal Blue Discus" class="nav-thumb">
+                    <span>Royal Blue Discus</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- Main Spotlight Showcase Grid -->
+        <div class="spotlight-grid reveal" id="spotlight-main-container">
+            <!-- Left Info Column -->
+            <div class="spotlight-info-col">
+                <div class="spotlight-taxonomy" id="spotlight-taxonomy">
+                    <span class="badge badge-success" id="spotlight-tax-cat">Marine Psychedelic</span>
+                    <span class="badge badge-info" id="spotlight-tax-family">Callionymidae</span>
                 </div>
-                <div style="color:rgba(255,255,255,0.65);font-size:0.875rem;">
-                    <strong style="color:#fff;display:block;">Care Level</strong>Medium
+                <h2 class="spotlight-heading" id="spotlight-title">
+                    Mandarin Dragonet
+                    <span class="spotlight-scientific" id="spotlight-scientific">Synchiropus splendidus</span>
+                </h2>
+                <p class="spotlight-desc" id="spotlight-desc">
+                    Renowned for its breathtaking maze-like psychedelic cyan, orange, and emerald patterning. The Mandarin Dragonet is a peaceful reef gem that thrives gracefully in mature marine aquariums.
+                </p>
+
+                <!-- Parameter Spec Matrix -->
+                <div class="spotlight-specs-grid" id="spotlight-specs">
+                    <div class="spotlight-spec-card">
+                        <div class="spec-icon"><i class="fa-solid fa-earth-oceania"></i></div>
+                        <div class="spec-data">
+                            <span class="spec-title">Origin</span>
+                            <strong class="spec-val" id="spec-origin">Indo-West Pacific Reefs</strong>
+                        </div>
+                    </div>
+                    <div class="spotlight-spec-card">
+                        <div class="spec-icon"><i class="fa-solid fa-gauge-high"></i></div>
+                        <div class="spec-data">
+                            <span class="spec-title">Care Level</span>
+                            <strong class="spec-val" id="spec-care">Intermediate / Dedicated</strong>
+                        </div>
+                    </div>
+                    <div class="spotlight-spec-card">
+                        <div class="spec-icon"><i class="fa-solid fa-cubes-stacked"></i></div>
+                        <div class="spec-data">
+                            <span class="spec-title">Min Tank</span>
+                            <strong class="spec-val" id="spec-tank">50+ Gallons (190L)</strong>
+                        </div>
+                    </div>
+                    <div class="spotlight-spec-card">
+                        <div class="spec-icon"><i class="fa-solid fa-shield-heart"></i></div>
+                        <div class="spec-data">
+                            <span class="spec-title">Reef Safe</span>
+                            <strong class="spec-val" id="spec-reef">100% Reef Safe</strong>
+                        </div>
+                    </div>
                 </div>
-                <div style="color:rgba(255,255,255,0.65);font-size:0.875rem;">
-                    <strong style="color:#fff;display:block;">Tank Size</strong>75+ Gallons
-                </div>
-                <div style="color:rgba(255,255,255,0.65);font-size:0.875rem;">
-                    <strong style="color:#fff;display:block;">Price</strong>₹6,800
+
+                <!-- Price & CTA Controls -->
+                <div class="spotlight-cta-row">
+                    <div class="spotlight-price-box">
+                        <span class="price-label">Specimen Price</span>
+                        <div class="price-figures">
+                            <span class="current-price" id="spotlight-price">₹4,500</span>
+                            <span class="old-price" id="spotlight-oldprice">₹5,200</span>
+                        </div>
+                    </div>
+                    <div class="spotlight-btn-group">
+                        <a href="catalog.html" class="btn btn-primary btn-lg" id="spotlight-btn-catalog">
+                            <i class="fa-solid fa-fish"></i> View in Catalog
+                        </a>
+                        <a href="care-guides.html" class="btn btn-secondary btn-lg">
+                            <i class="fa-solid fa-book-open"></i> Care Guide
+                        </a>
+                    </div>
                 </div>
             </div>
-            <a href="catalog.html" class="btn btn-primary btn-lg">View in Catalog →</a>
+
+            <!-- Right Showcase Visual Column -->
+            <div class="spotlight-visual-col">
+                <div class="spotlight-stage-card">
+                    <div class="spotlight-image-holder">
+                        <img src="assets/images/mandarin_dragonet.jpg" alt="Mandarin Dragonet Specimen" id="spotlight-img" class="spotlight-main-img">
+                    </div>
+                    
+                    <!-- Floating Highlight Badges -->
+                    <div class="stage-floating-badge badge-top-left" id="badge-top-left">
+                        <i class="fa-solid fa-gem text-accent"></i>
+                        <span>Master Grade AAA</span>
+                    </div>
+                    <div class="stage-floating-badge badge-bottom-right" id="badge-bottom-right">
+                        <i class="fa-solid fa-certificate text-primary"></i>
+                        <span>14-Day Live Warranty</span>
+                    </div>
+
+                    <!-- Bottom Quick Stats Banner -->
+                    <div class="stage-quick-banner" id="stage-quick-banner">
+                        <div class="quick-stat-item">
+                            <span class="q-label">Max Size</span>
+                            <span class="q-val" id="q-size">3.0 in (7.5 cm)</span>
+                        </div>
+                        <div class="quick-stat-divider"></div>
+                        <div class="quick-stat-item">
+                            <span class="q-label">Diet</span>
+                            <span class="q-val" id="q-diet">Copepods / Pods</span>
+                        </div>
+                        <div class="quick-stat-divider"></div>
+                        <div class="quick-stat-item">
+                            <span class="q-label">Water Temp</span>
+                            <span class="q-val" id="q-temp">74–78°F</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </section>
@@ -630,31 +1517,31 @@
         </div>
 
         <div class="equip-strip reveal">
-            <div class="equip-card">
-                <img src="https://images.unsplash.com/photo-1555009393-f20bdb245c4d?w=600&q=80" alt="Aquarium glass tank with clear water">
+            <div class="equip-card" onclick="location.href='equipment.html'">
+                <img src="assets/images/equip_rimless_tank.jpg" alt="Ultra-Clear rimless optical glass aquarium tank" loading="lazy">
                 <div class="equip-card-label">
-                    <h4>Premium Glass Tanks</h4>
+                    <h4>Ultra-Clear Rimless Tanks</h4>
                     <span>From ₹3,500</span>
                 </div>
             </div>
-            <div class="equip-card">
-                <img src="https://images.unsplash.com/photo-1584464491033-06628f3a6b7b?w=600&q=80" alt="Aquarium canister filter">
+            <div class="equip-card" onclick="location.href='equipment.html'">
+                <img src="assets/images/equip_canister_filter.jpg" alt="High-tech stainless canister filter and filtration system" loading="lazy">
                 <div class="equip-card-label">
-                    <h4>Canister Filters</h4>
+                    <h4>Pro Filtration & CO2</h4>
                     <span>From ₹2,800</span>
                 </div>
             </div>
-            <div class="equip-card">
-                <img src="https://images.unsplash.com/photo-1563396983906-b3795482a59a?w=600&q=80" alt="LED aquarium lighting system">
+            <div class="equip-card" onclick="location.href='equipment.html'">
+                <img src="assets/images/equip_led_lighting.jpg" alt="Full-spectrum RGB+W smart LED aquarium lighting system" loading="lazy">
                 <div class="equip-card-label">
-                    <h4>LED Lighting Systems</h4>
+                    <h4>Full-Spectrum LED Lights</h4>
                     <span>From ₹1,200</span>
                 </div>
             </div>
-            <div class="equip-card">
-                <img src="https://images.unsplash.com/photo-1620735692151-26a7e0748429?w=600&q=80" alt="Premium fish food and nutrition">
+            <div class="equip-card" onclick="location.href='equipment.html'">
+                <img src="assets/images/equip_fish_nutrition.jpg" alt="Premium fish food vitality pellets and spirulina flakes" loading="lazy">
                 <div class="equip-card-label">
-                    <h4>Premium Fish Food</h4>
+                    <h4>Premium Nutrition & Food</h4>
                     <span>From ₹250</span>
                 </div>
             </div>
@@ -674,39 +1561,39 @@
         </div>
 
         <div class="blog-grid-h2 reveal">
-            <div class="blog-card-feat">
-                <div class="blog-feat-img">
-                    <img src="https://images.unsplash.com/photo-1526649661456-89c7ed4d00b8?w=800&q=80" alt="Aquarium nitrogen cycle diagram">
+            <div class="blog-card-h2" onclick="location.href='care-guides.html'">
+                <div class="blog-card-img-wrap">
+                    <img src="assets/images/water_quality_care.jpg" alt="Aquarium water chemistry and nitrogen cycle testing" loading="lazy">
                 </div>
                 <div class="blog-card-body">
                     <div class="blog-card-tags"><span class="badge badge-primary">Beginner</span><span class="badge badge-info">Water Chemistry</span></div>
-                    <h3 class="blog-card-title">The Nitrogen Cycle Explained — Your Most Important Aquarium Concept</h3>
-                    <p class="blog-card-excerpt">Understanding the nitrogen cycle is the single most important thing any aquarist can learn. Without it, your fish will never truly thrive.</p>
-                    <div class="blog-card-meta"><span>12 min read</span><a href="care-guides.html" class="link-primary" style="font-size:0.8125rem;">Read →</a></div>
+                    <h3 class="blog-card-title">The Nitrogen Cycle Explained — Essential Water Guide</h3>
+                    <p class="blog-card-excerpt">Master the essential biological cycle to establish a healthy aquatic ecosystem, prevent toxic spikes, and keep your fish thriving.</p>
+                    <div class="blog-card-meta"><span><i class="fa-regular fa-clock"></i> 8 min read</span><a href="care-guides.html" class="link-primary" style="font-size:0.8125rem;font-weight:600;">Read Guide →</a></div>
                 </div>
             </div>
 
-            <div class="blog-card-small">
-                <div class="blog-small-img">
-                    <img src="https://images.unsplash.com/photo-1518796745738-41048802f99a?w=600&q=80" alt="Planted aquascape setup">
+            <div class="blog-card-h2" onclick="location.href='care-guides.html'">
+                <div class="blog-card-img-wrap">
+                    <img src="assets/images/nature_aquascape.jpg" alt="Lush nature planted aquascape aquarium setup" loading="lazy">
                 </div>
                 <div class="blog-card-body">
-                    <div class="blog-card-tags"><span class="badge badge-success">Plants</span></div>
-                    <h3 class="blog-card-title" style="font-size:0.9375rem;">Creating Your First Aquascape</h3>
-                    <p class="blog-card-excerpt" style="font-size:0.8125rem;">Step-by-step guide to setting up a lush planted aquarium from scratch.</p>
-                    <div class="blog-card-meta"><span>8 min read</span><a href="care-guides.html" class="link-primary" style="font-size:0.8125rem;">Read →</a></div>
+                    <div class="blog-card-tags"><span class="badge badge-success">Aquascaping</span><span class="badge badge-primary">Planted Tanks</span></div>
+                    <h3 class="blog-card-title">Creating Your First Aquascape — Step-by-Step Layout</h3>
+                    <p class="blog-card-excerpt">Learn essential hardscaping layout methods, substrate layering, plant selection, and CO2 basics for a vibrant living underwater garden.</p>
+                    <div class="blog-card-meta"><span><i class="fa-regular fa-clock"></i> 8 min read</span><a href="care-guides.html" class="link-primary" style="font-size:0.8125rem;font-weight:600;">Read Guide →</a></div>
                 </div>
             </div>
 
-            <div class="blog-card-small">
-                <div class="blog-small-img">
-                    <img src="https://images.unsplash.com/photo-1535591273668-578e31182c4f?w=600&q=80" alt="Marine reef aquarium care">
+            <div class="blog-card-h2" onclick="location.href='care-guides.html'">
+                <div class="blog-card-img-wrap">
+                    <img src="assets/images/marine_world.jpg" alt="Marine saltwater reef aquarium care" loading="lazy">
                 </div>
                 <div class="blog-card-body">
-                    <div class="blog-card-tags"><span class="badge badge-warning">Marine</span></div>
-                    <h3 class="blog-card-title" style="font-size:0.9375rem;">Beginner's Guide to Saltwater Fish</h3>
-                    <p class="blog-card-excerpt" style="font-size:0.8125rem;">Everything you need to know before setting up your first marine aquarium.</p>
-                    <div class="blog-card-meta"><span>10 min read</span><a href="care-guides.html" class="link-primary" style="font-size:0.8125rem;">Read →</a></div>
+                    <div class="blog-card-tags"><span class="badge badge-warning">Marine Reef</span><span class="badge badge-info">Saltwater Setup</span></div>
+                    <h3 class="blog-card-title">Beginner's Guide to Marine Fish & Reef Aquariums</h3>
+                    <p class="blog-card-excerpt">Discover core fundamentals for saltwater tanks, including salinity balancing, live rock filtration, and hardy starter marine species.</p>
+                    <div class="blog-card-meta"><span><i class="fa-regular fa-clock"></i> 8 min read</span><a href="care-guides.html" class="link-primary" style="font-size:0.8125rem;font-weight:600;">Read Guide →</a></div>
                 </div>
             </div>
         </div>
@@ -718,9 +1605,9 @@
     <div class="container">
         <div class="social-proof">
             <div class="sp-img-collage reveal">
-                <img src="https://images.unsplash.com/photo-1559827260-dc66d52bef19?w=500&q=80" alt="Customer aquarium setup 1" class="img-tall">
-                <img src="https://images.unsplash.com/photo-1583212292454-1fe6229603b7?w=500&q=80" alt="Customer marine reef tank">
-                <img src="https://images.unsplash.com/photo-1524704654690-b56c05c78a00?w=500&q=80" alt="Customers aquascape">
+                <img src="assets/images/planted_world.jpg" alt="Customer lush nature aquascape tank" class="img-tall" loading="lazy">
+                <img src="assets/images/cat_marine_reef.jpg" alt="Customer marine reef sanctuary aquarium" loading="lazy">
+                <img src="assets/images/cat_freshwater_fish.jpg" alt="Customer tropical freshwater community aquarium" loading="lazy">
             </div>
             <div class="reveal">
                 <span class="section-label">Community</span>
@@ -752,26 +1639,40 @@
     </div>
 </section>
 
-<!-- ─── GLASSMORPHISM NEWSLETTER ───────────────────── -->
+<!-- ─── CALL TO ACTION (CTA BANNER) ─────────────────── -->
 <section class="section">
     <div class="container">
-        <div class="glass-newsletter reveal">
-            <div class="glass-newsletter-bg">
-                <img src="https://images.unsplash.com/photo-1516939884455-1445c8652f83?w=1400&q=80" alt="Vibrant coral reef background">
+        <div class="glass-cta reveal">
+            <div class="glass-cta-bg">
+                <img src="assets/images/hero_ocean_fish.jpg" alt="Luxury oceanic aquarium background" loading="lazy">
             </div>
-            <div class="glass-newsletter-content">
-                <span class="section-label" style="margin-bottom:1rem;">Exclusive Members</span>
-                <h2>Get Early Access to<br>New Arrivals</h2>
-                <p>Be the first to know about rare species arrivals, flash sales, and expert care webinars — exclusively for our newsletter subscribers.</p>
-                <form onsubmit="event.preventDefault(); alert('Welcome to the AquaWorld community! 🐠'); this.reset();" class="glass-form">
-                    <input type="email" placeholder="your@email.com" class="glass-input" required>
-                    <button type="submit" class="btn btn-primary">Join Now</button>
-                </form>
+            <div class="glass-cta-content">
+                <div class="cta-pill-badge" style="margin-bottom:1.25rem;">
+                    <i class="fa-solid fa-sparkles"></i> Custom Aquariums & Rare Species
+                </div>
+                <h2>Ready to Build Your <span class="highlight-text">Dream Aquatic World?</span></h2>
+                <p>From curated rare exotic species and 14-day quarantine assurance to bespoke tank installations — our master aquarists are ready to elevate your space.</p>
+                
+                <div class="glass-cta-perks">
+                    <div class="glass-cta-perk"><i class="fa-solid fa-truck-fast"></i> 100% Live Arrival Guarantee</div>
+                    <div class="glass-cta-perk"><i class="fa-solid fa-shield-heart"></i> 14-Day Health Warranty</div>
+                    <div class="glass-cta-perk"><i class="fa-solid fa-certificate"></i> Ethical Quarantine Sourced</div>
+                </div>
+
+                <div class="glass-cta-actions">
+                    <a href="catalog.html" class="btn btn-primary btn-xl">
+                        <i class="fa-solid fa-fish"></i> Explore Fish Catalog <i class="fa-solid fa-arrow-right" style="font-size:0.875rem;"></i>
+                    </a>
+                    <a href="contact.html" class="btn btn-secondary btn-xl">
+                        <i class="fa-solid fa-headset"></i> Request Custom Setup
+                    </a>
+                </div>
             </div>
         </div>
     </div>
 </section>
 
+<!-- Footer placeholder -->
 <div id="main-footer"></div>
 
 <button class="scroll-top-btn" id="scroll-top-btn" aria-label="Scroll to top">
@@ -779,5 +1680,218 @@
 </button>
 
 <script src="components.js"></script>
+<script>
+let currentHeroSlide = 0;
+const heroSlides = document.querySelectorAll('.hero2-slide');
+const heroDots = document.querySelectorAll('.slider-dot');
+let heroSlideTimer;
+
+function updateHeroSlide(index) {
+    if (!heroSlides.length) return;
+    heroSlides.forEach((slide, i) => {
+        slide.classList.toggle('active', i === index);
+    });
+    heroDots.forEach((dot, i) => {
+        dot.classList.toggle('active', i === index);
+    });
+    
+    // Sync floating badges with active slide metadata
+    const activeSlide = heroSlides[index];
+    if (activeSlide) {
+        const topTitle = activeSlide.getAttribute('data-top-title');
+        const topSub = activeSlide.getAttribute('data-top-sub');
+        const topIcon = activeSlide.getAttribute('data-top-icon');
+        const botTitle = activeSlide.getAttribute('data-bot-title');
+        const botSub = activeSlide.getAttribute('data-bot-sub');
+        const botIcon = activeSlide.getAttribute('data-bot-icon');
+
+        const badgeTopTitle = document.getElementById('slider-badge-title-top');
+        const badgeTopSub = document.getElementById('slider-badge-sub-top');
+        const badgeTopIcon = document.getElementById('slider-badge-icon-top');
+        const badgeBotTitle = document.getElementById('slider-badge-title-bot');
+        const badgeBotSub = document.getElementById('slider-badge-sub-bot');
+        const badgeBotIcon = document.getElementById('slider-badge-icon-bot');
+
+        if (badgeTopTitle) badgeTopTitle.textContent = topTitle;
+        if (badgeTopSub) badgeTopSub.textContent = topSub;
+        if (badgeTopIcon) badgeTopIcon.innerHTML = `<i class="fa-solid ${topIcon}"></i>`;
+        if (badgeBotTitle) badgeBotTitle.textContent = botTitle;
+        if (badgeBotSub) badgeBotSub.textContent = botSub;
+        if (badgeBotIcon) badgeBotIcon.innerHTML = `<i class="fa-solid ${botIcon}"></i>`;
+    }
+    currentHeroSlide = index;
+}
+
+function nextHeroSlide() {
+    let nextIndex = (currentHeroSlide + 1) % heroSlides.length;
+    updateHeroSlide(nextIndex);
+}
+
+function prevHeroSlide() {
+    let prevIndex = (currentHeroSlide - 1 + heroSlides.length) % heroSlides.length;
+    updateHeroSlide(prevIndex);
+}
+
+function goToHeroSlide(index) {
+    updateHeroSlide(index);
+    startHeroAutoSlide();
+}
+
+function startHeroAutoSlide() {
+    clearInterval(heroSlideTimer);
+    heroSlideTimer = setInterval(nextHeroSlide, 5000);
+}
+
+// ─── Species Spotlight Interactive Switcher ───
+const speciesData = {
+    'mandarin': {
+        cat: 'Marine Psychedelic',
+        catClass: 'badge-success',
+        family: 'Callionymidae',
+        title: 'Mandarin Dragonet',
+        scientific: 'Synchiropus splendidus',
+        desc: 'Renowned for its breathtaking maze-like psychedelic cyan, orange, and emerald patterning. The Mandarin Dragonet is a peaceful reef gem that thrives gracefully in mature marine aquariums.',
+        origin: 'Indo-West Pacific Reefs',
+        care: 'Intermediate / Dedicated',
+        tank: '50+ Gallons (190L)',
+        reef: '100% Reef Safe',
+        price: '₹4,500',
+        oldPrice: '₹5,200',
+        img: 'assets/images/mandarin_dragonet.jpg',
+        badgeTopIcon: 'fa-solid fa-gem text-accent',
+        badgeTopText: 'Master Grade AAA',
+        badgeBotIcon: 'fa-solid fa-certificate text-primary',
+        badgeBotText: '14-Day Live Warranty',
+        size: '3.0 in (7.5 cm)',
+        diet: 'Copepods / Pods',
+        temp: '74–78°F'
+    },
+    'picasso-clown': {
+        cat: 'Designer Marine',
+        catClass: 'badge-warning',
+        family: 'Pomacentridae',
+        title: 'Picasso Clownfish Pair',
+        scientific: 'Amphiprion percula var.',
+        desc: 'An exquisite premium designer grade morph featuring striking abstract white patterning outlined with intense black margins and fiery orange hues. Highly resilient, captive-conditioned, and symbiotic with anemones.',
+        origin: 'Captive Bred Specialist',
+        care: 'Easy / Beginner Friendly',
+        tank: '30+ Gallons (115L)',
+        reef: '100% Reef Safe',
+        price: '₹5,800',
+        oldPrice: '₹6,500',
+        img: 'assets/images/picasso_clownfish.jpg',
+        badgeTopIcon: 'fa-solid fa-sparkles text-accent',
+        badgeTopText: 'Select Bonded Pair',
+        badgeBotIcon: 'fa-solid fa-shield-halved text-primary',
+        badgeBotText: '100% Captive Bred',
+        size: '3.2 in (8.0 cm)',
+        diet: 'Omnivore / Pellets',
+        temp: '75–82°F'
+    },
+    'discus': {
+        cat: 'King of Freshwater',
+        catClass: 'badge-primary',
+        family: 'Cichlidae',
+        title: 'Royal Blue Discus',
+        scientific: 'Symphysodon aequifasciatus',
+        desc: 'Crowned the majestic King of freshwater aquaria, displaying brilliant electric cobalt striations across a velvety body with crimson eyes. Calm, highly intelligent, and a centerpiece for lush planted biotope setups.',
+        origin: 'Amazon River Basin',
+        care: 'Dedicated Care',
+        tank: '75+ Gallons (280L)',
+        reef: 'Planted Safe',
+        price: '₹3,200',
+        oldPrice: '₹3,900',
+        img: 'assets/images/royal_blue_discus.jpg',
+        badgeTopIcon: 'fa-solid fa-crown text-accent',
+        badgeTopText: 'Showroom Selection',
+        badgeBotIcon: 'fa-solid fa-shield-heart text-primary',
+        badgeBotText: '14-Day Health Warranty',
+        size: '6.0 in (15 cm)',
+        diet: 'Beefheart / Flakes',
+        temp: '82–86°F'
+    }
+};
+
+function switchSpotlight(speciesId) {
+    const data = speciesData[speciesId];
+    if (!data) return;
+
+    // Update active button state
+    document.querySelectorAll('.spotlight-nav-btn').forEach(btn => {
+        btn.classList.toggle('active', btn.getAttribute('data-species') === speciesId);
+    });
+
+    // Elements
+    const elTaxCat = document.getElementById('spotlight-tax-cat');
+    const elTaxFam = document.getElementById('spotlight-tax-family');
+    const elTitle = document.getElementById('spotlight-title');
+    const elDesc = document.getElementById('spotlight-desc');
+    const elOrigin = document.getElementById('spec-origin');
+    const elCare = document.getElementById('spec-care');
+    const elTank = document.getElementById('spec-tank');
+    const elReef = document.getElementById('spec-reef');
+    const elPrice = document.getElementById('spotlight-price');
+    const elOldPrice = document.getElementById('spotlight-oldprice');
+    const elImg = document.getElementById('spotlight-img');
+    const elBadgeTop = document.getElementById('badge-top-left');
+    const elBadgeBot = document.getElementById('badge-bottom-right');
+    const elSize = document.getElementById('q-size');
+    const elDiet = document.getElementById('q-diet');
+    const elTemp = document.getElementById('q-temp');
+
+    // Smooth image crossfade
+    if (elImg) {
+        elImg.style.opacity = '0';
+        setTimeout(() => {
+            elImg.src = data.img;
+            elImg.alt = data.title + ' Specimen';
+            elImg.style.opacity = '1';
+        }, 180);
+    }
+
+    if (elTaxCat) {
+        elTaxCat.className = 'badge ' + data.catClass;
+        elTaxCat.textContent = data.cat;
+    }
+    if (elTaxFam) elTaxFam.textContent = data.family;
+    if (elTitle) {
+        elTitle.innerHTML = `${data.title} <span class="spotlight-scientific" id="spotlight-scientific">${data.scientific}</span>`;
+    }
+    if (elDesc) elDesc.textContent = data.desc;
+    if (elOrigin) elOrigin.textContent = data.origin;
+    if (elCare) elCare.textContent = data.care;
+    if (elTank) elTank.textContent = data.tank;
+    if (elReef) elReef.textContent = data.reef;
+    if (elPrice) elPrice.textContent = data.price;
+    if (elOldPrice) elOldPrice.textContent = data.oldPrice;
+
+    if (elBadgeTop) {
+        elBadgeTop.innerHTML = `<i class="${data.badgeTopIcon}"></i> <span>${data.badgeTopText}</span>`;
+    }
+    if (elBadgeBot) {
+        elBadgeBot.innerHTML = `<i class="${data.badgeBotIcon}"></i> <span>${data.badgeBotText}</span>`;
+    }
+
+    if (elSize) elSize.textContent = data.size;
+    if (elDiet) elDiet.textContent = data.diet;
+    if (elTemp) elTemp.textContent = data.temp;
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+    const prevBtn = document.getElementById('slider-prev-btn');
+    const nextBtn = document.getElementById('slider-next-btn');
+    const sliderContainer = document.getElementById('hero2-slider');
+
+    if (prevBtn) prevBtn.addEventListener('click', (e) => { e.stopPropagation(); prevHeroSlide(); startHeroAutoSlide(); });
+    if (nextBtn) nextBtn.addEventListener('click', (e) => { e.stopPropagation(); nextHeroSlide(); startHeroAutoSlide(); });
+
+    if (sliderContainer) {
+        sliderContainer.addEventListener('mouseenter', () => clearInterval(heroSlideTimer));
+        sliderContainer.addEventListener('mouseleave', () => startHeroAutoSlide());
+    }
+
+    startHeroAutoSlide();
+});
+</script>
 </body>
 </html>
