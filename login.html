@@ -97,15 +97,45 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 0.75rem;
+            gap: 0.875rem;
             text-decoration: none;
             margin-bottom: 2rem;
+            transition: transform 0.2s ease;
         }
 
-        .auth-logo .brand-top { color: var(--clr-primary); font-size: 1rem; font-weight: 800; letter-spacing: 0.05em; }
-        .auth-logo .brand-bottom { font-size: 0.7rem; color: var(--text-muted); }
+        .auth-logo:hover {
+            transform: scale(1.03);
+        }
 
-        html.dark .auth-logo .brand-top { color: var(--clr-secondary); }
+        .auth-logo .brand-top {
+            color: var(--clr-primary);
+            font-size: 1.625rem;
+            font-weight: 900;
+            letter-spacing: 0.08em;
+            line-height: 1;
+            display: block;
+        }
+
+        .auth-logo .brand-bottom {
+            font-size: 0.9375rem;
+            color: var(--text-heading);
+            font-weight: 700;
+            letter-spacing: 0.22em;
+            line-height: 1;
+            margin-top: 0.25rem;
+            display: block;
+            opacity: 0.85;
+        }
+
+        html.dark .auth-logo .brand-top {
+            color: #00E5FF;
+            text-shadow: 0 0 15px rgba(0, 229, 255, 0.35);
+        }
+
+        html.dark .auth-logo .brand-bottom {
+            color: rgba(220, 243, 246, 0.85);
+            opacity: 1;
+        }
 
         .auth-heading {
             text-align: center;
@@ -206,6 +236,49 @@
 
         .checkbox-wrapper label { color: var(--text-muted); }
         html.dark .checkbox-wrapper label { color: rgba(255,255,255,0.50); }
+
+        .password-wrapper {
+            position: relative;
+            width: 100%;
+        }
+
+        .password-wrapper .form-input {
+            padding-right: 2.75rem;
+        }
+
+        .password-toggle {
+            position: absolute;
+            right: 0.75rem;
+            left: auto;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            color: var(--text-muted);
+            cursor: pointer;
+            padding: 0.25rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 2;
+        }
+
+        html[dir="rtl"] .form-input,
+        html[dir="rtl"] .form-select,
+        html[dir="rtl"] .form-label {
+            text-align: right;
+        }
+
+        html[dir="rtl"] .password-wrapper .form-input {
+            padding-right: 1rem;
+            padding-left: 2.75rem;
+            text-align: right;
+        }
+
+        html[dir="rtl"] .password-toggle {
+            right: auto;
+            left: 0.75rem;
+        }
     </style>
 </head>
 <body class="auth-page">
@@ -235,7 +308,7 @@
 
         <!-- Logo -->
         <a href="index.html" class="auth-logo" aria-label="AquaWorld Home">
-            <img src="logo.svg" alt="AquaWorld Logo" width="48" height="48" style="width:48px;height:48px;object-fit:contain;display:block;">
+            <img src="logo.svg" alt="AquaWorld Logo" width="56" height="56" style="width:56px;height:56px;object-fit:contain;display:block;">
             <div class="auth-logo-text">
                 <span class="brand-top">AQUA</span>
                 <span class="brand-bottom">WORLD</span>

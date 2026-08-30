@@ -8,17 +8,25 @@
     <link rel="icon" type="image/svg+xml" href="favicon.svg">
     <link rel="stylesheet" href="style.css">
     <style>
+        /* ─── DEFAULT / DARK THEME ───────────────────────── */
         body.fullscreen-page {
-            background: linear-gradient(160deg, #071A20 0%, #0A2C38 50%, #071A20 100%);
+            background: linear-gradient(160deg, #041419 0%, #082933 50%, #031418 100%);
             min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            color: #FFFFFF;
+            overflow-x: hidden;
+            position: relative;
+            transition: background 0.3s ease, color 0.3s ease;
         }
 
         body.fullscreen-page::before {
             content: '';
             position: fixed;
             inset: 0;
-            background: radial-gradient(ellipse at 50% 50%, rgba(11,123,140,0.12) 0%, transparent 70%);
+            background: radial-gradient(ellipse at 50% 40%, rgba(0, 229, 255, 0.12) 0%, transparent 70%);
             pointer-events: none;
+            transition: background 0.3s ease;
         }
 
         .error-topbar {
@@ -30,7 +38,7 @@
             margin: 0 auto;
             width: 100%;
             position: relative;
-            z-index: 1;
+            z-index: 20;
         }
 
         .error-logo {
@@ -40,11 +48,8 @@
             text-decoration: none;
         }
 
-        .error-logo .brand-top { color: var(--clr-secondary); font-size: 0.9rem; font-weight: 800; letter-spacing: 0.05em; }
-        .error-logo .brand-bottom { font-size: 0.65rem; color: rgba(255,255,255,0.45); }
-
-        html:not(.dark) .error-logo .brand-top { color: var(--clr-primary); }
-        html:not(.dark) .error-logo .brand-bottom { color: var(--text-muted); }
+        .error-logo .brand-top { color: #00E5FF; font-size: 0.9rem; font-weight: 800; letter-spacing: 0.05em; }
+        .error-logo .brand-bottom { font-size: 0.65rem; color: rgba(220, 243, 246, 0.7); }
 
         .error-topbar-right {
             display: flex;
@@ -53,29 +58,19 @@
 
         .error-toggle-btn {
             width: 36px; height: 36px;
-            background: rgba(255,255,255,0.06);
-            border: 1px solid rgba(255,255,255,0.12);
+            background: rgba(255,255,255,0.08);
+            border: 1px solid rgba(0, 229, 255, 0.25);
             border-radius: var(--radius-sm);
-            color: rgba(255,255,255,0.65);
+            color: rgba(220, 243, 246, 0.85);
             display: flex; align-items: center; justify-content: center;
             cursor: pointer; font-family: var(--font-sans);
             transition: all 0.2s;
         }
 
-        html:not(.dark) .error-toggle-btn {
-            background: var(--bg-surface);
-            border-color: var(--border-color);
-            color: var(--text-body);
-        }
-
         .error-toggle-btn:hover {
-            border-color: var(--clr-secondary);
-            color: var(--clr-secondary);
-        }
-
-        html:not(.dark) .error-toggle-btn:hover {
-            border-color: var(--clr-primary);
-            color: var(--clr-primary);
+            border-color: #00E5FF;
+            color: #00E5FF;
+            background: rgba(0, 229, 255, 0.12);
         }
 
         .fullscreen-content {
@@ -84,39 +79,50 @@
             align-items: center;
             justify-content: center;
             text-align: center;
-            padding: 2rem;
+            padding: 2rem 1.5rem;
             position: relative;
-            z-index: 1;
+            z-index: 10;
+        }
+
+        .error-card {
+            max-width: 620px;
+            width: 100%;
+            background: rgba(6, 28, 36, 0.78);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(0, 229, 255, 0.22);
+            border-radius: 1.5rem;
+            padding: 3.5rem 2.5rem;
+            box-shadow: 0 25px 60px rgba(0, 0, 0, 0.55), 0 0 35px rgba(0, 229, 255, 0.10);
+            position: relative;
+            transition: all 0.3s ease;
         }
 
         .error-visual {
             position: relative;
-            margin-bottom: 2rem;
+            margin-bottom: 1.5rem;
+            display: inline-block;
         }
 
-        /* Animated fish swimming around the 404 */
+        /* Animated glowing 404 text */
         .error-number {
-            font-size: clamp(6rem, 18vw, 11rem);
+            font-size: clamp(6.5rem, 18vw, 10.5rem);
             font-weight: 900;
             line-height: 1;
-            background: linear-gradient(135deg, rgba(11,123,140,0.20) 0%, rgba(167,227,233,0.15) 100%);
+            background: linear-gradient(135deg, #00E5FF 0%, #00B4D8 45%, #34D399 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
-            letter-spacing: -0.05em;
+            letter-spacing: -0.04em;
             position: relative;
-        }
-
-        html:not(.dark) .error-number {
-            background: linear-gradient(135deg, rgba(11,123,140,0.18) 0%, rgba(11,123,140,0.08) 100%);
-            -webkit-background-clip: text;
-            background-clip: text;
+            filter: drop-shadow(0 0 25px rgba(0, 229, 255, 0.40));
         }
 
         .fish-svg {
             position: absolute;
             animation: swimAround 8s ease-in-out infinite;
             transform-origin: center;
+            filter: drop-shadow(0 0 10px rgba(0, 229, 255, 0.6));
         }
 
         @keyframes swimAround {
@@ -131,36 +137,43 @@
             position: absolute;
             border-radius: 50%;
             background: transparent;
-            border: 2px solid rgba(167,227,233,0.25);
+            border: 2px solid rgba(0, 229, 255, 0.4);
             animation: floatUp linear infinite;
         }
 
         .error-subtitle {
-            font-size: clamp(1.5rem, 4vw, 2.25rem);
-            font-weight: 700;
-            color: #ffffff;
-            margin-bottom: 0.875rem;
-            text-shadow: 0 2px 12px rgba(0,0,0,0.4);
+            font-size: clamp(1.6rem, 3.5vw, 2.25rem);
+            font-weight: 800;
+            color: #FFFFFF;
+            margin-bottom: 1rem;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.6);
         }
-
-        html:not(.dark) .error-subtitle { color: var(--text-heading); }
 
         .error-desc {
             font-size: 1.0625rem;
-            color: rgba(255,255,255,0.58);
-            max-width: 440px;
-            margin: 0 auto 2.5rem;
+            color: rgba(220, 243, 246, 0.85);
+            max-width: 480px;
+            margin: 0 auto 2.25rem;
             line-height: 1.7;
             font-weight: 400;
         }
 
-        html:not(.dark) .error-desc { color: var(--text-muted); }
-
         .error-actions {
             display: flex;
-            gap: 0.875rem;
+            gap: 1rem;
             justify-content: center;
             flex-wrap: wrap;
+        }
+
+        .btn-catalog-secondary {
+            border: 1px solid rgba(0, 229, 255, 0.4);
+            color: #FFFFFF;
+            background: rgba(255, 255, 255, 0.06);
+        }
+        .btn-catalog-secondary:hover {
+            background: rgba(0, 229, 255, 0.15);
+            color: #FFFFFF;
+            border-color: #00E5FF;
         }
 
         /* Quick links */
@@ -170,30 +183,109 @@
             flex-wrap: wrap;
             justify-content: center;
             margin-top: 2.5rem;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(0, 229, 255, 0.12);
         }
 
         .quick-link-chip {
             font-size: 0.8125rem;
             font-weight: 500;
-            color: rgba(255,255,255,0.55);
-            background: rgba(255,255,255,0.05);
-            border: 1px solid rgba(255,255,255,0.10);
+            color: rgba(220, 243, 246, 0.75);
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid rgba(0, 229, 255, 0.18);
             border-radius: 9999px;
-            padding: 0.375rem 1rem;
+            padding: 0.4rem 1.1rem;
             text-decoration: none;
-            transition: all 0.2s;
-        }
-
-        html:not(.dark) .quick-link-chip {
-            color: var(--text-muted);
-            background: var(--bg-surface-2);
-            border-color: var(--border-color);
+            transition: all 0.2s ease;
         }
 
         .quick-link-chip:hover {
-            color: var(--clr-secondary);
-            border-color: var(--clr-secondary);
-            background: rgba(167,227,233,0.08);
+            color: #FFFFFF;
+            border-color: #00E5FF;
+            background: rgba(0, 229, 255, 0.18);
+            transform: translateY(-2px);
+        }
+
+        /* ─── LIGHT THEME OVERRIDES ───────────────────────── */
+        html:not(.dark) body.fullscreen-page {
+            background: linear-gradient(160deg, #EBF8FA 0%, #D2F2F6 45%, #E6F8FA 100%);
+            color: var(--text-heading);
+        }
+
+        html:not(.dark) body.fullscreen-page::before {
+            background: radial-gradient(ellipse at 50% 40%, rgba(11, 123, 140, 0.10) 0%, transparent 70%);
+        }
+
+        html:not(.dark) .error-logo .brand-top { color: var(--clr-primary); }
+        html:not(.dark) .error-logo .brand-bottom { color: var(--text-muted); }
+
+        html:not(.dark) .error-toggle-btn {
+            background: #ffffff;
+            border-color: rgba(11, 123, 140, 0.2);
+            color: var(--text-body);
+        }
+
+        html:not(.dark) .error-toggle-btn:hover {
+            border-color: var(--clr-primary);
+            color: var(--clr-primary);
+            background: var(--clr-primary-xlight);
+        }
+
+        html:not(.dark) .error-card {
+            background: rgba(255, 255, 255, 0.90);
+            border: 1px solid rgba(11, 123, 140, 0.16);
+            box-shadow: 0 20px 50px rgba(11, 123, 140, 0.12), 0 0 25px rgba(11, 123, 140, 0.05);
+        }
+
+        html:not(.dark) .error-number {
+            background: linear-gradient(135deg, #0B7B8C 0%, #0098A6 45%, #059669 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            filter: drop-shadow(0 4px 15px rgba(11, 123, 140, 0.25));
+        }
+
+        html:not(.dark) .fish-svg {
+            filter: drop-shadow(0 2px 8px rgba(11, 123, 140, 0.4));
+        }
+
+        html:not(.dark) .fish-svg ellipse,
+        html:not(.dark) .fish-svg path:not([stroke]) {
+            fill: #0B7B8C;
+        }
+
+        html:not(.dark) .bubble-float {
+            border-color: rgba(11, 123, 140, 0.3);
+        }
+
+        html:not(.dark) .error-subtitle {
+            color: var(--text-heading) !important;
+            text-shadow: none;
+        }
+
+        html:not(.dark) .error-desc {
+            color: var(--text-muted) !important;
+        }
+
+        html:not(.dark) .btn-catalog-secondary {
+            border-color: var(--border-color);
+            color: var(--text-heading);
+            background: var(--bg-surface-2);
+        }
+
+        html:not(.dark) .btn-catalog-secondary:hover {
+            border-color: var(--clr-primary);
+            color: var(--clr-primary);
+            background: var(--clr-primary-xlight);
+        }
+
+        html:not(.dark) .quick-links {
+            border-top-color: var(--border-color);
+        }
+
+        html:not(.dark) .quick-link-chip {
+            color: var(--text-body);
+            background: var(--bg-surface-2);
+            border-color: var(--border-color);
         }
 
         html:not(.dark) .quick-link-chip:hover {
@@ -206,12 +298,11 @@
 <body class="fullscreen-page">
 
 <!-- Bubble decorations -->
-<div aria-hidden="true" style="position:fixed;inset:0;pointer-events:none;overflow:hidden;z-index:0;">
+<div aria-hidden="true" style="position:fixed;inset:0;pointer-events:none;overflow:hidden;z-index:0;opacity:0.35;">
     <div class="bubble" style="width:100px;height:100px;left:5%;bottom:-60px;animation-duration:14s;"></div>
     <div class="bubble" style="width:50px;height:50px;left:20%;bottom:-40px;animation-duration:10s;animation-delay:2s;"></div>
-    <div class="bubble" style="width:70px;height:70px;left:40%;bottom:-50px;animation-duration:12s;animation-delay:4s;"></div>
-    <div class="bubble" style="width:40px;height:40px;left:70%;bottom:-35px;animation-duration:9s;animation-delay:1s;"></div>
-    <div class="bubble" style="width:80px;height:80px;left:85%;bottom:-55px;animation-duration:11s;animation-delay:3s;"></div>
+    <div class="bubble" style="width:70px;height:70px;left:80%;bottom:-50px;animation-duration:12s;animation-delay:4s;"></div>
+    <div class="bubble" style="width:40px;height:40px;left:88%;bottom:-35px;animation-duration:9s;animation-delay:1s;"></div>
 </div>
 
 <!-- Top Bar -->
@@ -237,22 +328,22 @@
 
 <!-- Main Content -->
 <div class="fullscreen-content">
-    <div style="max-width:600px;width:100%;">
+    <div class="error-card">
 
         <!-- Visual -->
         <div class="error-visual">
             <!-- Swimming fish -->
-            <svg class="fish-svg" style="top:20px;left:50px;" width="48" height="32" viewBox="0 0 48 32" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <ellipse cx="22" cy="16" rx="14" ry="9" fill="#0B7B8C" opacity="0.7"/>
-                <path d="M36 16 L48 8 L48 24 Z" fill="#0B7B8C" opacity="0.7"/>
+            <svg class="fish-svg" style="top:10px;left:20px;" width="52" height="34" viewBox="0 0 48 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <ellipse cx="22" cy="16" rx="14" ry="9" fill="#00E5FF" opacity="0.95"/>
+                <path d="M36 16 L48 8 L48 24 Z" fill="#00E5FF" opacity="0.95"/>
                 <circle cx="10" cy="13" r="2.5" fill="white"/>
-                <circle cx="11" cy="13" r="1" fill="#0B7B8C"/>
-                <path d="M18 8 Q20 16 18 24" stroke="rgba(167,227,233,0.5)" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+                <circle cx="11" cy="13" r="1.2" fill="#041C24"/>
+                <path d="M18 8 Q20 16 18 24" stroke="#FFFFFF" stroke-width="1.5" fill="none" stroke-linecap="round"/>
             </svg>
 
             <!-- Bubble floats -->
-            <div class="bubble-float" style="width:12px;height:12px;top:10px;right:80px;animation-duration:4s;animation-delay:0s;"></div>
-            <div class="bubble-float" style="width:8px;height:8px;top:5px;right:100px;animation-duration:3s;animation-delay:1s;"></div>
+            <div class="bubble-float" style="width:12px;height:12px;top:10px;right:40px;animation-duration:4s;animation-delay:0s;"></div>
+            <div class="bubble-float" style="width:8px;height:8px;top:5px;right:60px;animation-duration:3s;animation-delay:1s;"></div>
 
             <div class="error-number">404</div>
         </div>
@@ -262,10 +353,10 @@
 
         <div class="error-actions">
             <a href="index.html" class="btn btn-primary btn-lg">
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
                 Back to Home
             </a>
-            <a href="catalog.html" class="btn btn-secondary btn-lg" style="border-color:rgba(167,227,233,0.3);color:rgba(255,255,255,0.75);">Browse Fish Catalog</a>
+            <a href="catalog.html" class="btn btn-catalog-secondary btn-lg">Browse Fish Catalog</a>
         </div>
 
         <div class="quick-links">

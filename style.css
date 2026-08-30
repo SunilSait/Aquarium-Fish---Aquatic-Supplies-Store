@@ -1322,10 +1322,19 @@ html[dir="rtl"] .mobile-menu.open { right: auto; left: 0; }
 .form-textarea { resize: vertical; min-height: 120px; line-height: 1.6; }
 .form-select { appearance: none; cursor: pointer; }
 
-.password-wrapper { position: relative; }
+.password-wrapper {
+    position: relative;
+    width: 100%;
+}
+
+.password-wrapper .form-input {
+    padding-right: 2.75rem;
+}
+
 .password-toggle {
     position: absolute;
     right: 0.75rem;
+    left: auto;
     top: 50%;
     transform: translateY(-50%);
     background: none;
@@ -1335,8 +1344,36 @@ html[dir="rtl"] .mobile-menu.open { right: auto; left: 0; }
     padding: 0.25rem;
     display: flex;
     align-items: center;
+    justify-content: center;
+    z-index: 2;
 }
+
 .password-toggle:hover { color: var(--clr-primary); }
+
+/* RTL Form Adjustments */
+[dir="rtl"] .form-input,
+[dir="rtl"] .form-select,
+[dir="rtl"] .form-textarea,
+[dir="rtl"] .form-label {
+    text-align: right;
+}
+
+[dir="rtl"] input[type="tel"] {
+    text-align: right;
+    direction: rtl;
+    unicode-bidi: plaintext;
+}
+
+[dir="rtl"] .password-wrapper .form-input {
+    padding-right: 1rem;
+    padding-left: 2.75rem;
+    text-align: right;
+}
+
+[dir="rtl"] .password-toggle {
+    right: auto;
+    left: 0.75rem;
+}
 
 .checkbox-wrapper {
     display: flex;
@@ -1348,6 +1385,7 @@ html[dir="rtl"] .mobile-menu.open { right: auto; left: 0; }
     width: 16px; height: 16px;
     accent-color: var(--clr-primary);
     cursor: pointer;
+    flex-shrink: 0;
 }
 
 .checkbox-wrapper label {

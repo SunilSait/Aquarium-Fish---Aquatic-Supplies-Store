@@ -208,9 +208,9 @@
 
         .light-card h4 { font-size: 1rem; font-weight: 600; color: var(--text-heading); margin-bottom: 0.5rem; }
         .light-card p  { font-size: 0.8125rem; color: var(--text-muted); line-height: 1.6; font-weight: 400; }
-        .light-card ul { text-align: left; margin-top: 0.75rem; }
-        .light-card li { font-size: 0.8125rem; color: var(--text-muted); padding: 0.2rem 0; }
-        .light-card li::before { content: '› '; color: var(--clr-primary); }
+        .light-card ul { text-align: center; list-style: none; padding: 0; margin-top: 0.75rem; }
+        .light-card li { font-size: 0.8125rem; color: var(--text-muted); padding: 0.25rem 0; text-align: center; }
+        .light-card li::before { content: '› '; color: var(--clr-primary); font-weight: 600; }
 
         @media (max-width: 1024px) {
             .plants-intro { grid-template-columns: 1fr; gap: 2rem; }
@@ -221,6 +221,88 @@
         @media (max-width: 768px) {
             .aqscape-steps { grid-template-columns: 1fr; }
             .grid-3 { grid-template-columns: 1fr; }
+        }
+
+        /* Plant CTA Card with right side image */
+        .plant-cta-section {
+            padding: 1rem 0 5rem;
+        }
+
+        .plant-cta-card {
+            background: var(--bg-surface);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-xl);
+            overflow: hidden;
+            display: grid;
+            grid-template-columns: 1.25fr 1fr;
+            box-shadow: var(--shadow-md);
+            align-items: stretch;
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .plant-cta-card:hover {
+            border-color: rgba(52, 211, 153, 0.4);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .plant-cta-body {
+            padding: 3rem 2.5rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: flex-start;
+        }
+
+        .plant-cta-body h3 {
+            font-size: clamp(1.35rem, 2.5vw, 1.85rem);
+            font-weight: 700;
+            color: var(--text-heading);
+            margin: 0.75rem 0;
+            line-height: 1.3;
+        }
+
+        .plant-cta-body p {
+            font-size: 0.9375rem;
+            color: var(--text-muted);
+            line-height: 1.7;
+            margin-bottom: 1.75rem;
+        }
+
+        .plant-cta-actions {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .plant-cta-img {
+            position: relative;
+            min-height: 280px;
+            overflow: hidden;
+        }
+
+        .plant-cta-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.6s ease;
+        }
+
+        .plant-cta-card:hover .plant-cta-img img {
+            transform: scale(1.04);
+        }
+
+        @media (max-width: 900px) {
+            .plant-cta-card {
+                grid-template-columns: 1fr;
+            }
+            .plant-cta-img {
+                order: -1;
+                min-height: 220px;
+                max-height: 260px;
+            }
+            .plant-cta-body {
+                padding: 2rem 1.5rem;
+            }
         }
     </style>
 </head>
@@ -584,6 +666,26 @@
 
         <div style="text-align:center;margin-top:3rem;">
             <a href="care-guides.html" class="btn btn-primary btn-lg">Read Full Aquascape Guide →</a>
+        </div>
+    </div>
+</section>
+
+<!-- ─── PLANT CTA (RIGHT IMAGE) ────────────────────── -->
+<section class="plant-cta-section">
+    <div class="container">
+        <div class="plant-cta-card reveal">
+            <div class="plant-cta-body">
+                <span class="badge badge-success">Custom Aquascape Design</span>
+                <h3>Looking for a Complete Custom Aquascape Setup?</h3>
+                <p>Our master aquascapers provide personalized layout blueprints, plant selection bundles, hardscape wood & stone matching, and CO2 guidance for any tank dimension.</p>
+                <div class="plant-cta-actions">
+                    <a href="contact.html" class="btn btn-primary">Book Aquascape Consultation →</a>
+                    <a href="equipment.html" class="btn btn-secondary">Shop CO2 & Lighting</a>
+                </div>
+            </div>
+            <div class="plant-cta-img">
+                <img src="assets/images/cat_aquatic_plants.jpg" alt="Thriving planted aquarium aquascape" loading="lazy">
+            </div>
         </div>
     </div>
 </section>
