@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="en" id="root-html">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Contact AquaWorld — Visit our store, check opening hours, or submit a special order enquiry for rare aquarium fish, plants, and equipment.">
+    <title>Contact Us | AquaWorld Aquarium Store</title>
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        /* Contact layout */
+        .contact-layout {
+            display: grid;
+            grid-template-columns: 1fr 1.6fr;
+            gap: 3rem;
+            align-items: start;
+        }
+
+        /* Map placeholder */
+        .map-placeholder {
+            width: 100%;
+            aspect-ratio: 4/3;
+            background: var(--bg-surface-2);
+            border-radius: var(--radius-xl);
+            border: 1px solid var(--border-color);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 0.75rem;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .map-placeholder img {
+            width: 100%; height: 100%;
+            object-fit: cover;
+            border-radius: var(--radius-xl);
+            opacity: 0.5;
+        }
+
+        .map-placeholder-overlay {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            background: rgba(11,123,140,0.08);
+        }
+
+        .map-placeholder-overlay p {
+            font-size: 0.875rem;
+            color: var(--clr-primary);
+            font-weight: 600;
+        }
+
+        /* Hours table */
+        .hours-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .hours-table tr {
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .hours-table tr:last-child { border-bottom: none; }
+
+        .hours-table td {
+            padding: 0.625rem 0;
+            font-size: 0.875rem;
+            color: var(--text-body);
+        }
+
+        .hours-table td:first-child { font-weight: 600; color: var(--text-heading); }
+        .hours-table td:last-child { text-align: right; color: var(--text-muted); }
+
+        .hours-today td { color: var(--clr-primary) !important; }
+        .hours-today td:first-child { color: var(--clr-primary) !important; }
+
+        .hours-closed td:last-child { color: var(--clr-danger) !important; }
+
+        /* Form card */
+        .contact-form-card {
+            background: var(--bg-surface);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-xl);
+            padding: 2.5rem;
+            box-shadow: var(--shadow-md);
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+
+        /* Success state */
+        .form-success {
+            display: none;
+            text-align: center;
+            padding: 3rem 2rem;
+        }
+
+        .form-success-icon {
+            width: 72px; height: 72px;
+            background: #D1FAE5;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1.5rem;
+            color: #059669;
+        }
+
+        /* Special order badge */
+        .special-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: linear-gradient(135deg, var(--clr-primary) 0%, var(--clr-primary-light) 100%);
+            color: #fff;
+            padding: 0.4rem 1rem;
+            border-radius: 9999px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            margin-bottom: 1rem;
+        }
+
+        @media (max-width: 1024px) {
+            .contact-layout { grid-template-columns: 1fr; }
+            .form-row { grid-template-columns: 1fr; }
+        }
+
+        @media (max-width: 768px) {
+            .contact-form-card { padding: 1.5rem; }
+            .form-row { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+<div id="main-nav"></div>
+
+<!-- Page Hero -->
+<div class="page-hero">
+    <div class="container">
+        <div class="breadcrumb">
+            <a href="index.html">Home</a>
+            <span>›</span>
+            <span style="color:#fff;">Contact Us</span>
+        </div>
+        <h1 class="page-hero-title">Visit or Contact Us</h1>
+        <p class="page-hero-desc">Find us in-store, reach out online, or submit a special order enquiry for rare species.</p>
+    </div>
+</div>
+
+<!-- ─── CONTACT INFO + FORM ────────────────────────── -->
+<section class="section">
+    <div class="container">
+        <div class="contact-layout">
+
+            <!-- Left: Store Info -->
+            <div class="reveal">
+
+                <!-- Info cards -->
+                <div class="contact-info-item">
+                    <div class="contact-info-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                    </div>
+                    <div>
+                        <div class="contact-info-label">Store Address</div>
+                        <div class="contact-info-value">No. 48, Marine Lines Road<br>Anna Nagar, Chennai — 600 040<br>Tamil Nadu, India</div>
+                    </div>
+                </div>
+
+                <div class="contact-info-item">
+                    <div class="contact-info-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 10.5a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.6 0h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 7.91a16 16 0 0 0 8 8l1.27-.83a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 24 17z"/></svg>
+                    </div>
+                    <div>
+                        <div class="contact-info-label">Phone & WhatsApp</div>
+                        <div class="contact-info-value">+91 98400 12345<br>+91 98400 67890 (WhatsApp)</div>
+                    </div>
+                </div>
+
+                <div class="contact-info-item">
+                    <div class="contact-info-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+                    </div>
+                    <div>
+                        <div class="contact-info-label">Email</div>
+                        <div class="contact-info-value">hello@aquaworld.in<br>orders@aquaworld.in</div>
+                    </div>
+                </div>
+
+                <!-- Store Hours -->
+                <div style="background:var(--bg-surface);border:1px solid var(--border-color);border-radius:var(--radius-xl);padding:1.5rem;margin-top:0.5rem;">
+                    <div style="display:flex;align-items:center;gap:0.75rem;margin-bottom:1.25rem;">
+                        <div class="contact-info-icon" style="width:40px;height:40px;">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                        </div>
+                        <div class="contact-info-label" style="margin-bottom:0;">Store Timings</div>
+                    </div>
+                    <table class="hours-table">
+                        <tbody>
+                            <tr class="hours-today"><td>Monday – Friday</td><td>9:00 AM – 8:00 PM</td></tr>
+                            <tr><td>Saturday</td><td>9:00 AM – 9:00 PM</td></tr>
+                            <tr><td>Sunday</td><td>10:00 AM – 7:00 PM</td></tr>
+                            <tr class="hours-closed"><td>Public Holidays</td><td>Closed</td></tr>
+                        </tbody>
+                    </table>
+                    <div style="margin-top:1rem;padding-top:1rem;border-top:1px solid var(--border-color);">
+                        <span class="badge badge-success">● Open Now</span>
+                        <span style="font-size:0.8125rem;color:var(--text-muted);margin-left:0.5rem;">Closes at 8:00 PM today</span>
+                    </div>
+                </div>
+
+                <!-- Map -->
+                <div class="map-placeholder" style="margin-top:1.25rem;">
+                    <img src="https://images.unsplash.com/photo-1524704654690-b56c05c78a00?w=800&q=60" alt="Store location map placeholder">
+                    <div class="map-placeholder-overlay">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="var(--clr-primary)" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                        <p>AquaWorld Store, Chennai</p>
+                        <a href="https://maps.google.com" target="_blank" rel="noopener" class="btn btn-primary btn-sm">Open in Google Maps</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right: Special Order Enquiry Form -->
+            <div class="reveal">
+                <div class="contact-form-card">
+                    <div class="special-badge">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                        Special Order Enquiry
+                    </div>
+                    <h2 style="font-size:1.5rem;font-weight:700;color:var(--text-heading);margin-bottom:0.5rem;">Can't Find What You Need?</h2>
+                    <p style="color:var(--text-muted);font-size:0.9375rem;line-height:1.6;margin-bottom:2rem;font-weight:400;">Tell us what you're looking for — rare species, specific equipment, or wholesale enquiries. We source across India and internationally.</p>
+
+                    <div id="contact-form-wrap">
+                        <form id="contact-form" onsubmit="submitContactForm(event)">
+
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label class="form-label" for="c-fname">First Name *</label>
+                                    <input type="text" id="c-fname" class="form-input" placeholder="Rajan" required>
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label" for="c-lname">Last Name *</label>
+                                    <input type="text" id="c-lname" class="form-input" placeholder="Krishnamurthy" required>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="form-label" for="c-email">Email Address *</label>
+                                <input type="email" id="c-email" class="form-input" placeholder="rajan@email.com" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="form-label" for="c-phone">Phone / WhatsApp</label>
+                                <input type="tel" id="c-phone" class="form-input" placeholder="+91 98400 12345">
+                            </div>
+
+                            <div class="form-group">
+                                <label class="form-label" for="c-type">Enquiry Type *</label>
+                                <select id="c-type" class="form-select" required>
+                                    <option value="" disabled selected>Select enquiry type</option>
+                                    <option>Special Order — Rare Fish</option>
+                                    <option>Special Order — Plants</option>
+                                    <option>Special Order — Equipment</option>
+                                    <option>Wholesale / Bulk Order</option>
+                                    <option>General Question</option>
+                                    <option>Aquarium Setup Consultation</option>
+                                    <option>Other</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="form-label" for="c-species">Species / Item of Interest</label>
+                                <input type="text" id="c-species" class="form-input" placeholder="e.g. Altum Angelfish, Chihiros WRGB II, Anubias Barteri…">
+                            </div>
+
+                            <div class="form-group">
+                                <label class="form-label" for="c-tank">Tank Size (if relevant)</label>
+                                <input type="text" id="c-tank" class="form-input" placeholder="e.g. 100L freshwater community tank">
+                            </div>
+
+                            <div class="form-group">
+                                <label class="form-label" for="c-message">Your Message *</label>
+                                <textarea id="c-message" class="form-textarea" rows="5" placeholder="Please describe what you're looking for, your budget range, and any specific requirements…" required></textarea>
+                            </div>
+
+                            <div class="form-group" style="margin-bottom:1.5rem;">
+                                <div class="checkbox-wrapper">
+                                    <input type="checkbox" id="c-consent" required>
+                                    <label for="c-consent">I agree to be contacted by AquaWorld regarding my enquiry.</label>
+                                </div>
+                            </div>
+
+                            <button type="submit" class="btn btn-primary btn-lg w-full" id="submit-btn">
+                                Send Enquiry
+                            </button>
+                        </form>
+
+                        <div class="form-success" id="form-success">
+                            <div class="form-success-icon">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                            </div>
+                            <h3 style="font-size:1.375rem;font-weight:700;color:var(--text-heading);margin-bottom:0.5rem;">Enquiry Sent!</h3>
+                            <p style="color:var(--text-muted);line-height:1.6;margin-bottom:1.5rem;font-weight:400;">Thank you! Our team will review your enquiry and get back to you within 24 hours via email or WhatsApp.</p>
+                            <a href="index.html" class="btn btn-primary">Back to Home</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+<!-- ─── FAQ ────────────────────────────────────────── -->
+<section class="section bg-surface">
+    <div class="container" style="max-width:780px;">
+        <div class="section-header centered reveal">
+            <span class="section-label">FAQ</span>
+            <h2 class="section-title">Frequently Asked Questions</h2>
+        </div>
+
+        <div class="faq-list reveal">
+            <div class="faq-item">
+                <button class="faq-question" onclick="toggleFAQ(this)">
+                    Do you ship live fish across India?
+                    <span class="faq-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+                    </span>
+                </button>
+                <div class="faq-answer">
+                    <div class="faq-answer-inner">Yes! We ship live fish to all major cities in India via overnight air courier. Fish are packed with pure oxygen, temperature control, and stress coat. We guarantee live arrival — if any fish arrive DOA, we replace them free of charge within 48 hours of receiving photo evidence.</div>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <button class="faq-question" onclick="toggleFAQ(this)">
+                    How long does a special order take?
+                    <span class="faq-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+                    </span>
+                </button>
+                <div class="faq-answer">
+                    <div class="faq-answer-inner">Most domestic special orders take 1–2 weeks. International sourcing (e.g., rare marine species) can take 3–6 weeks depending on availability and import clearance. We'll keep you updated throughout the process with WhatsApp notifications.</div>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <button class="faq-question" onclick="toggleFAQ(this)">
+                    Do you offer aquarium setup consultation services?
+                    <span class="faq-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+                    </span>
+                </button>
+                <div class="faq-answer">
+                    <div class="faq-answer-inner">Yes! We offer free in-store consultations and paid home-visit setup services for Chennai and surrounding areas. For online customers, we provide free video call consultations to help plan your aquarium layout, species selection, and equipment list.</div>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <button class="faq-question" onclick="toggleFAQ(this)">
+                    What is your return / replacement policy?
+                    <span class="faq-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+                    </span>
+                </button>
+                <div class="faq-answer">
+                    <div class="faq-answer-inner">All live fish are covered by our Live Arrival Guarantee. For equipment, we offer a 7-day return window if unused and in original packaging. Fish that die within 7 days of purchase (with water test proof) are covered by our Healthy Fish Warranty — we'll replace them once.</div>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <button class="faq-question" onclick="toggleFAQ(this)">
+                    Can I visit the store to see fish before buying?
+                    <span class="faq-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+                    </span>
+                </button>
+                <div class="faq-answer">
+                    <div class="faq-answer-inner">Absolutely! Our Chennai showroom has over 200 display tanks across two floors. We welcome walk-in visitors during store hours and encourage you to take your time choosing your fish. Our staff will be happy to assist and answer any care questions.</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<div id="main-footer"></div>
+<button class="scroll-top-btn" id="scroll-top-btn" aria-label="Scroll to top">
+    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="19" x2="12" y2="5"/><polyline points="5 12 12 5 19 12"/></svg>
+</button>
+
+<script src="components.js"></script>
+<script>
+    function submitContactForm(e) {
+        e.preventDefault();
+        const btn = document.getElementById('submit-btn');
+        btn.textContent = 'Sending…';
+        btn.disabled = true;
+        setTimeout(() => {
+            document.getElementById('contact-form').style.display = 'none';
+            document.getElementById('form-success').style.display = 'block';
+        }, 1200);
+    }
+</script>
+</body>
+</html>

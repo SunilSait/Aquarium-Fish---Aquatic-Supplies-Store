@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html lang="en" id="root-html">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="AquaWorld Care Guides — Expert aquarium care articles covering water chemistry, fish health, aquascaping, breeding, and marine reef-keeping.">
+    <title>Care Guides | AquaWorld Aquarium Store</title>
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        /* Search hero */
+        .guide-search-hero {
+            background: linear-gradient(135deg, var(--clr-primary) 0%, var(--clr-primary-dark) 100%);
+            padding: 4.5rem 0 3.5rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .guide-search-hero::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(ellipse at 70% 50%, rgba(167,227,233,0.1) 0%, transparent 70%);
+        }
+
+        .guide-search-hero-content { position: relative; z-index: 1; }
+        .guide-search-hero h1 { color: #fff; font-size: clamp(1.75rem, 4vw, 2.75rem); margin-bottom: 0.75rem; }
+        .guide-search-hero p { color: rgba(255,255,255,0.75); font-size: 1.0625rem; margin-bottom: 2rem; font-weight: 400; }
+
+        .guide-search-box {
+            display: flex;
+            max-width: 520px;
+            margin: 0 auto;
+            background: #fff;
+            border-radius: 0.875rem;
+            overflow: hidden;
+            box-shadow: var(--shadow-lg);
+        }
+
+        .guide-search-box input {
+            flex: 1;
+            border: none;
+            background: transparent;
+            padding: 0.875rem 1.25rem;
+            font-size: 0.9375rem;
+            color: var(--text-heading);
+            font-family: var(--font-sans);
+            outline: none;
+        }
+
+        .guide-search-box input::placeholder { color: var(--text-muted); }
+
+        .guide-search-box button {
+            background: var(--clr-primary);
+            color: #fff;
+            border: none;
+            padding: 0.875rem 1.5rem;
+            font-size: 0.875rem;
+            font-weight: 600;
+            cursor: pointer;
+            font-family: var(--font-sans);
+            transition: background 0.2s;
+        }
+
+        .guide-search-box button:hover { background: var(--clr-primary-dark); }
+
+        /* Featured Guide */
+        .featured-guide {
+            display: grid;
+            grid-template-columns: 3fr 2fr;
+            gap: 0;
+            border-radius: var(--radius-xl);
+            overflow: hidden;
+            border: 1px solid var(--border-color);
+            box-shadow: var(--shadow-lg);
+            background: var(--bg-surface);
+            margin-bottom: 3rem;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .featured-guide:hover { transform: translateY(-4px); box-shadow: var(--shadow-xl); }
+
+        .featured-guide-img {
+            overflow: hidden;
+        }
+
+        .featured-guide-img img {
+            width: 100%; height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s;
+        }
+
+        .featured-guide:hover .featured-guide-img img { transform: scale(1.04); }
+
+        .featured-guide-body {
+            padding: 2.5rem;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .featured-guide-body .guide-tag {
+            margin-bottom: 0.875rem;
+        }
+
+        .featured-guide-body h2 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--text-heading);
+            margin-bottom: 0.875rem;
+            line-height: 1.3;
+        }
+
+        .featured-guide-body p {
+            color: var(--text-muted);
+            line-height: 1.7;
+            margin-bottom: 1.5rem;
+            flex: 1;
+            font-weight: 400;
+        }
+
+        .featured-guide-meta {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            font-size: 0.8125rem;
+            color: var(--text-muted);
+            border-top: 1px solid var(--border-color);
+            padding-top: 1.25rem;
+            margin-bottom: 1.25rem;
+        }
+
+        /* Article reading time & author */
+        .author-mini {
+            display: flex;
+            align-items: center;
+            gap: 0.625rem;
+        }
+
+        .author-avatar-sm {
+            width: 32px; height: 32px;
+            border-radius: 50%;
+            background: var(--clr-primary-xlight);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.75rem;
+            font-weight: 700;
+            color: var(--clr-primary);
+        }
+
+        .author-name-sm { font-size: 0.8125rem; font-weight: 600; color: var(--text-body); }
+
+        /* Blog grid */
+        .blog-main-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 2.5rem;
+            align-items: start;
+        }
+
+        .blog-articles-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+        }
+
+        /* Sidebar */
+        .blog-sidebar {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .sidebar-widget {
+            background: var(--bg-surface);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-xl);
+            padding: 1.5rem;
+        }
+
+        .sidebar-widget-title {
+            font-size: 0.875rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: var(--text-muted);
+            margin-bottom: 1rem;
+        }
+
+        .popular-list { display: flex; flex-direction: column; gap: 0.875rem; }
+
+        .popular-item {
+            display: flex;
+            gap: 0.875rem;
+            align-items: flex-start;
+        }
+
+        .popular-item-num {
+            font-size: 0.75rem;
+            font-weight: 800;
+            color: var(--clr-primary);
+            background: var(--clr-primary-xlight);
+            width: 24px; height: 24px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .popular-item-text {
+            font-size: 0.8125rem;
+            font-weight: 500;
+            color: var(--text-body);
+            line-height: 1.4;
+        }
+
+        .popular-item-text:hover { color: var(--clr-primary); cursor: pointer; }
+
+        .category-tags { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+
+        .cat-tag {
+            font-size: 0.8125rem;
+            background: var(--bg-surface-2);
+            border: 1px solid var(--border-color);
+            border-radius: 9999px;
+            padding: 0.3rem 0.875rem;
+            color: var(--text-muted);
+            cursor: pointer;
+            transition: all 0.15s;
+            font-weight: 500;
+        }
+
+        .cat-tag:hover, .cat-tag.active {
+            background: var(--clr-primary);
+            border-color: var(--clr-primary);
+            color: #fff;
+        }
+
+        @media (max-width: 1024px) {
+            .featured-guide { grid-template-columns: 1fr; }
+            .featured-guide-img { height: 260px; }
+            .blog-main-grid { grid-template-columns: 1fr; }
+        }
+
+        @media (max-width: 768px) {
+            .blog-articles-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+<div id="main-nav"></div>
+
+<!-- ─── SEARCH HERO ────────────────────────────────── -->
+<div class="guide-search-hero">
+    <div class="container">
+        <div class="guide-search-hero-content">
+            <div class="breadcrumb" style="margin-bottom:1rem;">
+                <a href="index.html">Home</a><span>›</span>
+                <span style="color:#fff;">Care Guides</span>
+            </div>
+            <h1>Aquarium Care Guides</h1>
+            <p>Expert articles, tutorials, and species profiles written by our in-house aquarists.</p>
+            <div class="guide-search-box">
+                <input type="text" placeholder="Search articles — e.g. 'nitrogen cycle', 'betta care'…">
+                <button type="button">Search</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ─── CATEGORY TABS ──────────────────────────────── -->
+<section class="section-xs bg-surface">
+    <div class="container">
+        <div class="filter-bar" style="justify-content:center;">
+            <button class="filter-btn active">All Topics</button>
+            <button class="filter-btn">Beginner Guides</button>
+            <button class="filter-btn">Water Chemistry</button>
+            <button class="filter-btn">Fish Health</button>
+            <button class="filter-btn">Aquascaping</button>
+            <button class="filter-btn">Marine Reef</button>
+            <button class="filter-btn">Breeding</button>
+            <button class="filter-btn">Equipment</button>
+        </div>
+    </div>
+</section>
+
+<!-- ─── FEATURED ARTICLE ───────────────────────────── -->
+<section class="section-sm">
+    <div class="container">
+        <div class="featured-guide reveal">
+            <div class="featured-guide-img">
+                <img src="https://images.unsplash.com/photo-1526649661456-89c7ed4d00b8?w=900&q=80" alt="Aquarium nitrogen cycle illustration with fish and plants" loading="lazy">
+            </div>
+            <div class="featured-guide-body">
+                <div class="guide-tag"><span class="badge badge-primary">Featured</span> <span class="badge badge-info">Water Chemistry</span></div>
+                <h2>The Complete Nitrogen Cycle Guide — Your Most Critical Aquarium Concept</h2>
+                <p>Before adding a single fish, every aquarist must understand the nitrogen cycle. This biological process is the foundation of all healthy aquariums — and understanding it will help you avoid 90% of beginner mistakes that lead to fish loss.</p>
+                <div class="featured-guide-meta">
+                    <div class="author-mini">
+                        <div class="author-avatar-sm">AK</div>
+                        <span class="author-name-sm">Arjun Kumar</span>
+                    </div>
+                    <span>·</span>
+                    <span>15 min read</span>
+                    <span>·</span>
+                    <span>Aug 2025</span>
+                </div>
+                <a href="#" class="btn btn-primary">Read Full Article →</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ─── ARTICLE GRID + SIDEBAR ────────────────────── -->
+<section class="section-sm">
+    <div class="container">
+        <div class="blog-main-grid">
+
+            <!-- Articles -->
+            <div>
+                <h2 style="font-size:1.25rem;font-weight:600;color:var(--text-heading);margin-bottom:1.5rem;">Latest Articles</h2>
+                <div class="blog-articles-grid" id="articles-grid">
+
+                    <div class="blog-card reveal">
+                        <div class="blog-card-img-wrap">
+                            <img src="https://images.unsplash.com/photo-1518796745738-41048802f99a?w=600&q=80" alt="Aquascape planted tank" loading="lazy" class="blog-card-img">
+                        </div>
+                        <div class="blog-card-body">
+                            <div class="blog-card-tags">
+                                <span class="badge badge-success">Plants</span>
+                                <span class="badge badge-primary">Beginner</span>
+                            </div>
+                            <h3 class="blog-card-title">How to Create Your First Planted Aquascape in 5 Steps</h3>
+                            <p class="blog-card-excerpt">A step-by-step guide to setting up a beautiful planted aquarium, from choosing substrate to adding the finishing touches.</p>
+                            <div class="blog-card-meta">
+                                <span>8 min read</span>
+                                <a href="#" class="link-primary" style="font-size:0.8125rem;">Read →</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="blog-card reveal delay-100">
+                        <div class="blog-card-img-wrap">
+                            <img src="https://images.unsplash.com/photo-1519374667756-5f1a2c7b6b35?w=600&q=80" alt="Betta fish care guide" loading="lazy" class="blog-card-img">
+                        </div>
+                        <div class="blog-card-body">
+                            <div class="blog-card-tags">
+                                <span class="badge badge-primary">Freshwater</span>
+                                <span class="badge badge-success">Care</span>
+                            </div>
+                            <h3 class="blog-card-title">Betta Fish Complete Care Guide — Tank Size, Feeding & More</h3>
+                            <p class="blog-card-excerpt">Everything you need to know about keeping Betta Splendens healthy and thriving — busting common myths along the way.</p>
+                            <div class="blog-card-meta">
+                                <span>11 min read</span>
+                                <a href="#" class="link-primary" style="font-size:0.8125rem;">Read →</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="blog-card reveal delay-200">
+                        <div class="blog-card-img-wrap">
+                            <img src="https://images.unsplash.com/photo-1535591273668-578e31182c4f?w=600&q=80" alt="Marine reef tank setup" loading="lazy" class="blog-card-img">
+                        </div>
+                        <div class="blog-card-body">
+                            <div class="blog-card-tags">
+                                <span class="badge badge-warning">Marine</span>
+                            </div>
+                            <h3 class="blog-card-title">Setting Up Your First Saltwater Aquarium — The Complete Starter Guide</h3>
+                            <p class="blog-card-excerpt">Marine tanks are more complex but incredibly rewarding. Here's everything you need before buying your first clownfish.</p>
+                            <div class="blog-card-meta">
+                                <span>18 min read</span>
+                                <a href="#" class="link-primary" style="font-size:0.8125rem;">Read →</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="blog-card reveal delay-300">
+                        <div class="blog-card-img-wrap">
+                            <img src="https://images.unsplash.com/photo-1584464491033-06628f3a6b7b?w=600&q=80" alt="Aquarium water testing" loading="lazy" class="blog-card-img">
+                        </div>
+                        <div class="blog-card-body">
+                            <div class="blog-card-tags">
+                                <span class="badge badge-info">Water Chemistry</span>
+                            </div>
+                            <h3 class="blog-card-title">Understanding pH, KH, and GH — A Plain-English Water Chemistry Primer</h3>
+                            <p class="blog-card-excerpt">Confused by water parameters? This guide explains the key values in plain English, and what they mean for your fish.</p>
+                            <div class="blog-card-meta">
+                                <span>9 min read</span>
+                                <a href="#" class="link-primary" style="font-size:0.8125rem;">Read →</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="blog-card reveal">
+                        <div class="blog-card-img-wrap">
+                            <img src="https://images.unsplash.com/photo-1544551763-46a013bb70d5?w=600&q=80" alt="Discus fish care" loading="lazy" class="blog-card-img">
+                        </div>
+                        <div class="blog-card-body">
+                            <div class="blog-card-tags">
+                                <span class="badge badge-danger">Advanced</span>
+                                <span class="badge badge-primary">Freshwater</span>
+                            </div>
+                            <h3 class="blog-card-title">Keeping Discus Fish — The King's Care Requirements Explained</h3>
+                            <p class="blog-card-excerpt">Discus are the most demanding freshwater fish — but they're also the most stunning. Here's how to keep them successfully.</p>
+                            <div class="blog-card-meta">
+                                <span>14 min read</span>
+                                <a href="#" class="link-primary" style="font-size:0.8125rem;">Read →</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="blog-card reveal delay-100">
+                        <div class="blog-card-img-wrap">
+                            <img src="https://images.unsplash.com/photo-1474314170901-f351b68f544f?w=600&q=80" alt="Algae control aquarium" loading="lazy" class="blog-card-img">
+                        </div>
+                        <div class="blog-card-body">
+                            <div class="blog-card-tags">
+                                <span class="badge badge-success">Plants</span>
+                                <span class="badge badge-warning">Troubleshooting</span>
+                            </div>
+                            <h3 class="blog-card-title">How to Defeat Algae — The Complete Guide to Algae Control</h3>
+                            <p class="blog-card-excerpt">Algae is every aquarist's nemesis. Learn to identify different algae types and eliminate them using proven natural methods.</p>
+                            <div class="blog-card-meta">
+                                <span>12 min read</span>
+                                <a href="#" class="link-primary" style="font-size:0.8125rem;">Read →</a>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div style="text-align:center;margin-top:2.5rem;">
+                    <button class="btn btn-secondary btn-lg">Load More Articles</button>
+                </div>
+            </div>
+
+            <!-- Sidebar -->
+            <aside class="blog-sidebar reveal">
+                <!-- Popular -->
+                <div class="sidebar-widget">
+                    <div class="sidebar-widget-title">Popular Articles</div>
+                    <div class="popular-list">
+                        <div class="popular-item">
+                            <div class="popular-item-num">1</div>
+                            <div class="popular-item-text">The Nitrogen Cycle — Complete Beginner Guide</div>
+                        </div>
+                        <div class="popular-item">
+                            <div class="popular-item-num">2</div>
+                            <div class="popular-item-text">Best Fish for a 40-Litre Aquarium</div>
+                        </div>
+                        <div class="popular-item">
+                            <div class="popular-item-num">3</div>
+                            <div class="popular-item-text">How to Breed Neon Tetras Successfully</div>
+                        </div>
+                        <div class="popular-item">
+                            <div class="popular-item-num">4</div>
+                            <div class="popular-item-text">Marine Tank vs Freshwater — Which is Right for You?</div>
+                        </div>
+                        <div class="popular-item">
+                            <div class="popular-item-num">5</div>
+                            <div class="popular-item-text">10 Aquascape Layouts Every Hobbyist Should Know</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tags -->
+                <div class="sidebar-widget">
+                    <div class="sidebar-widget-title">Browse by Topic</div>
+                    <div class="category-tags">
+                        <span class="cat-tag active">All</span>
+                        <span class="cat-tag">Freshwater</span>
+                        <span class="cat-tag">Marine</span>
+                        <span class="cat-tag">Plants</span>
+                        <span class="cat-tag">Water Quality</span>
+                        <span class="cat-tag">Breeding</span>
+                        <span class="cat-tag">Beginner</span>
+                        <span class="cat-tag">Advanced</span>
+                        <span class="cat-tag">Equipment</span>
+                        <span class="cat-tag">Fish Health</span>
+                    </div>
+                </div>
+
+                <!-- Newsletter CTA -->
+                <div class="sidebar-widget" style="background:var(--clr-primary);border-color:var(--clr-primary);">
+                    <h4 style="color:#fff;font-size:1rem;font-weight:600;margin-bottom:0.5rem;">Get Weekly Care Tips</h4>
+                    <p style="color:rgba(255,255,255,0.75);font-size:0.8125rem;line-height:1.6;margin-bottom:1rem;font-weight:400;">Join 5,000+ aquarists who receive expert tips every Tuesday.</p>
+                    <form onsubmit="event.preventDefault(); alert('Subscribed! 🐠'); this.reset();">
+                        <input type="email" placeholder="your@email.com" class="form-input" style="margin-bottom:0.625rem;background:rgba(255,255,255,0.1);border-color:rgba(255,255,255,0.2);color:#fff;" required>
+                        <button type="submit" class="btn btn-white w-full">Subscribe Free</button>
+                    </form>
+                </div>
+            </aside>
+        </div>
+    </div>
+</section>
+
+<div id="main-footer"></div>
+<button class="scroll-top-btn" id="scroll-top-btn" aria-label="Scroll to top">
+    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="19" x2="12" y2="5"/><polyline points="5 12 12 5 19 12"/></svg>
+</button>
+
+<script src="components.js"></script>
+<script>
+    // Category tag toggle
+    document.querySelectorAll('.cat-tag').forEach(tag => {
+        tag.addEventListener('click', () => {
+            document.querySelectorAll('.cat-tag').forEach(t => t.classList.remove('active'));
+            tag.classList.add('active');
+        });
+    });
+</script>
+</body>
+</html>

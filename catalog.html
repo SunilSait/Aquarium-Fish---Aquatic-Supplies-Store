@@ -1,0 +1,647 @@
+<!DOCTYPE html>
+<html lang="en" id="root-html">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="AquaWorld Fish Catalog — Browse freshwater, marine, and planted tank fish. Filter by type, care level, and origin. Find your perfect aquarium fish.">
+    <title>Fish Catalog | AquaWorld Aquarium Store</title>
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .catalog-layout {
+            display: grid;
+            grid-template-columns: 260px 1fr;
+            gap: 2.5rem;
+            align-items: start;
+        }
+
+        /* Sidebar */
+        .catalog-sidebar {
+            background: var(--bg-surface);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-xl);
+            padding: 1.5rem;
+            position: sticky;
+            top: calc(var(--navbar-height) + 1.5rem);
+        }
+
+        .sidebar-section { margin-bottom: 1.75rem; }
+        .sidebar-section:last-child { margin-bottom: 0; }
+
+        .sidebar-title {
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--text-muted);
+            margin-bottom: 0.875rem;
+        }
+
+        .sidebar-radio-group { display: flex; flex-direction: column; gap: 0.5rem; }
+
+        .sidebar-radio {
+            display: flex;
+            align-items: center;
+            gap: 0.625rem;
+            cursor: pointer;
+            font-size: 0.875rem;
+            color: var(--text-body);
+            padding: 0.375rem 0.625rem;
+            border-radius: var(--radius-sm);
+            transition: background 0.15s;
+        }
+
+        .sidebar-radio:hover { background: var(--bg-surface-2); }
+        .sidebar-radio input { accent-color: var(--clr-primary); width: 15px; height: 15px; }
+
+        .sidebar-divider {
+            border: none;
+            border-top: 1px solid var(--border-color);
+            margin: 1.25rem 0;
+        }
+
+        /* Search bar */
+        .catalog-search {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            background: var(--bg-surface);
+            border: 1.5px solid var(--border-color);
+            border-radius: var(--radius-md);
+            padding: 0.625rem 1rem;
+            margin-bottom: 1.5rem;
+            transition: border-color 0.2s;
+        }
+
+        .catalog-search:focus-within { border-color: var(--clr-primary); }
+
+        .catalog-search input {
+            border: none;
+            background: transparent;
+            font-size: 0.875rem;
+            color: var(--text-heading);
+            font-family: var(--font-sans);
+            flex: 1;
+            outline: none;
+        }
+
+        .catalog-search input::placeholder { color: var(--text-placeholder); }
+
+        /* Results bar */
+        .results-bar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+            gap: 0.75rem;
+        }
+
+        .results-count { font-size: 0.875rem; color: var(--text-muted); }
+        .results-count strong { color: var(--text-heading); font-weight: 600; }
+
+        /* Product grid */
+        .catalog-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.25rem;
+        }
+
+        /* Care info row */
+        .care-info-row {
+            display: flex;
+            gap: 0.5rem;
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            margin-bottom: 0.75rem;
+            flex-wrap: wrap;
+        }
+
+        .care-info-row span {
+            display: flex;
+            align-items: center;
+            gap: 0.25rem;
+        }
+
+        @media (max-width: 1024px) {
+            .catalog-layout { grid-template-columns: 1fr; }
+            .catalog-sidebar { position: static; }
+            .catalog-grid { grid-template-columns: repeat(2, 1fr); }
+        }
+
+        @media (max-width: 768px) {
+            .catalog-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+<div id="main-nav"></div>
+
+<!-- Page Hero -->
+<div class="page-hero">
+    <div class="container">
+        <div class="breadcrumb">
+            <a href="index.html">Home</a>
+            <span>›</span>
+            <span style="color:#fff;">Fish Catalog</span>
+        </div>
+        <h1 class="page-hero-title">Fish Catalog</h1>
+        <p class="page-hero-desc">Explore our collection of 500+ freshwater, marine, and specialty fish — ethically sourced and health-guaranteed.</p>
+    </div>
+</div>
+
+<!-- Main Content -->
+<section class="section">
+    <div class="container">
+
+        <!-- Search -->
+        <div class="catalog-search">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color:var(--text-muted);flex-shrink:0;"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+            <input type="text" placeholder="Search fish by name, origin, or species..." id="catalog-search-input" oninput="searchCatalog(this.value)">
+        </div>
+
+        <!-- Category Filter Tabs -->
+        <div class="filter-bar" id="cat-filter-bar" style="margin-bottom:2rem;">
+            <button class="filter-btn active" onclick="filterCatalog('all', this)">All Species</button>
+            <button class="filter-btn" onclick="filterCatalog('freshwater', this)">🌿 Freshwater</button>
+            <button class="filter-btn" onclick="filterCatalog('marine', this)">🌊 Marine</button>
+            <button class="filter-btn" onclick="filterCatalog('planted', this)">🪴 Planted Tank</button>
+        </div>
+
+        <div class="catalog-layout">
+            <!-- Sidebar -->
+            <aside class="catalog-sidebar">
+                <div class="sidebar-section">
+                    <div class="sidebar-title">Care Level</div>
+                    <div class="sidebar-radio-group">
+                        <label class="sidebar-radio"><input type="radio" name="care" value="all" checked> All Levels</label>
+                        <label class="sidebar-radio"><input type="radio" name="care" value="easy"> Beginner / Easy</label>
+                        <label class="sidebar-radio"><input type="radio" name="care" value="medium"> Intermediate</label>
+                        <label class="sidebar-radio"><input type="radio" name="care" value="expert"> Expert Only</label>
+                    </div>
+                </div>
+                <hr class="sidebar-divider">
+                <div class="sidebar-section">
+                    <div class="sidebar-title">Price Range</div>
+                    <div class="sidebar-radio-group">
+                        <label class="sidebar-radio"><input type="radio" name="price" value="all" checked> All Prices</label>
+                        <label class="sidebar-radio"><input type="radio" name="price" value="low"> Under ₹500</label>
+                        <label class="sidebar-radio"><input type="radio" name="price" value="mid"> ₹500 – ₹2,000</label>
+                        <label class="sidebar-radio"><input type="radio" name="price" value="high"> Above ₹2,000</label>
+                    </div>
+                </div>
+                <hr class="sidebar-divider">
+                <div class="sidebar-section">
+                    <div class="sidebar-title">Tank Size</div>
+                    <div class="sidebar-radio-group">
+                        <label class="sidebar-radio"><input type="radio" name="tank" value="all" checked> Any Size</label>
+                        <label class="sidebar-radio"><input type="radio" name="tank" value="nano"> Nano (under 40L)</label>
+                        <label class="sidebar-radio"><input type="radio" name="tank" value="medium"> Medium (40–200L)</label>
+                        <label class="sidebar-radio"><input type="radio" name="tank" value="large"> Large (200L+)</label>
+                    </div>
+                </div>
+                <hr class="sidebar-divider">
+                <div class="sidebar-section">
+                    <div class="sidebar-title">Availability</div>
+                    <div class="sidebar-radio-group">
+                        <label class="sidebar-radio"><input type="radio" name="stock" value="all" checked> All</label>
+                        <label class="sidebar-radio"><input type="radio" name="stock" value="instock"> In Stock</label>
+                        <label class="sidebar-radio"><input type="radio" name="stock" value="new"> New Arrivals</label>
+                    </div>
+                </div>
+                <button onclick="clearFilters()" class="btn btn-ghost w-full" style="margin-top:0.5rem;font-size:0.8125rem;">Clear All Filters</button>
+            </aside>
+
+            <!-- Product Grid -->
+            <div>
+                <div class="results-bar">
+                    <p class="results-count">Showing <strong id="result-count">18</strong> species</p>
+                    <div style="display:flex;align-items:center;gap:0.5rem;">
+                        <label style="font-size:0.8125rem;color:var(--text-muted);">Sort by:</label>
+                        <select class="form-select" style="width:auto;padding:0.375rem 2rem 0.375rem 0.75rem;font-size:0.8125rem;">
+                            <option>Most Popular</option>
+                            <option>Price: Low to High</option>
+                            <option>Price: High to Low</option>
+                            <option>Newest First</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="catalog-grid" id="catalog-grid">
+
+                    <!-- Freshwater Fish -->
+                    <div class="product-card catalog-item" data-category="freshwater">
+                        <div class="product-card-img-wrap">
+                            <img src="https://images.unsplash.com/photo-1544551763-46a013bb70d5?w=600&q=80" alt="Royal Blue Discus" loading="lazy">
+                            <div class="product-card-badge"><span class="badge badge-warning">Limited</span></div>
+                        </div>
+                        <div class="product-card-body">
+                            <span class="product-card-category">Freshwater</span>
+                            <h3 class="product-card-name">Royal Blue Discus</h3>
+                            <div class="care-info-row">
+                                <span><span class="badge care-medium">Medium</span></span>
+                                <span>Amazon, Brazil</span>
+                                <span>60–200L</span>
+                            </div>
+                            <div class="product-card-footer">
+                                <span class="product-price">₹3,200</span>
+                                <a href="#" class="btn btn-primary btn-sm">Add to Cart</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="product-card catalog-item" data-category="freshwater">
+                        <div class="product-card-img-wrap">
+                            <img src="https://images.unsplash.com/photo-1602491453631-e2a5ad90a131?w=600&q=80" alt="Altum Angelfish" loading="lazy">
+                            <div class="product-card-badge"><span class="badge badge-danger">New</span></div>
+                        </div>
+                        <div class="product-card-body">
+                            <span class="product-card-category">Freshwater</span>
+                            <h3 class="product-card-name">Altum Angelfish</h3>
+                            <div class="care-info-row">
+                                <span><span class="badge care-medium">Medium</span></span>
+                                <span>Venezuela</span>
+                                <span>100L+</span>
+                            </div>
+                            <div class="product-card-footer">
+                                <span class="product-price">₹1,800</span>
+                                <a href="#" class="btn btn-primary btn-sm">Add to Cart</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="product-card catalog-item" data-category="freshwater">
+                        <div class="product-card-img-wrap">
+                            <img src="https://images.unsplash.com/photo-1519374667756-5f1a2c7b6b35?w=600&q=80" alt="Galaxy Betta" loading="lazy">
+                            <div class="product-card-badge"><span class="badge badge-success">In Stock</span></div>
+                        </div>
+                        <div class="product-card-body">
+                            <span class="product-card-category">Freshwater</span>
+                            <h3 class="product-card-name">Galaxy Betta</h3>
+                            <div class="care-info-row">
+                                <span><span class="badge care-easy">Easy</span></span>
+                                <span>Southeast Asia</span>
+                                <span>10L+</span>
+                            </div>
+                            <div class="product-card-footer">
+                                <span class="product-price">₹850</span>
+                                <a href="#" class="btn btn-primary btn-sm">Add to Cart</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="product-card catalog-item" data-category="freshwater">
+                        <div class="product-card-img-wrap">
+                            <img src="https://images.unsplash.com/photo-1546026423-cc4642628d2b?w=600&q=80" alt="Cardinal Tetra school" loading="lazy">
+                            <div class="product-card-badge"><span class="badge badge-success">In Stock</span></div>
+                        </div>
+                        <div class="product-card-body">
+                            <span class="product-card-category">Freshwater</span>
+                            <h3 class="product-card-name">Cardinal Tetra</h3>
+                            <div class="care-info-row">
+                                <span><span class="badge care-easy">Easy</span></span>
+                                <span>South America</span>
+                                <span>40L+</span>
+                            </div>
+                            <div class="product-card-footer">
+                                <span class="product-price">₹120 each</span>
+                                <a href="#" class="btn btn-primary btn-sm">Add to Cart</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="product-card catalog-item" data-category="freshwater">
+                        <div class="product-card-img-wrap">
+                            <img src="https://images.unsplash.com/photo-1584464491033-06628f3a6b7b?w=600&q=80" alt="Corydoras catfish" loading="lazy">
+                            <div class="product-card-badge"><span class="badge badge-success">In Stock</span></div>
+                        </div>
+                        <div class="product-card-body">
+                            <span class="product-card-category">Freshwater</span>
+                            <h3 class="product-card-name">Sterbai Corydoras</h3>
+                            <div class="care-info-row">
+                                <span><span class="badge care-easy">Easy</span></span>
+                                <span>Brazil</span>
+                                <span>40L+</span>
+                            </div>
+                            <div class="product-card-footer">
+                                <span class="product-price">₹380</span>
+                                <a href="#" class="btn btn-primary btn-sm">Add to Cart</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="product-card catalog-item" data-category="freshwater">
+                        <div class="product-card-img-wrap">
+                            <img src="https://images.unsplash.com/photo-1620735692151-26a7e0748429?w=600&q=80" alt="Apistogramma cichlid" loading="lazy">
+                            <div class="product-card-badge"><span class="badge badge-danger">New</span></div>
+                        </div>
+                        <div class="product-card-body">
+                            <span class="product-card-category">Freshwater</span>
+                            <h3 class="product-card-name">Apistogramma Agassizii</h3>
+                            <div class="care-info-row">
+                                <span><span class="badge care-medium">Medium</span></span>
+                                <span>Peru, Amazon</span>
+                                <span>60L+</span>
+                            </div>
+                            <div class="product-card-footer">
+                                <span class="product-price">₹950</span>
+                                <a href="#" class="btn btn-primary btn-sm">Add to Cart</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Marine Fish -->
+                    <div class="product-card catalog-item" data-category="marine">
+                        <div class="product-card-img-wrap">
+                            <img src="https://images.unsplash.com/photo-1535591273668-578e31182c4f?w=600&q=80" alt="Mandarin Dragonet" loading="lazy">
+                            <div class="product-card-badge"><span class="badge badge-danger">Expert</span></div>
+                        </div>
+                        <div class="product-card-body">
+                            <span class="product-card-category">Marine</span>
+                            <h3 class="product-card-name">Mandarin Dragonet</h3>
+                            <div class="care-info-row">
+                                <span><span class="badge care-expert">Expert</span></span>
+                                <span>Pacific Ocean</span>
+                                <span>100L+</span>
+                            </div>
+                            <div class="product-card-footer">
+                                <span class="product-price">₹2,400</span>
+                                <a href="#" class="btn btn-primary btn-sm">Add to Cart</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="product-card catalog-item" data-category="marine">
+                        <div class="product-card-img-wrap">
+                            <img src="https://images.unsplash.com/photo-1498889444388-e67ea62c464b?w=600&q=80" alt="Ocellaris Clownfish" loading="lazy">
+                            <div class="product-card-badge"><span class="badge badge-success">In Stock</span></div>
+                        </div>
+                        <div class="product-card-body">
+                            <span class="product-card-category">Marine</span>
+                            <h3 class="product-card-name">Ocellaris Clownfish</h3>
+                            <div class="care-info-row">
+                                <span><span class="badge care-easy">Easy</span></span>
+                                <span>Indo-Pacific</span>
+                                <span>75L+</span>
+                            </div>
+                            <div class="product-card-footer">
+                                <span class="product-price">₹1,200</span>
+                                <a href="#" class="btn btn-primary btn-sm">Add to Cart</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="product-card catalog-item" data-category="marine">
+                        <div class="product-card-img-wrap">
+                            <img src="https://images.unsplash.com/photo-1544551763-92ab472cad5d?w=600&q=80" alt="Hippo Blue Tang" loading="lazy">
+                            <div class="product-card-badge"><span class="badge badge-warning">Limited</span></div>
+                        </div>
+                        <div class="product-card-body">
+                            <span class="product-card-category">Marine</span>
+                            <h3 class="product-card-name">Hippo Blue Tang</h3>
+                            <div class="care-info-row">
+                                <span><span class="badge care-medium">Medium</span></span>
+                                <span>Pacific Ocean</span>
+                                <span>280L+</span>
+                            </div>
+                            <div class="product-card-footer">
+                                <span class="product-price">₹4,500</span>
+                                <a href="#" class="btn btn-primary btn-sm">Add to Cart</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="product-card catalog-item" data-category="marine">
+                        <div class="product-card-img-wrap">
+                            <img src="https://images.unsplash.com/photo-1474314170901-f351b68f544f?w=600&q=80" alt="Moon Jellyfish" loading="lazy">
+                            <div class="product-card-badge"><span class="badge badge-danger">Rare</span></div>
+                        </div>
+                        <div class="product-card-body">
+                            <span class="product-card-category">Marine / Specialty</span>
+                            <h3 class="product-card-name">Moon Jellyfish</h3>
+                            <div class="care-info-row">
+                                <span><span class="badge care-expert">Expert</span></span>
+                                <span>Global Oceans</span>
+                                <span>Special Kreisel</span>
+                            </div>
+                            <div class="product-card-footer">
+                                <span class="product-price">₹3,800</span>
+                                <a href="contact.html" class="btn btn-secondary btn-sm">Enquire</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="product-card catalog-item" data-category="marine">
+                        <div class="product-card-img-wrap">
+                            <img src="https://images.unsplash.com/photo-1516939884455-1445c8652f83?w=600&q=80" alt="Flame Angelfish" loading="lazy">
+                            <div class="product-card-badge"><span class="badge badge-warning">Limited</span></div>
+                        </div>
+                        <div class="product-card-body">
+                            <span class="product-card-category">Marine</span>
+                            <h3 class="product-card-name">Flame Angelfish</h3>
+                            <div class="care-info-row">
+                                <span><span class="badge care-medium">Medium</span></span>
+                                <span>Pacific Ocean</span>
+                                <span>280L+</span>
+                            </div>
+                            <div class="product-card-footer">
+                                <span class="product-price">₹6,800</span>
+                                <a href="#" class="btn btn-primary btn-sm">Add to Cart</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="product-card catalog-item" data-category="marine">
+                        <div class="product-card-img-wrap">
+                            <img src="https://images.unsplash.com/photo-1583212292454-1fe6229603b7?w=600&q=80" alt="Royal Gramma Basslet" loading="lazy">
+                            <div class="product-card-badge"><span class="badge badge-success">In Stock</span></div>
+                        </div>
+                        <div class="product-card-body">
+                            <span class="product-card-category">Marine</span>
+                            <h3 class="product-card-name">Royal Gramma Basslet</h3>
+                            <div class="care-info-row">
+                                <span><span class="badge care-easy">Easy</span></span>
+                                <span>Caribbean</span>
+                                <span>75L+</span>
+                            </div>
+                            <div class="product-card-footer">
+                                <span class="product-price">₹2,100</span>
+                                <a href="#" class="btn btn-primary btn-sm">Add to Cart</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Planted Tank fish -->
+                    <div class="product-card catalog-item" data-category="planted">
+                        <div class="product-card-img-wrap">
+                            <img src="https://images.unsplash.com/photo-1524704654690-b56c05c78a00?w=600&q=80" alt="Planted tank with schooling rasboras" loading="lazy">
+                            <div class="product-card-badge"><span class="badge badge-success">In Stock</span></div>
+                        </div>
+                        <div class="product-card-body">
+                            <span class="product-card-category">Planted Tank</span>
+                            <h3 class="product-card-name">Chili Rasbora</h3>
+                            <div class="care-info-row">
+                                <span><span class="badge care-easy">Easy</span></span>
+                                <span>Indonesia</span>
+                                <span>20L+</span>
+                            </div>
+                            <div class="product-card-footer">
+                                <span class="product-price">₹180</span>
+                                <a href="#" class="btn btn-primary btn-sm">Add to Cart</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="product-card catalog-item" data-category="planted">
+                        <div class="product-card-img-wrap">
+                            <img src="https://images.unsplash.com/photo-1559827260-dc66d52bef19?w=600&q=80" alt="Otocinclus algae eater" loading="lazy">
+                            <div class="product-card-badge"><span class="badge badge-success">In Stock</span></div>
+                        </div>
+                        <div class="product-card-body">
+                            <span class="product-card-category">Planted Tank</span>
+                            <h3 class="product-card-name">Otocinclus Catfish</h3>
+                            <div class="care-info-row">
+                                <span><span class="badge care-easy">Easy</span></span>
+                                <span>South America</span>
+                                <span>40L+</span>
+                            </div>
+                            <div class="product-card-footer">
+                                <span class="product-price">₹250</span>
+                                <a href="#" class="btn btn-primary btn-sm">Add to Cart</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="product-card catalog-item" data-category="planted">
+                        <div class="product-card-img-wrap">
+                            <img src="https://images.unsplash.com/photo-1518796745738-41048802f99a?w=600&q=80" alt="Red cherry shrimp planted tank" loading="lazy">
+                            <div class="product-card-badge"><span class="badge badge-danger">New</span></div>
+                        </div>
+                        <div class="product-card-body">
+                            <span class="product-card-category">Planted Tank</span>
+                            <h3 class="product-card-name">Crystal Red Shrimp</h3>
+                            <div class="care-info-row">
+                                <span><span class="badge care-expert">Expert</span></span>
+                                <span>Taiwan / Japan</span>
+                                <span>20L+</span>
+                            </div>
+                            <div class="product-card-footer">
+                                <span class="product-price">₹600</span>
+                                <a href="#" class="btn btn-primary btn-sm">Add to Cart</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="product-card catalog-item" data-category="planted">
+                        <div class="product-card-img-wrap">
+                            <img src="https://images.unsplash.com/photo-1565118531796-763e5082d113?w=600&q=80" alt="Dwarf puffer planted tank" loading="lazy">
+                            <div class="product-card-badge"><span class="badge badge-warning">Limited</span></div>
+                        </div>
+                        <div class="product-card-body">
+                            <span class="product-card-category">Planted Tank</span>
+                            <h3 class="product-card-name">Dwarf Puffer Fish</h3>
+                            <div class="care-info-row">
+                                <span><span class="badge care-medium">Medium</span></span>
+                                <span>Kerala, India</span>
+                                <span>40L+</span>
+                            </div>
+                            <div class="product-card-footer">
+                                <span class="product-price">₹420</span>
+                                <a href="#" class="btn btn-primary btn-sm">Add to Cart</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="product-card catalog-item" data-category="planted">
+                        <div class="product-card-img-wrap">
+                            <img src="https://images.unsplash.com/photo-1526649661456-89c7ed4d00b8?w=600&q=80" alt="CPO crayfish planted tank" loading="lazy">
+                            <div class="product-card-badge"><span class="badge badge-danger">New</span></div>
+                        </div>
+                        <div class="product-card-body">
+                            <span class="product-card-category">Planted Tank</span>
+                            <h3 class="product-card-name">CPO Crayfish</h3>
+                            <div class="care-info-row">
+                                <span><span class="badge care-easy">Easy</span></span>
+                                <span>Mexico</span>
+                                <span>40L+</span>
+                            </div>
+                            <div class="product-card-footer">
+                                <span class="product-price">₹520</span>
+                                <a href="#" class="btn btn-primary btn-sm">Add to Cart</a>
+                            </div>
+                        </div>
+                    </div>
+
+                </div><!-- end catalog-grid -->
+
+                <!-- Load More -->
+                <div style="text-align:center;margin-top:3rem;">
+                    <button class="btn btn-secondary btn-lg">Load More Species</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Special Order CTA -->
+<section class="cta-band" style="padding:3rem 0;">
+    <div class="container">
+        <h2 class="cta-band-title" style="font-size:1.75rem;">Can't find what you're looking for?</h2>
+        <p class="cta-band-desc">We source rare and exotic species on special order. Contact us with your requirements and we'll locate it for you.</p>
+        <div class="cta-band-actions">
+            <a href="contact.html" class="btn btn-white btn-lg">Place Special Order →</a>
+        </div>
+    </div>
+</section>
+
+<div id="main-footer"></div>
+<button class="scroll-top-btn" id="scroll-top-btn" aria-label="Scroll to top">
+    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="19" x2="12" y2="5"/><polyline points="5 12 12 5 19 12"/></svg>
+</button>
+
+<script src="components.js"></script>
+<script>
+    function filterCatalog(category, btn) {
+        document.querySelectorAll('#cat-filter-bar .filter-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+
+        const items = document.querySelectorAll('.catalog-item');
+        let count = 0;
+        items.forEach(item => {
+            const cat = item.dataset.category;
+            const show = category === 'all' || cat === category;
+            item.style.display = show ? '' : 'none';
+            if (show) count++;
+        });
+        document.getElementById('result-count').textContent = count;
+    }
+
+    function searchCatalog(query) {
+        const q = query.toLowerCase();
+        const items = document.querySelectorAll('.catalog-item');
+        let count = 0;
+        items.forEach(item => {
+            const name = item.querySelector('.product-card-name')?.textContent.toLowerCase() || '';
+            const meta = item.querySelector('.care-info-row')?.textContent.toLowerCase() || '';
+            const show = !q || name.includes(q) || meta.includes(q);
+            item.style.display = show ? '' : 'none';
+            if (show) count++;
+        });
+        document.getElementById('result-count').textContent = count;
+    }
+
+    function clearFilters() {
+        document.querySelectorAll('#cat-filter-bar .filter-btn').forEach((b, i) => {
+            b.classList.toggle('active', i === 0);
+        });
+        document.querySelectorAll('.catalog-item').forEach(item => item.style.display = '');
+        document.getElementById('catalog-search-input').value = '';
+        document.getElementById('result-count').textContent = document.querySelectorAll('.catalog-item').length;
+        document.querySelectorAll('input[type=radio]').forEach(r => {
+            r.checked = r.value === 'all';
+        });
+    }
+</script>
+</body>
+</html>

@@ -1,0 +1,641 @@
+<!DOCTYPE html>
+<html lang="en" id="root-html">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="AquaWorld Equipment & Accessories — Premium aquarium tanks, canister filters, LED lighting, fish food, and everything you need for a perfect aquarium setup.">
+    <title>Equipment & Accessories | AquaWorld Aquarium Store</title>
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        /* Category hero cards */
+        .cat-hero-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1rem;
+            margin-bottom: 4rem;
+        }
+
+        .cat-hero-card {
+            border-radius: 1.25rem;
+            overflow: hidden;
+            position: relative;
+            aspect-ratio: 3/4;
+            cursor: pointer;
+            transition: transform 0.3s;
+        }
+
+        .cat-hero-card:hover { transform: translateY(-6px); }
+
+        .cat-hero-card img {
+            width: 100%; height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s;
+        }
+
+        .cat-hero-card:hover img { transform: scale(1.06); }
+
+        .cat-hero-card-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to top, rgba(7,20,25,0.90) 0%, transparent 60%);
+            display: flex;
+            align-items: flex-end;
+            padding: 1.25rem;
+        }
+
+        .cat-hero-card-overlay-inner h3 {
+            color: #fff;
+            font-size: 1rem;
+            font-weight: 700;
+            margin-bottom: 0.25rem;
+        }
+
+        .cat-hero-card-overlay-inner span {
+            font-size: 0.8rem;
+            color: rgba(255,255,255,0.65);
+        }
+
+        .cat-hero-card.active-cat .cat-hero-card-overlay {
+            background: linear-gradient(to top, rgba(11,123,140,0.90) 0%, rgba(11,123,140,0.3) 60%, transparent 100%);
+        }
+
+        /* Equipment product card enhanced */
+        .eq-card {
+            background: var(--bg-surface);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-xl);
+            overflow: hidden;
+            display: grid;
+            grid-template-columns: 200px 1fr;
+            gap: 0;
+            transition: transform 0.3s, box-shadow 0.3s, border-color 0.2s;
+        }
+
+        .eq-card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-lg);
+            border-color: var(--clr-primary);
+        }
+
+        .eq-card-img {
+            background: var(--bg-surface-2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        .eq-card-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .eq-card-body {
+            padding: 1.5rem;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .eq-card-brand {
+            font-size: 0.7rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--clr-primary);
+            margin-bottom: 0.25rem;
+        }
+
+        .eq-card-name {
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--text-heading);
+            margin-bottom: 0.375rem;
+        }
+
+        .eq-card-desc {
+            font-size: 0.8125rem;
+            color: var(--text-muted);
+            line-height: 1.6;
+            margin-bottom: 0.875rem;
+            flex: 1;
+            font-weight: 400;
+        }
+
+        .eq-card-specs {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+            margin-bottom: 1rem;
+        }
+
+        .eq-spec-tag {
+            font-size: 0.7rem;
+            background: var(--bg-surface-2);
+            border: 1px solid var(--border-color);
+            border-radius: 9999px;
+            padding: 0.175rem 0.625rem;
+            color: var(--text-muted);
+            font-weight: 500;
+        }
+
+        .eq-card-footer {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1rem;
+        }
+
+        .eq-price {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--clr-primary);
+        }
+
+        /* Buying guide */
+        .buying-guide {
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: 4rem;
+            align-items: start;
+        }
+
+        .buying-guide-sticky {
+            position: sticky;
+            top: calc(var(--navbar-height) + 1.5rem);
+        }
+
+        .buying-guide-sticky h3 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--text-heading);
+            margin-bottom: 1rem;
+        }
+
+        .buying-guide-img {
+            border-radius: 1.25rem;
+            overflow: hidden;
+            aspect-ratio: 3/4;
+            margin-bottom: 1.5rem;
+        }
+
+        .buying-guide-img img { width: 100%; height: 100%; object-fit: cover; }
+
+        .guide-checklist { display: flex; flex-direction: column; gap: 0.75rem; }
+
+        .guide-check-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 0.75rem;
+            padding: 0.875rem 1rem;
+            background: var(--bg-surface-2);
+            border-radius: var(--radius-md);
+            border: 1px solid var(--border-color);
+        }
+
+        .guide-check-icon {
+            width: 20px; height: 20px;
+            background: var(--clr-primary);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            color: #fff;
+            margin-top: 0.125rem;
+        }
+
+        .guide-check-text strong { display: block; font-size: 0.875rem; font-weight: 600; color: var(--text-heading); }
+        .guide-check-text span { font-size: 0.8125rem; color: var(--text-muted); }
+
+        .eq-list { display: flex; flex-direction: column; gap: 1.25rem; }
+
+        @media (max-width: 1024px) {
+            .cat-hero-grid { grid-template-columns: 1fr 1fr; }
+            .eq-card { grid-template-columns: 160px 1fr; }
+            .buying-guide { grid-template-columns: 1fr; gap: 2rem; }
+            .buying-guide-sticky { position: static; }
+        }
+
+        @media (max-width: 768px) {
+            .cat-hero-grid { grid-template-columns: 1fr 1fr; }
+            .eq-card { grid-template-columns: 1fr; }
+            .eq-card-img { height: 200px; }
+        }
+
+        @media (max-width: 360px) {
+            .cat-hero-grid { grid-template-columns: 1fr; }
+            .cat-hero-card { aspect-ratio: 2/1; }
+        }
+    </style>
+</head>
+<body>
+
+<div id="main-nav"></div>
+
+<!-- Page Hero -->
+<div class="page-hero">
+    <div class="container">
+        <div class="breadcrumb">
+            <a href="index.html">Home</a>
+            <span>›</span>
+            <span style="color:#fff;">Equipment & Accessories</span>
+        </div>
+        <h1 class="page-hero-title">Equipment & Accessories</h1>
+        <p class="page-hero-desc">Professional-grade tanks, filters, lighting systems, and nutrition — everything you need to build the perfect aquarium.</p>
+    </div>
+</div>
+
+<!-- ─── CATEGORY TILES ─────────────────────────────── -->
+<section class="section-sm bg-surface">
+    <div class="container">
+        <div class="cat-hero-grid reveal">
+            <div class="cat-hero-card active-cat" onclick="filterEq('tanks', this)">
+                <img src="https://images.unsplash.com/photo-1555009393-f20bdb245c4d?w=600&q=80" alt="Aquarium glass tanks">
+                <div class="cat-hero-card-overlay">
+                    <div class="cat-hero-card-overlay-inner">
+                        <h3>Tanks & Aquariums</h3>
+                        <span>Nano to full-size setups</span>
+                    </div>
+                </div>
+            </div>
+            <div class="cat-hero-card" onclick="filterEq('filters', this)">
+                <img src="https://images.unsplash.com/photo-1584464491033-06628f3a6b7b?w=600&q=80" alt="Aquarium filtration systems">
+                <div class="cat-hero-card-overlay">
+                    <div class="cat-hero-card-overlay-inner">
+                        <h3>Filtration Systems</h3>
+                        <span>Internal, canister & sump</span>
+                    </div>
+                </div>
+            </div>
+            <div class="cat-hero-card" onclick="filterEq('lighting', this)">
+                <img src="https://images.unsplash.com/photo-1563396983906-b3795482a59a?w=600&q=80" alt="LED aquarium lighting">
+                <div class="cat-hero-card-overlay">
+                    <div class="cat-hero-card-overlay-inner">
+                        <h3>Lighting</h3>
+                        <span>LED, T5, and planted lights</span>
+                    </div>
+                </div>
+            </div>
+            <div class="cat-hero-card" onclick="filterEq('food', this)">
+                <img src="https://images.unsplash.com/photo-1620735692151-26a7e0748429?w=600&q=80" alt="Premium fish food">
+                <div class="cat-hero-card-overlay">
+                    <div class="cat-hero-card-overlay-inner">
+                        <h3>Food & Nutrition</h3>
+                        <span>Flakes, pellets, live & frozen</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ─── PRODUCT LISTINGS ────────────────────────────── -->
+<section class="section">
+    <div class="container">
+        <div class="section-header" style="display:flex;align-items:flex-end;justify-content:space-between;flex-wrap:wrap;gap:1rem;margin-bottom:2rem;">
+            <div class="reveal">
+                <span class="section-label" id="eq-category-label">Tanks & Aquariums</span>
+                <h2 class="section-title" style="margin-bottom:0;" id="eq-category-title">Premium Glass Tanks</h2>
+            </div>
+            <div style="display:flex;align-items:center;gap:0.5rem;" class="reveal">
+                <label style="font-size:0.8125rem;color:var(--text-muted);">Sort:</label>
+                <select class="form-select" style="width:auto;padding:0.375rem 2rem 0.375rem 0.75rem;font-size:0.8125rem;">
+                    <option>Featured</option>
+                    <option>Price: Low to High</option>
+                    <option>Price: High to Low</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="eq-list" id="eq-list">
+
+            <!-- TANKS -->
+            <div class="eq-card eq-item" data-category="tanks">
+                <div class="eq-card-img">
+                    <img src="https://images.unsplash.com/photo-1555009393-f20bdb245c4d?w=500&q=80" alt="60cm rimless aquarium tank" loading="lazy">
+                </div>
+                <div class="eq-card-body">
+                    <div class="eq-card-brand">AquaWorld Pro</div>
+                    <h3 class="eq-card-name">60cm Rimless Low-Iron Glass Aquarium</h3>
+                    <p class="eq-card-desc">Crystal-clear low-iron glass with minimal green tint, precisely siliconed joints, and polished edges. Includes base cabinet stand option.</p>
+                    <div class="eq-card-specs">
+                        <span class="eq-spec-tag">60 × 30 × 36 cm</span>
+                        <span class="eq-spec-tag">65 Litres</span>
+                        <span class="eq-spec-tag">Rimless</span>
+                        <span class="eq-spec-tag">Low-Iron Glass</span>
+                    </div>
+                    <div class="eq-card-footer">
+                        <div>
+                            <span class="eq-price">₹4,800</span>
+                            <div style="font-size:0.75rem;color:var(--text-muted);">Free delivery</div>
+                        </div>
+                        <a href="#" class="btn btn-primary">Add to Cart</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="eq-card eq-item" data-category="tanks">
+                <div class="eq-card-img">
+                    <img src="https://images.unsplash.com/photo-1524704654690-b56c05c78a00?w=500&q=80" alt="Complete aquarium starter kit" loading="lazy">
+                </div>
+                <div class="eq-card-body">
+                    <div class="eq-card-brand">AquaWorld Starter</div>
+                    <h3 class="eq-card-name">Beginner Complete Aquarium Kit — 30L</h3>
+                    <p class="eq-card-desc">Everything you need to get started: rimmed tank, internal filter, LED light, thermometer, lid, and 1 month of fish food included.</p>
+                    <div class="eq-card-specs">
+                        <span class="eq-spec-tag">40 × 25 × 30 cm</span>
+                        <span class="eq-spec-tag">30 Litres</span>
+                        <span class="eq-spec-tag">Complete Kit</span>
+                        <span class="eq-spec-tag">Beginner</span>
+                    </div>
+                    <div class="eq-card-footer">
+                        <div>
+                            <span class="eq-price">₹3,500</span>
+                            <div style="font-size:0.75rem;color:var(--clr-success);">Starter Bundle</div>
+                        </div>
+                        <a href="#" class="btn btn-primary">Add to Cart</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="eq-card eq-item" data-category="tanks">
+                <div class="eq-card-img">
+                    <img src="https://images.unsplash.com/photo-1583212292454-1fe6229603b7?w=500&q=80" alt="Marine reef aquarium 250L" loading="lazy">
+                </div>
+                <div class="eq-card-body">
+                    <div class="eq-card-brand">AquaWorld Marine</div>
+                    <h3 class="eq-card-name">Marine Reef Ready Tank — 250L</h3>
+                    <p class="eq-card-desc">Drilled overflow, internal sump overflow box, low-iron glass. Pre-drilled and plumbing-ready for professional reef setups. Sump sold separately.</p>
+                    <div class="eq-card-specs">
+                        <span class="eq-spec-tag">100 × 50 × 50 cm</span>
+                        <span class="eq-spec-tag">250 Litres</span>
+                        <span class="eq-spec-tag">Reef Ready</span>
+                        <span class="eq-spec-tag">Drilled</span>
+                    </div>
+                    <div class="eq-card-footer">
+                        <div>
+                            <span class="eq-price">₹18,500</span>
+                            <div style="font-size:0.75rem;color:var(--text-muted);">Professional grade</div>
+                        </div>
+                        <a href="contact.html" class="btn btn-secondary">Enquire</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- FILTERS -->
+            <div class="eq-card eq-item" data-category="filters" style="display:none;">
+                <div class="eq-card-img">
+                    <img src="https://images.unsplash.com/photo-1584464491033-06628f3a6b7b?w=500&q=80" alt="Eheim canister filter" loading="lazy">
+                </div>
+                <div class="eq-card-body">
+                    <div class="eq-card-brand">Eheim</div>
+                    <h3 class="eq-card-name">Classic Canister Filter 350 — 700L/h</h3>
+                    <p class="eq-card-desc">The industry-standard canister filter. Extremely reliable, whisper quiet, and perfect for freshwater and marine tanks up to 350L. German-engineered.</p>
+                    <div class="eq-card-specs">
+                        <span class="eq-spec-tag">Up to 350L</span>
+                        <span class="eq-spec-tag">700 L/h</span>
+                        <span class="eq-spec-tag">Multi-stage</span>
+                        <span class="eq-spec-tag">German Made</span>
+                    </div>
+                    <div class="eq-card-footer">
+                        <div>
+                            <span class="eq-price">₹8,200</span>
+                            <div style="font-size:0.75rem;color:var(--clr-success);">Highly Rated</div>
+                        </div>
+                        <a href="#" class="btn btn-primary">Add to Cart</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="eq-card eq-item" data-category="filters" style="display:none;">
+                <div class="eq-card-img">
+                    <img src="https://images.unsplash.com/photo-1565118531796-763e5082d113?w=500&q=80" alt="Sponge filter for nano tank" loading="lazy">
+                </div>
+                <div class="eq-card-body">
+                    <div class="eq-card-brand">AquaWorld</div>
+                    <h3 class="eq-card-name">Matten Filter (Hamburg System)</h3>
+                    <p class="eq-card-desc">The classic slow-flow biological filter using large foam matten. Ideal for shrimp tanks and planted aquariums. Gentle flow, massive surface area.</p>
+                    <div class="eq-card-specs">
+                        <span class="eq-spec-tag">Up to 80L</span>
+                        <span class="eq-spec-tag">Biological</span>
+                        <span class="eq-spec-tag">Shrimp Safe</span>
+                    </div>
+                    <div class="eq-card-footer">
+                        <div>
+                            <span class="eq-price">₹1,400</span>
+                        </div>
+                        <a href="#" class="btn btn-primary">Add to Cart</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- LIGHTING -->
+            <div class="eq-card eq-item" data-category="lighting" style="display:none;">
+                <div class="eq-card-img">
+                    <img src="https://images.unsplash.com/photo-1563396983906-b3795482a59a?w=500&q=80" alt="Chihiros LED aquarium light" loading="lazy">
+                </div>
+                <div class="eq-card-body">
+                    <div class="eq-card-brand">Chihiros</div>
+                    <h3 class="eq-card-name">WRGB II Pro — Full Spectrum LED</h3>
+                    <p class="eq-card-desc">Flagship planted tank LED with sunrise/sunset cycle, smartphone control, and high-CRI WRGB spectrum. Ideal for both planted and reef applications.</p>
+                    <div class="eq-card-specs">
+                        <span class="eq-spec-tag">60cm version</span>
+                        <span class="eq-spec-tag">WRGB Spectrum</span>
+                        <span class="eq-spec-tag">App Controlled</span>
+                        <span class="eq-spec-tag">90 CRI</span>
+                    </div>
+                    <div class="eq-card-footer">
+                        <div>
+                            <span class="eq-price">₹7,800</span>
+                            <div style="font-size:0.75rem;color:var(--clr-success);">Top Rated</div>
+                        </div>
+                        <a href="#" class="btn btn-primary">Add to Cart</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="eq-card eq-item" data-category="lighting" style="display:none;">
+                <div class="eq-card-img">
+                    <img src="https://images.unsplash.com/photo-1559827260-dc66d52bef19?w=500&q=80" alt="Budget LED starter light" loading="lazy">
+                </div>
+                <div class="eq-card-body">
+                    <div class="eq-card-brand">AquaWorld</div>
+                    <h3 class="eq-card-name">Nano LED Light Bar — 30cm</h3>
+                    <p class="eq-card-desc">Compact, powerful LED light for nano and desktop aquariums. Clips onto any tank rim, adjustable arm, on/off timer included.</p>
+                    <div class="eq-card-specs">
+                        <span class="eq-spec-tag">30cm</span>
+                        <span class="eq-spec-tag">Clip On</span>
+                        <span class="eq-spec-tag">Timer</span>
+                        <span class="eq-spec-tag">Low Plants</span>
+                    </div>
+                    <div class="eq-card-footer">
+                        <div>
+                            <span class="eq-price">₹1,200</span>
+                        </div>
+                        <a href="#" class="btn btn-primary">Add to Cart</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- FOOD -->
+            <div class="eq-card eq-item" data-category="food" style="display:none;">
+                <div class="eq-card-img">
+                    <img src="https://images.unsplash.com/photo-1620735692151-26a7e0748429?w=500&q=80" alt="Hikari discus fish food" loading="lazy">
+                </div>
+                <div class="eq-card-body">
+                    <div class="eq-card-brand">Hikari</div>
+                    <h3 class="eq-card-name">Discus Bio-Gold Premium Pellets</h3>
+                    <p class="eq-card-desc">Specially formulated for discus fish — enhances color, promotes rapid growth, and supports immunity. Minimal water clouding formula.</p>
+                    <div class="eq-card-specs">
+                        <span class="eq-spec-tag">80g</span>
+                        <span class="eq-spec-tag">Color Enhancing</span>
+                        <span class="eq-spec-tag">Discus Specific</span>
+                    </div>
+                    <div class="eq-card-footer">
+                        <div>
+                            <span class="eq-price">₹680</span>
+                        </div>
+                        <a href="#" class="btn btn-primary">Add to Cart</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="eq-card eq-item" data-category="food" style="display:none;">
+                <div class="eq-card-img">
+                    <img src="https://images.unsplash.com/photo-1526649661456-89c7ed4d00b8?w=500&q=80" alt="Frozen bloodworms fish food" loading="lazy">
+                </div>
+                <div class="eq-card-body">
+                    <div class="eq-card-brand">AquaWorld</div>
+                    <h3 class="eq-card-name">Frozen Bloodworm Blister Pack</h3>
+                    <p class="eq-card-desc">Premium frozen bloodworms — nature's perfect fish food. Rich in protein and amino acids, accepted by virtually all freshwater and marine fish.</p>
+                    <div class="eq-card-specs">
+                        <span class="eq-spec-tag">100g pack</span>
+                        <span class="eq-spec-tag">Frozen</span>
+                        <span class="eq-spec-tag">All species</span>
+                    </div>
+                    <div class="eq-card-footer">
+                        <div>
+                            <span class="eq-price">₹250</span>
+                        </div>
+                        <a href="#" class="btn btn-primary">Add to Cart</a>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+</section>
+
+<!-- ─── BUYING GUIDE ────────────────────────────────── -->
+<section class="section bg-surface">
+    <div class="container">
+        <div class="section-header centered reveal">
+            <span class="section-label">Expert Advice</span>
+            <h2 class="section-title">Equipment Buying Guide</h2>
+            <p class="section-desc">Not sure what to choose? Our checklist helps you select the right equipment for your aquarium goals.</p>
+        </div>
+
+        <div class="buying-guide">
+            <div class="buying-guide-sticky reveal">
+                <div class="buying-guide-img">
+                    <img src="https://images.unsplash.com/photo-1555009393-f20bdb245c4d?w=600&q=80" alt="Well-equipped aquarium setup">
+                </div>
+                <h3>Not sure where to start?</h3>
+                <p style="color:var(--text-muted);font-size:0.9375rem;line-height:1.7;margin-bottom:1.25rem;">Our in-store experts and online chat team can help you build a complete equipment list tailored to your budget and goals.</p>
+                <a href="contact.html" class="btn btn-primary w-full">Get Free Advice</a>
+            </div>
+
+            <div class="guide-checklist reveal">
+                <div class="guide-check-item">
+                    <div class="guide-check-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                    </div>
+                    <div class="guide-check-text">
+                        <strong>Tank Size First</strong>
+                        <span>Always buy the largest tank your space and budget allows. Bigger tanks are more stable and forgiving for beginners.</span>
+                    </div>
+                </div>
+                <div class="guide-check-item">
+                    <div class="guide-check-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                    </div>
+                    <div class="guide-check-text">
+                        <strong>Filter Turnover Rate</strong>
+                        <span>Your filter should cycle the tank volume at least 5–10x per hour. Oversizing is always better than undersizing.</span>
+                    </div>
+                </div>
+                <div class="guide-check-item">
+                    <div class="guide-check-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                    </div>
+                    <div class="guide-check-text">
+                        <strong>Lighting Spectrum Matters</strong>
+                        <span>For planted tanks, choose full-spectrum LED with WRGB chips. Fish-only tanks can use any good quality LED.</span>
+                    </div>
+                </div>
+                <div class="guide-check-item">
+                    <div class="guide-check-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                    </div>
+                    <div class="guide-check-text">
+                        <strong>Match Food to Species</strong>
+                        <span>Herbivores, carnivores, and omnivores all have different nutritional needs. Using species-appropriate food prevents deficiencies.</span>
+                    </div>
+                </div>
+                <div class="guide-check-item">
+                    <div class="guide-check-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                    </div>
+                    <div class="guide-check-text">
+                        <strong>Heater Wattage Guide</strong>
+                        <span>Plan 3–5 watts per litre for tropical setups. Consider two smaller heaters for safety redundancy in large tanks.</span>
+                    </div>
+                </div>
+                <div class="guide-check-item">
+                    <div class="guide-check-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                    </div>
+                    <div class="guide-check-text">
+                        <strong>Test Kit Investment</strong>
+                        <span>Don't skip a water test kit. Knowing your parameters (pH, ammonia, nitrite, nitrate) prevents 90% of fish health problems.</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<div id="main-footer"></div>
+<button class="scroll-top-btn" id="scroll-top-btn" aria-label="Scroll to top">
+    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="19" x2="12" y2="5"/><polyline points="5 12 12 5 19 12"/></svg>
+</button>
+
+<script src="components.js"></script>
+<script>
+    function filterEq(category, clickedTile) {
+        // Update active tile
+        document.querySelectorAll('.cat-hero-card').forEach(t => t.classList.remove('active-cat'));
+        clickedTile.classList.add('active-cat');
+
+        // Category labels
+        const labels = {
+            tanks: ['Tanks & Aquariums', 'Premium Glass Tanks'],
+            filters: ['Filtration Systems', 'Filters & Pumps'],
+            lighting: ['Lighting', 'LED & Lighting Systems'],
+            food: ['Food & Nutrition', 'Fish Food & Supplements']
+        };
+
+        document.getElementById('eq-category-label').textContent = labels[category][0];
+        document.getElementById('eq-category-title').textContent = labels[category][1];
+
+        // Show/hide items
+        document.querySelectorAll('.eq-item').forEach(item => {
+            item.style.display = item.dataset.category === category ? '' : 'none';
+        });
+    }
+</script>
+</body>
+</html>

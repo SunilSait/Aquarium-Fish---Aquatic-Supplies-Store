@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en" id="root-html">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Page not found — AquaWorld Aquarium Store. The page you're looking for may have been moved or doesn't exist.">
+    <title>404 — Page Not Found | AquaWorld</title>
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        body.fullscreen-page {
+            background: linear-gradient(160deg, #071A20 0%, #0A2C38 50%, #071A20 100%);
+            min-height: 100vh;
+        }
+
+        body.fullscreen-page::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            background: radial-gradient(ellipse at 50% 50%, rgba(11,123,140,0.12) 0%, transparent 70%);
+            pointer-events: none;
+        }
+
+        .error-topbar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 1.25rem 1.5rem;
+            max-width: 1240px;
+            margin: 0 auto;
+            width: 100%;
+            position: relative;
+            z-index: 1;
+        }
+
+        .error-logo {
+            display: flex;
+            align-items: center;
+            gap: 0.625rem;
+            text-decoration: none;
+        }
+
+        .error-logo .brand-top { color: var(--clr-secondary); font-size: 0.9rem; font-weight: 800; letter-spacing: 0.05em; }
+        .error-logo .brand-bottom { font-size: 0.65rem; color: rgba(255,255,255,0.45); }
+
+        html:not(.dark) .error-logo .brand-top { color: var(--clr-primary); }
+        html:not(.dark) .error-logo .brand-bottom { color: var(--text-muted); }
+
+        .error-topbar-right {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .error-toggle-btn {
+            width: 36px; height: 36px;
+            background: rgba(255,255,255,0.06);
+            border: 1px solid rgba(255,255,255,0.12);
+            border-radius: var(--radius-sm);
+            color: rgba(255,255,255,0.65);
+            display: flex; align-items: center; justify-content: center;
+            cursor: pointer; font-family: var(--font-sans);
+            transition: all 0.2s;
+        }
+
+        html:not(.dark) .error-toggle-btn {
+            background: var(--bg-surface);
+            border-color: var(--border-color);
+            color: var(--text-body);
+        }
+
+        .error-toggle-btn:hover {
+            border-color: var(--clr-secondary);
+            color: var(--clr-secondary);
+        }
+
+        html:not(.dark) .error-toggle-btn:hover {
+            border-color: var(--clr-primary);
+            color: var(--clr-primary);
+        }
+
+        .fullscreen-content {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 2rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .error-visual {
+            position: relative;
+            margin-bottom: 2rem;
+        }
+
+        /* Animated fish swimming around the 404 */
+        .error-number {
+            font-size: clamp(6rem, 18vw, 11rem);
+            font-weight: 900;
+            line-height: 1;
+            background: linear-gradient(135deg, rgba(11,123,140,0.20) 0%, rgba(167,227,233,0.15) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            letter-spacing: -0.05em;
+            position: relative;
+        }
+
+        html:not(.dark) .error-number {
+            background: linear-gradient(135deg, rgba(11,123,140,0.18) 0%, rgba(11,123,140,0.08) 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+        }
+
+        .fish-svg {
+            position: absolute;
+            animation: swimAround 8s ease-in-out infinite;
+            transform-origin: center;
+        }
+
+        @keyframes swimAround {
+            0%   { transform: translate(-30px, -20px) rotate(-5deg); }
+            25%  { transform: translate(30px, -30px) rotate(5deg); }
+            50%  { transform: translate(40px, 10px) rotate(3deg); }
+            75%  { transform: translate(-10px, 20px) rotate(-8deg); }
+            100% { transform: translate(-30px, -20px) rotate(-5deg); }
+        }
+
+        .bubble-float {
+            position: absolute;
+            border-radius: 50%;
+            background: transparent;
+            border: 2px solid rgba(167,227,233,0.25);
+            animation: floatUp linear infinite;
+        }
+
+        .error-subtitle {
+            font-size: clamp(1.5rem, 4vw, 2.25rem);
+            font-weight: 700;
+            color: #ffffff;
+            margin-bottom: 0.875rem;
+            text-shadow: 0 2px 12px rgba(0,0,0,0.4);
+        }
+
+        html:not(.dark) .error-subtitle { color: var(--text-heading); }
+
+        .error-desc {
+            font-size: 1.0625rem;
+            color: rgba(255,255,255,0.58);
+            max-width: 440px;
+            margin: 0 auto 2.5rem;
+            line-height: 1.7;
+            font-weight: 400;
+        }
+
+        html:not(.dark) .error-desc { color: var(--text-muted); }
+
+        .error-actions {
+            display: flex;
+            gap: 0.875rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        /* Quick links */
+        .quick-links {
+            display: flex;
+            gap: 0.75rem;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin-top: 2.5rem;
+        }
+
+        .quick-link-chip {
+            font-size: 0.8125rem;
+            font-weight: 500;
+            color: rgba(255,255,255,0.55);
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.10);
+            border-radius: 9999px;
+            padding: 0.375rem 1rem;
+            text-decoration: none;
+            transition: all 0.2s;
+        }
+
+        html:not(.dark) .quick-link-chip {
+            color: var(--text-muted);
+            background: var(--bg-surface-2);
+            border-color: var(--border-color);
+        }
+
+        .quick-link-chip:hover {
+            color: var(--clr-secondary);
+            border-color: var(--clr-secondary);
+            background: rgba(167,227,233,0.08);
+        }
+
+        html:not(.dark) .quick-link-chip:hover {
+            color: var(--clr-primary);
+            border-color: var(--clr-primary);
+            background: var(--clr-primary-xlight);
+        }
+    </style>
+</head>
+<body class="fullscreen-page">
+
+<!-- Bubble decorations -->
+<div aria-hidden="true" style="position:fixed;inset:0;pointer-events:none;overflow:hidden;z-index:0;">
+    <div class="bubble" style="width:100px;height:100px;left:5%;bottom:-60px;animation-duration:14s;"></div>
+    <div class="bubble" style="width:50px;height:50px;left:20%;bottom:-40px;animation-duration:10s;animation-delay:2s;"></div>
+    <div class="bubble" style="width:70px;height:70px;left:40%;bottom:-50px;animation-duration:12s;animation-delay:4s;"></div>
+    <div class="bubble" style="width:40px;height:40px;left:70%;bottom:-35px;animation-duration:9s;animation-delay:1s;"></div>
+    <div class="bubble" style="width:80px;height:80px;left:85%;bottom:-55px;animation-duration:11s;animation-delay:3s;"></div>
+</div>
+
+<!-- Top Bar -->
+<div class="error-topbar">
+    <a href="index.html" class="error-logo" aria-label="AquaWorld Home">
+        <img src="logo.svg" alt="AquaWorld Logo" width="38" height="38" style="width:38px;height:38px;object-fit:contain;display:block;flex-shrink:0;">
+        <div class="nav-logo-text">
+            <span class="brand-top">AQUA</span>
+            <span class="brand-bottom">WORLD</span>
+        </div>
+    </a>
+    <div class="error-topbar-right">
+        <button onclick="toggleDir()" class="error-toggle-btn" title="Toggle Direction" aria-label="Toggle text direction">
+            <span class="dir-label" style="font-size:0.6rem;font-weight:700;">LTR</span>
+        </button>
+        <button onclick="toggleTheme()" class="error-toggle-btn" title="Toggle Theme" aria-label="Toggle dark mode">
+            <span class="theme-icon-wrap">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+            </span>
+        </button>
+    </div>
+</div>
+
+<!-- Main Content -->
+<div class="fullscreen-content">
+    <div style="max-width:600px;width:100%;">
+
+        <!-- Visual -->
+        <div class="error-visual">
+            <!-- Swimming fish -->
+            <svg class="fish-svg" style="top:20px;left:50px;" width="48" height="32" viewBox="0 0 48 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <ellipse cx="22" cy="16" rx="14" ry="9" fill="#0B7B8C" opacity="0.7"/>
+                <path d="M36 16 L48 8 L48 24 Z" fill="#0B7B8C" opacity="0.7"/>
+                <circle cx="10" cy="13" r="2.5" fill="white"/>
+                <circle cx="11" cy="13" r="1" fill="#0B7B8C"/>
+                <path d="M18 8 Q20 16 18 24" stroke="rgba(167,227,233,0.5)" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+            </svg>
+
+            <!-- Bubble floats -->
+            <div class="bubble-float" style="width:12px;height:12px;top:10px;right:80px;animation-duration:4s;animation-delay:0s;"></div>
+            <div class="bubble-float" style="width:8px;height:8px;top:5px;right:100px;animation-duration:3s;animation-delay:1s;"></div>
+
+            <div class="error-number">404</div>
+        </div>
+
+        <h1 class="error-subtitle">Oops! This fish swam away…</h1>
+        <p class="error-desc">The page you're looking for has been moved, deleted, or never existed. Don't worry — let's get you back to the reef.</p>
+
+        <div class="error-actions">
+            <a href="index.html" class="btn btn-primary btn-lg">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+                Back to Home
+            </a>
+            <a href="catalog.html" class="btn btn-secondary btn-lg" style="border-color:rgba(167,227,233,0.3);color:rgba(255,255,255,0.75);">Browse Fish Catalog</a>
+        </div>
+
+        <div class="quick-links">
+            <a href="index.html" class="quick-link-chip">Home</a>
+            <a href="catalog.html" class="quick-link-chip">Fish Catalog</a>
+            <a href="plants.html" class="quick-link-chip">Aquatic Plants</a>
+            <a href="equipment.html" class="quick-link-chip">Equipment</a>
+            <a href="care-guides.html" class="quick-link-chip">Care Guides</a>
+            <a href="contact.html" class="quick-link-chip">Contact</a>
+        </div>
+    </div>
+</div>
+
+<script src="components.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', initAuthPage);
+</script>
+</body>
+</html>

@@ -1,0 +1,783 @@
+<!DOCTYPE html>
+<html lang="en" id="root-html">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="AquaWorld Premium — Explore our curated collection of rare marine species, exotic freshwater fish, aquatic plants, and professional aquarium setups.">
+    <title>Home 2 — Premium | AquaWorld Aquarium Store</title>
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        /* ── Premium Hero: Split with Container Alignment ── */
+        .hero2 {
+            min-height: calc(100vh - var(--navbar-height));
+            display: flex;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+            background: linear-gradient(160deg, #071A20 0%, #0A2C38 60%, #0B4E5E 100%);
+            padding: 4rem 0;
+        }
+
+        .hero2::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: radial-gradient(ellipse at 20% 50%, rgba(11,123,140,0.25) 0%, transparent 70%);
+            pointer-events: none;
+        }
+
+        .hero2-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3.5rem;
+            align-items: center;
+        }
+
+        .hero2-visual {
+            position: relative;
+            border-radius: var(--radius-2xl);
+            overflow: hidden;
+            box-shadow: var(--shadow-xl);
+            border: 1px solid rgba(167,227,233,0.18);
+            aspect-ratio: 4/3;
+        }
+
+        .hero2-visual img {
+            width: 100%; height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        .hero2-content { position: relative; z-index: 1; max-width: 560px; }
+
+        .hero2-eyebrow {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .hero2-line {
+            width: 40px; height: 2px;
+            background: var(--clr-secondary);
+        }
+
+        .hero2-eyebrow span {
+            font-size: 0.8125rem;
+            font-weight: 600;
+            color: var(--clr-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.12em;
+        }
+
+        .hero2-title {
+            font-size: clamp(2.5rem, 5vw, 4.25rem);
+            font-weight: 800;
+            color: #fff;
+            line-height: 1.05;
+            margin-bottom: 1.5rem;
+        }
+
+        .hero2-title em {
+            font-style: normal;
+            color: var(--clr-secondary);
+        }
+
+        .hero2-desc {
+            font-size: 1.0625rem;
+            color: rgba(255,255,255,0.68);
+            line-height: 1.75;
+            margin-bottom: 2.5rem;
+            font-weight: 400;
+        }
+
+        .hero2-ctas { display: flex; gap: 1rem; flex-wrap: wrap; }
+
+        .hero2-floating-badge {
+            position: absolute;
+            bottom: 2rem;
+            right: 2rem;
+            background: rgba(11,123,140,0.85);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(167,227,233,0.2);
+            border-radius: 1rem;
+            padding: 1rem 1.25rem;
+            color: #fff;
+            text-align: center;
+            z-index: 10;
+        }
+
+        .hero2-floating-badge strong {
+            display: block;
+            font-size: 1.75rem;
+            font-weight: 800;
+        }
+
+        .hero2-floating-badge span {
+            font-size: 0.75rem;
+            opacity: 0.75;
+        }
+
+        /* ── Magazine Category Grid ── */
+        .cat-grid {
+            display: grid;
+            grid-template-columns: 3fr 2fr 2fr;
+            grid-template-rows: 360px 280px;
+            gap: 1rem;
+        }
+
+        .cat-tile {
+            position: relative;
+            border-radius: 1.25rem;
+            overflow: hidden;
+            cursor: pointer;
+        }
+
+        .cat-tile img {
+            width: 100%; height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .cat-tile:hover img { transform: scale(1.06); }
+
+        .cat-tile-cover {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to top, rgba(7,20,25,0.88) 0%, rgba(7,20,25,0.1) 60%, transparent 100%);
+            display: flex;
+            align-items: flex-end;
+            padding: 1.5rem;
+        }
+
+        .cat-tile-cover-inner h3 {
+            color: #fff;
+            font-size: 1.2rem;
+            font-weight: 700;
+            margin-bottom: 0.25rem;
+        }
+
+        .cat-tile-cover-inner p {
+            font-size: 0.8125rem;
+            color: rgba(255,255,255,0.65);
+            font-weight: 400;
+        }
+
+        .cat-tile-span2 { grid-column: span 2; }
+        .cat-tile-row2 { grid-row: 2; }
+
+        /* ── Masonry New Arrivals ── */
+        .masonry-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.25rem;
+        }
+
+        .masonry-card {
+            border-radius: 1.25rem;
+            overflow: hidden;
+            position: relative;
+            background: var(--bg-surface);
+            border: 1px solid var(--border-color);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .masonry-card:hover { transform: translateY(-6px); box-shadow: var(--shadow-lg); }
+
+        .masonry-card-img {
+            width: 100%;
+            aspect-ratio: 3/4;
+            object-fit: cover;
+        }
+
+        .masonry-card:nth-child(2) .masonry-card-img { aspect-ratio: 3/5; }
+        .masonry-card:nth-child(5) .masonry-card-img { aspect-ratio: 3/5; }
+
+        .masonry-card-body { padding: 1rem; }
+        .masonry-card-name { font-size: 0.9375rem; font-weight: 600; color: var(--text-heading); }
+        .masonry-card-type { font-size: 0.75rem; color: var(--clr-primary); font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.25rem; }
+        .masonry-card-price { font-size: 1rem; font-weight: 700; color: var(--clr-primary); margin-top: 0.5rem; }
+
+        /* ── Cinematic Species Spotlight ── */
+        .spotlight-section {
+            position: relative;
+            height: 70vh;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+        }
+
+        .spotlight-bg {
+            position: absolute;
+            inset: 0;
+        }
+
+        .spotlight-bg img {
+            width: 100%; height: 100%;
+            object-fit: cover;
+        }
+
+        .spotlight-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to right, rgba(7,20,25,0.90) 0%, rgba(7,20,25,0.40) 60%, transparent 100%);
+        }
+
+        .spotlight-content {
+            position: relative;
+            z-index: 1;
+            max-width: 520px;
+        }
+
+        .spotlight-content .section-label { margin-bottom: 1rem; }
+        .spotlight-content h2 { color: #fff; margin-bottom: 1rem; }
+        .spotlight-content p { color: rgba(255,255,255,0.72); line-height: 1.7; margin-bottom: 2rem; font-weight: 400; }
+
+        /* ── Equipment Strip ── */
+        .equip-strip {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1.25rem;
+        }
+
+        .equip-card {
+            border-radius: 1.25rem;
+            overflow: hidden;
+            position: relative;
+            aspect-ratio: 3/4;
+            cursor: pointer;
+        }
+
+        .equip-card img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s; }
+        .equip-card:hover img { transform: scale(1.08); }
+
+        .equip-card-label {
+            position: absolute;
+            bottom: 0; left: 0; right: 0;
+            padding: 1.25rem;
+            background: linear-gradient(to top, rgba(7,20,25,0.9) 0%, transparent 100%);
+            color: #fff;
+        }
+
+        .equip-card-label h4 { font-size: 1rem; font-weight: 600; margin-bottom: 0.25rem; }
+        .equip-card-label span { font-size: 0.8125rem; opacity: 0.7; }
+
+        /* ── Community Social Proof ── */
+        .social-proof {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        .sp-img-collage {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0.75rem;
+        }
+
+        .sp-img-collage img {
+            border-radius: 1rem;
+            aspect-ratio: 1/1;
+            width: 100%;
+            object-fit: cover;
+        }
+
+        .sp-img-collage .img-tall {
+            grid-row: span 2;
+            aspect-ratio: 1/2.1;
+        }
+
+        .sp-stat-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+
+        .sp-stat-box {
+            background: var(--bg-surface);
+            border: 1px solid var(--border-color);
+            border-radius: 1rem;
+            padding: 1.25rem;
+            text-align: center;
+        }
+
+        .sp-stat-box strong { display: block; font-size: 1.75rem; font-weight: 800; color: var(--clr-primary); }
+        .sp-stat-box span { font-size: 0.8125rem; color: var(--text-muted); }
+
+        /* ── Glassmorphism Newsletter ── */
+        .glass-newsletter {
+            position: relative;
+            border-radius: 2rem;
+            overflow: hidden;
+            padding: 5rem 3rem;
+            text-align: center;
+        }
+
+        .glass-newsletter-bg {
+            position: absolute;
+            inset: 0;
+        }
+
+        .glass-newsletter-bg img {
+            width: 100%; height: 100%;
+            object-fit: cover;
+        }
+
+        .glass-newsletter-bg::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: rgba(7,20,25,0.80);
+            backdrop-filter: blur(6px);
+        }
+
+        .glass-newsletter-content { position: relative; z-index: 1; max-width: 560px; margin: 0 auto; }
+        .glass-newsletter-content h2 { color: #fff; font-size: clamp(1.75rem, 3vw, 2.25rem); margin-bottom: 0.75rem; }
+        .glass-newsletter-content p { color: rgba(255,255,255,0.68); margin-bottom: 2rem; font-weight: 400; }
+
+        .glass-form {
+            display: flex;
+            gap: 0.75rem;
+            max-width: 420px;
+            margin: 0 auto;
+        }
+
+        .glass-input {
+            flex: 1;
+            background: rgba(255,255,255,0.1);
+            border: 1px solid rgba(255,255,255,0.2);
+            border-radius: 0.75rem;
+            padding: 0.75rem 1rem;
+            font-size: 0.875rem;
+            color: #fff;
+            font-family: var(--font-sans);
+            outline: none;
+        }
+
+        .glass-input::placeholder { color: rgba(255,255,255,0.5); }
+        .glass-input:focus { border-color: var(--clr-secondary); }
+
+        /* Blog Cards */
+        .blog-grid-h2 {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr;
+            gap: 1.25rem;
+        }
+
+        .blog-card-feat {
+            background: var(--bg-surface);
+            border: 1px solid var(--border-color);
+            border-radius: 1.25rem;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            transition: box-shadow 0.3s, transform 0.3s;
+        }
+
+        .blog-card-feat:hover { transform: translateY(-4px); box-shadow: var(--shadow-lg); }
+
+        .blog-card-feat .blog-feat-img { aspect-ratio: 16/9; overflow: hidden; }
+        .blog-card-feat .blog-feat-img img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s; }
+        .blog-card-feat:hover .blog-feat-img img { transform: scale(1.04); }
+
+        .blog-card-small {
+            background: var(--bg-surface);
+            border: 1px solid var(--border-color);
+            border-radius: 1.25rem;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            transition: box-shadow 0.3s, transform 0.3s;
+        }
+
+        .blog-card-small:hover { transform: translateY(-4px); box-shadow: var(--shadow-lg); }
+        .blog-card-small .blog-small-img { aspect-ratio: 16/9; overflow: hidden; }
+        .blog-card-small .blog-small-img img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s; }
+        .blog-card-small:hover .blog-small-img img { transform: scale(1.04); }
+
+        @media (max-width: 1024px) {
+            .hero2 { grid-template-columns: 1fr; min-height: auto; }
+            .hero2-right { display: none; }
+            .hero2-left { padding: 4rem 1.5rem; }
+            .cat-grid { grid-template-columns: 1fr 1fr; grid-template-rows: 260px 260px; }
+            .cat-tile-span2 { grid-column: 1 / -1; }
+            .masonry-grid { grid-template-columns: 1fr 1fr; }
+            .equip-strip { grid-template-columns: 1fr 1fr; }
+            .social-proof { grid-template-columns: 1fr; gap: 2rem; }
+            .blog-grid-h2 { grid-template-columns: 1fr; }
+        }
+
+        @media (max-width: 768px) {
+            .cat-grid { grid-template-columns: 1fr; grid-template-rows: auto; }
+            .cat-tile { height: 220px; }
+            .cat-tile-span2 { grid-column: 1; }
+            .masonry-grid { grid-template-columns: 1fr; }
+            .masonry-card:nth-child(2) .masonry-card-img,
+            .masonry-card:nth-child(5) .masonry-card-img { aspect-ratio: 3/4; }
+            .equip-strip { grid-template-columns: 1fr 1fr; }
+            .spotlight-section { height: auto; padding: 4rem 0; }
+            .glass-form { flex-direction: column; }
+            .sp-img-collage { grid-template-columns: 1fr; }
+            .sp-img-collage .img-tall { aspect-ratio: 1/1; grid-row: span 1; }
+        }
+    </style>
+</head>
+<body>
+
+<div id="main-nav"></div>
+
+<!-- ─── HERO 2 (Split Screen) ────────────────────── -->
+<section class="hero2">
+    <div class="bubble-wrap" aria-hidden="true">
+        <div class="bubble" style="width:100px;height:100px;left:8%;bottom:-60px;animation-duration:13s;"></div>
+        <div class="bubble" style="width:50px;height:50px;left:25%;bottom:-40px;animation-duration:9s;animation-delay:2s;"></div>
+        <div class="bubble" style="width:70px;height:70px;left:45%;bottom:-50px;animation-duration:11s;animation-delay:4s;"></div>
+    </div>
+    <div class="container" style="position:relative;z-index:1;width:100%;">
+        <div class="hero2-grid">
+            <div class="hero2-content animate-fade-in-up">
+                <div class="hero2-eyebrow">
+                    <div class="hero2-line"></div>
+                    <span>Premium Collection 2025</span>
+                </div>
+                <h1 class="hero2-title">
+                    Where Every<br>
+                    <em>Drop</em> Tells<br>
+                    A Story
+                </h1>
+                <p class="hero2-desc">
+                    Curated rare species, professional-grade setups, and expert knowledge — crafted for the passionate aquarist who demands the best.
+                </p>
+                <div class="hero2-ctas">
+                    <a href="catalog.html" class="btn btn-primary btn-xl">Explore Premium Fish</a>
+                    <a href="equipment.html" class="btn btn-ghost btn-xl" style="border-color:rgba(255,255,255,0.2);color:rgba(255,255,255,0.75);">Shop Equipment</a>
+                </div>
+            </div>
+            <div class="hero2-visual">
+                <img src="https://images.unsplash.com/photo-1535591273668-578e31182c4f?w=1200&q=80" alt="Stunning marine reef aquarium" loading="eager" class="animate-slow-zoom">
+                <div class="hero2-floating-badge" style="position:absolute;bottom:1.5rem;right:1.5rem;background:rgba(11,123,140,0.85);backdrop-filter:blur(12px);border:1px solid rgba(167,227,233,0.2);border-radius:var(--radius-lg);padding:0.75rem 1.25rem;color:#fff;">
+                    <strong style="display:block;font-size:1.5rem;line-height:1;font-weight:800;color:var(--clr-secondary);">500+</strong>
+                    <span style="font-size:0.75rem;opacity:0.85;">Species in stock</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ─── SHOP BY CATEGORY — Magazine Layout ────────── -->
+<section class="section bg-surface">
+    <div class="container">
+        <div class="section-header centered reveal">
+            <span class="section-label">Browse</span>
+            <h2 class="section-title">Shop by Category</h2>
+            <p class="section-desc">Navigate your passion — whether you're a freshwater explorer, reef builder, or aquascape artist.</p>
+        </div>
+
+        <div class="cat-grid reveal">
+            <div class="cat-tile" style="grid-row:1/3;" onclick="location.href='catalog.html'">
+                <img src="https://images.unsplash.com/photo-1516939884455-1445c8652f83?w=900&q=80" alt="Marine reef aquarium with corals">
+                <div class="cat-tile-cover">
+                    <div class="cat-tile-cover-inner">
+                        <h3>Marine & Reef</h3>
+                        <p>160+ species &nbsp;·&nbsp; Corals, Anemones & More</p>
+                    </div>
+                </div>
+            </div>
+            <div class="cat-tile" onclick="location.href='catalog.html'">
+                <img src="https://images.unsplash.com/photo-1565118531796-763e5082d113?w=600&q=80" alt="Freshwater tropical fish aquarium">
+                <div class="cat-tile-cover">
+                    <div class="cat-tile-cover-inner">
+                        <h3>Freshwater Fish</h3>
+                        <p>220+ species</p>
+                    </div>
+                </div>
+            </div>
+            <div class="cat-tile" onclick="location.href='catalog.html'">
+                <img src="https://images.unsplash.com/photo-1474314170901-f351b68f544f?w=600&q=80" alt="Jellyfish display aquarium">
+                <div class="cat-tile-cover">
+                    <div class="cat-tile-cover-inner">
+                        <h3>Specialty & Rare</h3>
+                        <p>50+ exclusive species</p>
+                    </div>
+                </div>
+            </div>
+            <div class="cat-tile" onclick="location.href='plants.html'">
+                <img src="https://images.unsplash.com/photo-1518796745738-41048802f99a?w=700&q=80" alt="Lush planted aquascape aquarium">
+                <div class="cat-tile-cover">
+                    <div class="cat-tile-cover-inner">
+                        <h3>Aquatic Plants</h3>
+                        <p>100+ plant species</p>
+                    </div>
+                </div>
+            </div>
+            <div class="cat-tile" onclick="location.href='equipment.html'">
+                <img src="https://images.unsplash.com/photo-1559827260-dc66d52bef19?w=700&q=80" alt="Premium aquarium equipment setup">
+                <div class="cat-tile-cover">
+                    <div class="cat-tile-cover-inner">
+                        <h3>Equipment & Accessories</h3>
+                        <p>Tanks, filters, lighting & more</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ─── NEW ARRIVALS (Masonry Offset) ─────────────── -->
+<section class="section">
+    <div class="container">
+        <div class="section-header" style="display:flex;align-items:flex-end;justify-content:space-between;flex-wrap:wrap;gap:1rem;margin-bottom:2.5rem;">
+            <div class="reveal">
+                <span class="section-label">This Week</span>
+                <h2 class="section-title" style="margin-bottom:0;">Fresh Arrivals</h2>
+            </div>
+            <a href="catalog.html" class="btn btn-secondary reveal">View All Arrivals →</a>
+        </div>
+
+        <div class="masonry-grid reveal">
+            <div class="masonry-card">
+                <img src="https://images.unsplash.com/photo-1544551763-92ab472cad5d?w=600&q=80" alt="Blue Tang fish" class="masonry-card-img">
+                <div class="masonry-card-body">
+                    <div class="masonry-card-type">Marine</div>
+                    <div class="masonry-card-name">Hippo Blue Tang</div>
+                    <div class="masonry-card-price">₹4,500</div>
+                </div>
+            </div>
+            <div class="masonry-card">
+                <img src="https://images.unsplash.com/photo-1602491453631-e2a5ad90a131?w=600&q=80" alt="Altum Angelfish" class="masonry-card-img">
+                <div class="masonry-card-body">
+                    <div class="masonry-card-type">Freshwater</div>
+                    <div class="masonry-card-name">Altum Angelfish</div>
+                    <div class="masonry-card-price">₹1,800</div>
+                </div>
+            </div>
+            <div class="masonry-card">
+                <img src="https://images.unsplash.com/photo-1519374667756-5f1a2c7b6b35?w=600&q=80" alt="Halfmoon Betta fish" class="masonry-card-img">
+                <div class="masonry-card-body">
+                    <div class="masonry-card-type">Freshwater</div>
+                    <div class="masonry-card-name">Halfmoon Betta</div>
+                    <div class="masonry-card-price">₹650</div>
+                </div>
+            </div>
+            <div class="masonry-card">
+                <img src="https://images.unsplash.com/photo-1498889444388-e67ea62c464b?w=600&q=80" alt="Clownfish anemone" class="masonry-card-img">
+                <div class="masonry-card-body">
+                    <div class="masonry-card-type">Marine</div>
+                    <div class="masonry-card-name">Tomato Clownfish</div>
+                    <div class="masonry-card-price">₹1,100</div>
+                </div>
+            </div>
+            <div class="masonry-card">
+                <img src="https://images.unsplash.com/photo-1546026423-cc4642628d2b?w=600&q=80" alt="Schooling neon tetras" class="masonry-card-img">
+                <div class="masonry-card-body">
+                    <div class="masonry-card-type">Freshwater</div>
+                    <div class="masonry-card-name">Neon Tetra (pack of 10)</div>
+                    <div class="masonry-card-price">₹800</div>
+                </div>
+            </div>
+            <div class="masonry-card">
+                <img src="https://images.unsplash.com/photo-1544551763-46a013bb70d5?w=600&q=80" alt="Royal Blue Discus" class="masonry-card-img">
+                <div class="masonry-card-body">
+                    <div class="masonry-card-type">Freshwater</div>
+                    <div class="masonry-card-name">Cobalt Blue Discus</div>
+                    <div class="masonry-card-price">₹2,900</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ─── CINEMATIC SPECIES SPOTLIGHT ───────────────── -->
+<section class="spotlight-section">
+    <div class="spotlight-bg">
+        <img src="https://images.unsplash.com/photo-1583212292454-1fe6229603b7?w=1600&q=80" alt="Vibrant marine reef with exotic fish">
+    </div>
+    <div class="spotlight-overlay"></div>
+    <div class="container">
+        <div class="spotlight-content reveal">
+            <span class="section-label">Species of the Month</span>
+            <h2 style="font-size:clamp(1.75rem,4vw,3rem);font-weight:700;">Flame Angelfish<br><em style="color:var(--clr-secondary);font-style:normal;">Centropyge loricula</em></h2>
+            <p>One of the most vibrant and sought-after dwarf angelfish in the marine hobby. With its brilliant orange-red body and electric blue markings, the Flame Angelfish is a stunning centerpiece for any reef system.</p>
+            <div style="display:flex;gap:1.5rem;flex-wrap:wrap;margin-bottom:2rem;">
+                <div style="color:rgba(255,255,255,0.65);font-size:0.875rem;">
+                    <strong style="color:#fff;display:block;">Origin</strong>Pacific Ocean
+                </div>
+                <div style="color:rgba(255,255,255,0.65);font-size:0.875rem;">
+                    <strong style="color:#fff;display:block;">Care Level</strong>Medium
+                </div>
+                <div style="color:rgba(255,255,255,0.65);font-size:0.875rem;">
+                    <strong style="color:#fff;display:block;">Tank Size</strong>75+ Gallons
+                </div>
+                <div style="color:rgba(255,255,255,0.65);font-size:0.875rem;">
+                    <strong style="color:#fff;display:block;">Price</strong>₹6,800
+                </div>
+            </div>
+            <a href="catalog.html" class="btn btn-primary btn-lg">View in Catalog →</a>
+        </div>
+    </div>
+</section>
+
+<!-- ─── EQUIPMENT PICKS ────────────────────────────── -->
+<section class="section bg-surface">
+    <div class="container">
+        <div class="section-header centered reveal">
+            <span class="section-label">Gear Up</span>
+            <h2 class="section-title">Top Equipment Picks</h2>
+            <p class="section-desc">Professional-grade tools that our experts use and recommend for outstanding aquarium results.</p>
+        </div>
+
+        <div class="equip-strip reveal">
+            <div class="equip-card">
+                <img src="https://images.unsplash.com/photo-1555009393-f20bdb245c4d?w=600&q=80" alt="Aquarium glass tank with clear water">
+                <div class="equip-card-label">
+                    <h4>Premium Glass Tanks</h4>
+                    <span>From ₹3,500</span>
+                </div>
+            </div>
+            <div class="equip-card">
+                <img src="https://images.unsplash.com/photo-1584464491033-06628f3a6b7b?w=600&q=80" alt="Aquarium canister filter">
+                <div class="equip-card-label">
+                    <h4>Canister Filters</h4>
+                    <span>From ₹2,800</span>
+                </div>
+            </div>
+            <div class="equip-card">
+                <img src="https://images.unsplash.com/photo-1563396983906-b3795482a59a?w=600&q=80" alt="LED aquarium lighting system">
+                <div class="equip-card-label">
+                    <h4>LED Lighting Systems</h4>
+                    <span>From ₹1,200</span>
+                </div>
+            </div>
+            <div class="equip-card">
+                <img src="https://images.unsplash.com/photo-1620735692151-26a7e0748429?w=600&q=80" alt="Premium fish food and nutrition">
+                <div class="equip-card-label">
+                    <h4>Premium Fish Food</h4>
+                    <span>From ₹250</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ─── CARE GUIDE PREVIEWS ────────────────────────── -->
+<section class="section">
+    <div class="container">
+        <div class="section-header" style="display:flex;align-items:flex-end;justify-content:space-between;flex-wrap:wrap;gap:1rem;margin-bottom:2.5rem;">
+            <div class="reveal">
+                <span class="section-label">Knowledge Hub</span>
+                <h2 class="section-title" style="margin-bottom:0;">Expert Care Guides</h2>
+            </div>
+            <a href="care-guides.html" class="btn btn-secondary reveal">All Articles →</a>
+        </div>
+
+        <div class="blog-grid-h2 reveal">
+            <div class="blog-card-feat">
+                <div class="blog-feat-img">
+                    <img src="https://images.unsplash.com/photo-1526649661456-89c7ed4d00b8?w=800&q=80" alt="Aquarium nitrogen cycle diagram">
+                </div>
+                <div class="blog-card-body">
+                    <div class="blog-card-tags"><span class="badge badge-primary">Beginner</span><span class="badge badge-info">Water Chemistry</span></div>
+                    <h3 class="blog-card-title">The Nitrogen Cycle Explained — Your Most Important Aquarium Concept</h3>
+                    <p class="blog-card-excerpt">Understanding the nitrogen cycle is the single most important thing any aquarist can learn. Without it, your fish will never truly thrive.</p>
+                    <div class="blog-card-meta"><span>12 min read</span><a href="care-guides.html" class="link-primary" style="font-size:0.8125rem;">Read →</a></div>
+                </div>
+            </div>
+
+            <div class="blog-card-small">
+                <div class="blog-small-img">
+                    <img src="https://images.unsplash.com/photo-1518796745738-41048802f99a?w=600&q=80" alt="Planted aquascape setup">
+                </div>
+                <div class="blog-card-body">
+                    <div class="blog-card-tags"><span class="badge badge-success">Plants</span></div>
+                    <h3 class="blog-card-title" style="font-size:0.9375rem;">Creating Your First Aquascape</h3>
+                    <p class="blog-card-excerpt" style="font-size:0.8125rem;">Step-by-step guide to setting up a lush planted aquarium from scratch.</p>
+                    <div class="blog-card-meta"><span>8 min read</span><a href="care-guides.html" class="link-primary" style="font-size:0.8125rem;">Read →</a></div>
+                </div>
+            </div>
+
+            <div class="blog-card-small">
+                <div class="blog-small-img">
+                    <img src="https://images.unsplash.com/photo-1535591273668-578e31182c4f?w=600&q=80" alt="Marine reef aquarium care">
+                </div>
+                <div class="blog-card-body">
+                    <div class="blog-card-tags"><span class="badge badge-warning">Marine</span></div>
+                    <h3 class="blog-card-title" style="font-size:0.9375rem;">Beginner's Guide to Saltwater Fish</h3>
+                    <p class="blog-card-excerpt" style="font-size:0.8125rem;">Everything you need to know before setting up your first marine aquarium.</p>
+                    <div class="blog-card-meta"><span>10 min read</span><a href="care-guides.html" class="link-primary" style="font-size:0.8125rem;">Read →</a></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ─── COMMUNITY SOCIAL PROOF ─────────────────────── -->
+<section class="section" style="background:var(--bg-surface-2);">
+    <div class="container">
+        <div class="social-proof">
+            <div class="sp-img-collage reveal">
+                <img src="https://images.unsplash.com/photo-1559827260-dc66d52bef19?w=500&q=80" alt="Customer aquarium setup 1" class="img-tall">
+                <img src="https://images.unsplash.com/photo-1583212292454-1fe6229603b7?w=500&q=80" alt="Customer marine reef tank">
+                <img src="https://images.unsplash.com/photo-1524704654690-b56c05c78a00?w=500&q=80" alt="Customers aquascape">
+            </div>
+            <div class="reveal">
+                <span class="section-label">Community</span>
+                <h2 class="section-title">12,000+ Aquarists Trust AquaWorld</h2>
+                <p style="color:var(--text-muted);line-height:1.7;margin-bottom:1.5rem;">From first-time fish owners to professional aquascapers, our community spans every level of expertise and passion for aquatic life.</p>
+
+                <div class="sp-stat-grid">
+                    <div class="sp-stat-box">
+                        <strong>500+</strong>
+                        <span>Species Available</span>
+                    </div>
+                    <div class="sp-stat-box">
+                        <strong>4.9★</strong>
+                        <span>Average Rating</span>
+                    </div>
+                    <div class="sp-stat-box">
+                        <strong>98%</strong>
+                        <span>Live Arrival Rate</span>
+                    </div>
+                    <div class="sp-stat-box">
+                        <strong>15yr</strong>
+                        <span>Years of Expertise</span>
+                    </div>
+                </div>
+
+                <a href="contact.html" class="btn btn-primary" style="margin-top:2rem;">Join Our Community</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ─── GLASSMORPHISM NEWSLETTER ───────────────────── -->
+<section class="section">
+    <div class="container">
+        <div class="glass-newsletter reveal">
+            <div class="glass-newsletter-bg">
+                <img src="https://images.unsplash.com/photo-1516939884455-1445c8652f83?w=1400&q=80" alt="Vibrant coral reef background">
+            </div>
+            <div class="glass-newsletter-content">
+                <span class="section-label" style="margin-bottom:1rem;">Exclusive Members</span>
+                <h2>Get Early Access to<br>New Arrivals</h2>
+                <p>Be the first to know about rare species arrivals, flash sales, and expert care webinars — exclusively for our newsletter subscribers.</p>
+                <form onsubmit="event.preventDefault(); alert('Welcome to the AquaWorld community! 🐠'); this.reset();" class="glass-form">
+                    <input type="email" placeholder="your@email.com" class="glass-input" required>
+                    <button type="submit" class="btn btn-primary">Join Now</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+
+<div id="main-footer"></div>
+
+<button class="scroll-top-btn" id="scroll-top-btn" aria-label="Scroll to top">
+    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="19" x2="12" y2="5"/><polyline points="5 12 12 5 19 12"/></svg>
+</button>
+
+<script src="components.js"></script>
+</body>
+</html>

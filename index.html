@@ -1,0 +1,833 @@
+<!DOCTYPE html>
+<html lang="en" id="root-html">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="AquaWorld — Your premier aquarium fish and aquatic supplies store. Shop tropical fish, marine species, aquatic plants, tanks, filters, and expert care guides.">
+    <title>AquaWorld | Aquarium Fish & Aquatic Supplies Store</title>
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        /* Hero specific */
+        .hero-home {
+            min-height: 100vh;
+            position: relative;
+            display: flex;
+            align-items: center;
+            overflow: hidden;
+            background: linear-gradient(160deg, #071A20 0%, #0B2D38 40%, #0B5C6E 100%);
+        }
+
+        .hero-fish-visual {
+            position: absolute;
+            right: 0;
+            top: 0;
+            height: 100%;
+            width: 55%;
+            overflow: hidden;
+        }
+
+        .hero-fish-visual img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0.75;
+        }
+
+        .hero-fish-visual::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to right, #071A20 0%, transparent 50%);
+        }
+
+        /* Bubbles */
+        .bubble { position: absolute; border-radius: 50%; background: rgba(167,227,233,0.06); border: 1px solid rgba(167,227,233,0.1); animation: floatUp linear infinite; }
+
+        /* Featured 3x2 Grid */
+        .featured-grid-3x2 {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
+        }
+
+        .species-card-3x2 {
+            border-radius: var(--radius-xl);
+            overflow: hidden;
+            position: relative;
+            aspect-ratio: 4/3;
+            background: var(--bg-surface-2);
+            box-shadow: var(--shadow-md);
+            border: 1px solid var(--border-color);
+            transition: transform var(--transition-premium), box-shadow var(--transition-premium), border-color var(--transition-base);
+            cursor: pointer;
+            text-decoration: none;
+            display: block;
+        }
+
+        .species-card-3x2:hover {
+            transform: translateY(-6px);
+            box-shadow: var(--glow-primary);
+            border-color: rgba(11,123,140,0.4);
+        }
+
+        .species-card-3x2 img {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.7s cubic-bezier(0.16,1,0.3,1), filter 0.4s ease;
+        }
+
+        .species-card-3x2:hover img {
+            transform: scale(1.08);
+            filter: brightness(1.06) saturate(1.1);
+        }
+
+        .species-card-3x2-badge {
+            position: absolute;
+            top: 1rem;
+            left: 1rem;
+            z-index: 2;
+        }
+
+        .species-card-3x2-info {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 1.25rem 1.5rem;
+            background: linear-gradient(to top, rgba(7,20,25,0.95) 0%, rgba(7,20,25,0.5) 60%, transparent 100%);
+            color: #fff;
+            z-index: 2;
+            transform: translateY(2px);
+            transition: transform var(--transition-base);
+        }
+
+        .species-card-3x2:hover .species-card-3x2-info {
+            transform: translateY(0);
+        }
+
+        .species-card-3x2-info h4 {
+            font-size: 1.125rem;
+            font-weight: 700;
+            color: #fff;
+            margin-bottom: 0.25rem;
+            letter-spacing: -0.01em;
+        }
+
+        .species-card-3x2-info p {
+            font-size: 0.8125rem;
+            color: rgba(255,255,255,0.75);
+            font-weight: 400;
+            margin-bottom: 0;
+        }
+
+        /* Aquarium Types */
+        .aq-type-tabs { display: flex; gap: 0.5rem; margin-bottom: 2rem; flex-wrap: wrap; justify-content: center; }
+        .aq-tab-btn {
+            padding: 0.625rem 1.5rem;
+            border-radius: 9999px;
+            font-size: 0.875rem;
+            font-weight: 600;
+            border: 2px solid var(--border-color);
+            background: transparent;
+            color: var(--text-muted);
+            cursor: pointer;
+            transition: all 0.2s;
+            font-family: var(--font-sans);
+        }
+        .aq-tab-btn:hover, .aq-tab-btn.active {
+            background: var(--clr-primary);
+            border-color: var(--clr-primary);
+            color: #fff;
+        }
+
+        .aq-type-content { display: none; }
+        .aq-type-content.active { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; align-items: center; }
+
+        .aq-type-img {
+            border-radius: 1.25rem;
+            overflow: hidden;
+            aspect-ratio: 4/3;
+            box-shadow: var(--shadow-lg);
+        }
+
+        .aq-type-img img { width: 100%; height: 100%; object-fit: cover; }
+
+        .aq-type-fish-list {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0.75rem;
+            margin-top: 1.5rem;
+        }
+
+        .aq-fish-chip {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 0.875rem;
+            background: var(--bg-surface-2);
+            border: 1px solid var(--border-color);
+            border-radius: 9999px;
+            font-size: 0.8125rem;
+            font-weight: 500;
+            color: var(--text-body);
+        }
+
+        .aq-fish-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--clr-primary); }
+
+        /* Care tips alternating */
+        .care-tip-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+            margin-bottom: 4rem;
+        }
+        .care-tip-row:last-child { margin-bottom: 0; }
+        .care-tip-row.rev { direction: rtl; }
+        .care-tip-row.rev > * { direction: ltr; }
+
+        .care-tip-img-wrap {
+            border-radius: 1.5rem;
+            overflow: hidden;
+            aspect-ratio: 5/4;
+            box-shadow: var(--shadow-lg);
+            position: relative;
+        }
+
+        .care-tip-img-wrap img { width: 100%; height: 100%; object-fit: cover; }
+
+        .care-tip-num {
+            position: absolute;
+            top: 1rem; left: 1rem;
+            width: 40px; height: 40px;
+            background: var(--clr-primary);
+            color: #fff;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.875rem;
+            font-weight: 700;
+        }
+
+        .care-list { list-style: none; display: flex; flex-direction: column; gap: 0.75rem; margin-top: 1.25rem; }
+
+        .care-list li {
+            display: flex;
+            align-items: flex-start;
+            gap: 0.75rem;
+            font-size: 0.9375rem;
+            color: var(--text-body);
+            font-weight: 400;
+        }
+
+        .care-list li::before {
+            content: '';
+            width: 8px; height: 8px;
+            background: var(--clr-primary);
+            border-radius: 50%;
+            flex-shrink: 0;
+            margin-top: 7px;
+        }
+
+        /* Testimonials */
+        .testimonials-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
+        }
+
+        /* Wave divider */
+        .wave-top {
+            width: 100%;
+            overflow: hidden;
+            line-height: 0;
+            margin-bottom: -2px;
+        }
+        .wave-top svg { display: block; width: 100%; }
+
+        @media (max-width: 1024px) {
+            .hero-fish-visual { width: 50%; }
+            .featured-grid-3x2 { grid-template-columns: repeat(2, 1fr); }
+            .aq-type-content.active { grid-template-columns: 1fr; gap: 2rem; }
+            .testimonials-grid { grid-template-columns: 1fr 1fr; }
+        }
+
+        @media (max-width: 768px) {
+            .hero-fish-visual { display: none; }
+            .featured-grid-3x2 { grid-template-columns: 1fr; }
+            .care-tip-row, .care-tip-row.rev { grid-template-columns: 1fr; direction: ltr; gap: 2rem; }
+            .testimonials-grid { grid-template-columns: 1fr; }
+            .aq-type-fish-list { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- Navbar placeholder -->
+<div id="main-nav"></div>
+
+<!-- ─── HERO ──────────────────────────────────────── -->
+<section class="hero-home">
+    <!-- Bubble decorations -->
+    <div class="bubble-wrap" aria-hidden="true">
+        <div class="bubble" style="width:120px;height:120px;left:5%;bottom:-60px;animation-duration:14s;animation-delay:0s;"></div>
+        <div class="bubble" style="width:60px;height:60px;left:20%;bottom:-40px;animation-duration:10s;animation-delay:2s;"></div>
+        <div class="bubble" style="width:90px;height:90px;left:35%;bottom:-50px;animation-duration:12s;animation-delay:4s;"></div>
+        <div class="bubble" style="width:40px;height:40px;left:55%;bottom:-30px;animation-duration:9s;animation-delay:1s;"></div>
+        <div class="bubble" style="width:70px;height:70px;left:70%;bottom:-45px;animation-duration:11s;animation-delay:3s;"></div>
+        <div class="bubble" style="width:50px;height:50px;left:85%;bottom:-35px;animation-duration:8s;animation-delay:5s;"></div>
+        <div class="bubble" style="width:30px;height:30px;left:12%;bottom:-20px;animation-duration:7s;animation-delay:1.5s;"></div>
+        <div class="bubble" style="width:80px;height:80px;left:45%;bottom:-50px;animation-duration:16s;animation-delay:6s;"></div>
+        <div class="bubble" style="width:25px;height:25px;left:62%;bottom:-20px;animation-duration:6s;animation-delay:3.5s;"></div>
+    </div>
+
+    <!-- Fish visual (right side) -->
+    <div class="hero-fish-visual">
+        <img src="https://images.unsplash.com/photo-1524704654690-b56c05c78a00?w=1200&q=80" alt="Tropical coral reef aquarium" loading="eager" class="animate-slow-zoom">
+    </div>
+
+    <!-- Content -->
+    <div class="container" style="position:relative;z-index:1;">
+        <div class="hero-content animate-fade-in-up">
+            <div class="hero-label">
+                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6.5 12c.94-3.46 4.94-6 8.5-6 3.56 0 6.06 2.54 7 6-.94 3.47-3.44 6-7 6s-7.56-2.53-8.5-6z"/></svg>
+                New arrivals every week
+            </div>
+            <h1 class="hero-title">
+                Bring the Ocean<br>
+                <span class="text-accent">Home</span>
+            </h1>
+            <p class="hero-desc">
+                Discover hundreds of rare tropical fish, vibrant marine species, lush aquatic plants, and premium equipment — everything you need for a stunning aquarium.
+            </p>
+            <div class="hero-actions">
+                <a href="catalog.html" class="btn btn-primary btn-xl">Explore Fish Catalog</a>
+                <a href="care-guides.html" class="btn btn-white btn-xl">Care Guides</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Hero bottom wave -->
+    <div class="wave-top" style="position:absolute;bottom:-1px;left:0;right:0;">
+        <svg viewBox="0 0 1440 80" fill="none" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
+            <path d="M0,40 C360,80 720,0 1440,40 L1440,80 L0,80 Z" fill="var(--bg-base)"/>
+        </svg>
+    </div>
+</section>
+
+<!-- ─── STATS STRIP ────────────────────────────────── -->
+<section class="stats-strip">
+    <div class="container">
+        <div class="stats-grid">
+            <div class="stat-item reveal">
+                <span class="stat-number">500+</span>
+                <span class="stat-label">Species Available</span>
+            </div>
+            <div class="stat-item reveal delay-100">
+                <span class="stat-number">12K+</span>
+                <span class="stat-label">Happy Aquarists</span>
+            </div>
+            <div class="stat-item reveal delay-200">
+                <span class="stat-number">15</span>
+                <span class="stat-label">Years of Expertise</span>
+            </div>
+            <div class="stat-item reveal delay-300">
+                <span class="stat-number">98%</span>
+                <span class="stat-label">Survival Rate</span>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ─── NEW STOCK ARRIVALS ─────────────────────────── -->
+<section class="section bg-surface">
+    <div class="container">
+        <div class="section-header" style="display:flex;align-items:flex-end;justify-content:space-between;flex-wrap:wrap;gap:1rem;margin-bottom:2rem;">
+            <div>
+                <span class="section-label">Just Arrived</span>
+                <h2 class="section-title" style="margin-bottom:0;">New Stock Arrivals</h2>
+            </div>
+            <a href="catalog.html" class="btn btn-secondary">View All →</a>
+        </div>
+
+        <div class="grid-4 stagger-children reveal">
+            <!-- Arrival card 1 -->
+            <div class="product-card">
+                <div class="product-card-img-wrap">
+                    <img src="https://images.unsplash.com/photo-1535591273668-578e31182c4f?w=600&q=80" alt="Ocellaris Clownfish" loading="lazy">
+                    <div class="product-card-badge"><span class="badge badge-danger">New</span></div>
+                </div>
+                <div class="product-card-body">
+                    <span class="product-card-category">Marine</span>
+                    <h3 class="product-card-name">Ocellaris Clownfish</h3>
+                    <p class="product-card-meta">Origin: Indo-Pacific &bull; Care: Easy</p>
+                    <div class="product-card-footer">
+                        <span class="product-price">₹1,200</span>
+                        <a href="catalog.html" class="btn btn-primary btn-sm">Add to Cart</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Arrival card 2 -->
+            <div class="product-card">
+                <div class="product-card-img-wrap">
+                    <img src="https://images.unsplash.com/photo-1522069169874-c58ec4b76be5?w=600&q=80" alt="Galaxy Betta" loading="lazy">
+                    <div class="product-card-badge"><span class="badge badge-success">In Stock</span></div>
+                </div>
+                <div class="product-card-body">
+                    <span class="product-card-category">Freshwater</span>
+                    <h3 class="product-card-name">Galaxy Betta</h3>
+                    <p class="product-card-meta">Origin: Southeast Asia &bull; Care: Easy</p>
+                    <div class="product-card-footer">
+                        <span class="product-price">₹850</span>
+                        <a href="catalog.html" class="btn btn-primary btn-sm">Add to Cart</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Arrival card 3 -->
+            <div class="product-card">
+                <div class="product-card-img-wrap">
+                    <img src="https://images.unsplash.com/photo-1544551763-92ab472cad5d?w=600&q=80" alt="Royal Blue Discus" loading="lazy">
+                    <div class="product-card-badge"><span class="badge badge-warning">Limited</span></div>
+                </div>
+                <div class="product-card-body">
+                    <span class="product-card-category">Freshwater</span>
+                    <h3 class="product-card-name">Royal Blue Discus</h3>
+                    <p class="product-card-meta">Origin: Amazon River &bull; Care: Medium</p>
+                    <div class="product-card-footer">
+                        <span class="product-price">₹3,200</span>
+                        <a href="catalog.html" class="btn btn-primary btn-sm">Add to Cart</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Arrival card 4 -->
+            <div class="product-card">
+                <div class="product-card-img-wrap">
+                    <img src="https://images.unsplash.com/photo-1565118531796-763e5082d113?w=600&q=80" alt="Cardinal Tetra" loading="lazy">
+                    <div class="product-card-badge"><span class="badge badge-danger">New</span></div>
+                </div>
+                <div class="product-card-body">
+                    <span class="product-card-category">Freshwater</span>
+                    <h3 class="product-card-name">Cardinal Tetra</h3>
+                    <p class="product-card-meta">Origin: South America &bull; Care: Easy</p>
+                    <div class="product-card-footer">
+                        <span class="product-price">₹120</span>
+                        <a href="catalog.html" class="btn btn-primary btn-sm">Add to Cart</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ─── FEATURED SPECIES (3x2 Grid) ────────────────── -->
+<section class="section">
+    <div class="container">
+        <div class="section-header centered reveal">
+            <span class="section-label">Editor's Pick</span>
+            <h2 class="section-title">Featured Species</h2>
+            <p class="section-desc">Hand-selected by our aquatic specialists — rare, beautiful, and healthy specimens ready for their new home.</p>
+        </div>
+
+        <div class="featured-grid-3x2 stagger-children reveal">
+            <!-- Card 1 -->
+            <a href="catalog.html" class="species-card-3x2">
+                <div class="species-card-3x2-badge">
+                    <span class="badge badge-info">Freshwater</span>
+                </div>
+                <img src="https://images.unsplash.com/photo-1544551763-92ab472cad5d?w=800&q=80" alt="Symphysodon Discus" loading="lazy">
+                <div class="species-card-3x2-info">
+                    <h4>Symphysodon Discus</h4>
+                    <p>The King of the Aquarium &bull; Amazon Basin</p>
+                </div>
+            </a>
+
+            <!-- Card 2 -->
+            <a href="catalog.html" class="species-card-3x2">
+                <div class="species-card-3x2-badge">
+                    <span class="badge badge-primary">Marine</span>
+                </div>
+                <img src="https://images.unsplash.com/photo-1524704654690-b56c05c78a00?w=800&q=80" alt="Blue Tang" loading="lazy">
+                <div class="species-card-3x2-info">
+                    <h4>Blue Tang (Paracanthurus)</h4>
+                    <p>Vibrant Indo-Pacific Coral Reef Species</p>
+                </div>
+            </a>
+
+            <!-- Card 3 -->
+            <a href="catalog.html" class="species-card-3x2">
+                <div class="species-card-3x2-badge">
+                    <span class="badge badge-success">Popular</span>
+                </div>
+                <img src="https://images.unsplash.com/photo-1522069169874-c58ec4b76be5?w=800&q=80" alt="Crown Tail Betta" loading="lazy">
+                <div class="species-card-3x2-info">
+                    <h4>Crown Tail Betta</h4>
+                    <p>Magnificent Showpiece Finnage &bull; Easy Care</p>
+                </div>
+            </a>
+
+            <!-- Card 4 -->
+            <a href="catalog.html" class="species-card-3x2">
+                <div class="species-card-3x2-badge">
+                    <span class="badge badge-success">Community</span>
+                </div>
+                <img src="https://images.unsplash.com/photo-1565118531796-763e5082d113?w=800&q=80" alt="Cardinal & Neon Tetras" loading="lazy">
+                <div class="species-card-3x2-info">
+                    <h4>Cardinal & Neon Tetras</h4>
+                    <p>Schooling Jewels for Nature Aquariums</p>
+                </div>
+            </a>
+
+            <!-- Card 5 -->
+            <a href="catalog.html" class="species-card-3x2">
+                <div class="species-card-3x2-badge">
+                    <span class="badge badge-warning">Rare</span>
+                </div>
+                <img src="https://images.unsplash.com/photo-1583212292454-1fe6229603b7?w=800&q=80" alt="Altum Angelfish" loading="lazy">
+                <div class="species-card-3x2-info">
+                    <h4>Altum Angelfish</h4>
+                    <p>Majestic High-Finned Wild Orinoco Specimen</p>
+                </div>
+            </a>
+
+            <!-- Card 6 -->
+            <a href="plants.html" class="species-card-3x2">
+                <div class="species-card-3x2-badge">
+                    <span class="badge badge-info">Aquascape</span>
+                </div>
+                <img src="https://images.unsplash.com/photo-1518796745738-41048802f99a?w=800&q=80" alt="Nature Aquascape Habitat" loading="lazy">
+                <div class="species-card-3x2-info">
+                    <h4>Nature Aquascape Habitat</h4>
+                    <p>Complete Balanced Planted Biotope Setup</p>
+                </div>
+            </a>
+        </div>
+    </div>
+</section>
+
+<!-- ─── WHY CHOOSE US ──────────────────────────────── -->
+<section class="section bg-surface">
+    <div class="container">
+        <div class="section-header centered reveal">
+            <span class="section-label">Our Promise</span>
+            <h2 class="section-title">Why AquaWorld?</h2>
+            <p class="section-desc">We don't just sell fish — we help you build thriving underwater ecosystems with confidence.</p>
+        </div>
+
+        <div class="grid-4 stagger-children reveal">
+            <div class="feature-card">
+                <div class="feature-icon-wrap">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                </div>
+                <h3 class="feature-card-title">Live Arrival Guarantee</h3>
+                <p class="feature-card-text">Every fish is guaranteed to arrive alive and healthy, or we replace it — no questions asked.</p>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon-wrap">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>
+                </div>
+                <h3 class="feature-card-title">Expert Aquarist Team</h3>
+                <p class="feature-card-text">Our specialists have decades of combined experience in both freshwater and marine systems.</p>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon-wrap">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+                </div>
+                <h3 class="feature-card-title">Ethically Sourced</h3>
+                <p class="feature-card-text">All our fish are sustainably wild-caught or captive-bred with strict welfare standards.</p>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon-wrap">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 9V5a3 3 0 0 0-3-3l-4 9v11h11.28a2 2 0 0 0 2-1.7l1.38-9a2 2 0 0 0-2-2.3z"/><path d="M7 22H4a2 2 0 0 1-2-2v-7a2 2 0 0 1 2-2h3"/></svg>
+                </div>
+                <h3 class="feature-card-title">5-Star Reviews</h3>
+                <p class="feature-card-text">Trusted by over 12,000 aquarium enthusiasts who return to us for every new addition.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ─── AQUARIUM TYPES EXPLORER ────────────────────── -->
+<section class="section" style="background:var(--bg-surface-2);">
+    <div class="container">
+        <div class="section-header centered reveal">
+            <span class="section-label">Explore</span>
+            <h2 class="section-title">Choose Your Aquarium World</h2>
+            <p class="section-desc">Whether you prefer the serenity of planted tanks, the drama of marine reefs, or the diversity of freshwater — we have it all.</p>
+        </div>
+
+        <div class="aq-type-tabs">
+            <button class="aq-tab-btn active" onclick="switchAqType('freshwater', this)">🌿 Freshwater</button>
+            <button class="aq-tab-btn" onclick="switchAqType('marine', this)">🌊 Marine</button>
+            <button class="aq-tab-btn" onclick="switchAqType('planted', this)">🪴 Planted Tank</button>
+        </div>
+
+        <!-- Freshwater -->
+        <div class="aq-type-content active reveal" id="aq-freshwater">
+            <div class="aq-type-img">
+                <img src="https://images.unsplash.com/photo-1565118531796-763e5082d113?w=800&q=80" alt="Freshwater community aquarium">
+            </div>
+            <div>
+                <span class="section-label">Freshwater</span>
+                <h3 style="font-size:1.75rem;font-weight:600;color:var(--text-heading);margin-bottom:1rem;">The Perfect Beginner World</h3>
+                <p style="font-size:1rem;color:var(--text-muted);line-height:1.7;margin-bottom:1.5rem;">Freshwater tanks are easier to maintain and home to an incredible diversity of colorful, active species from rivers and lakes worldwide.</p>
+                <div class="aq-type-fish-list">
+                    <div class="aq-fish-chip"><div class="aq-fish-dot"></div>Angelfish</div>
+                    <div class="aq-fish-chip"><div class="aq-fish-dot"></div>Neon Tetra</div>
+                    <div class="aq-fish-chip"><div class="aq-fish-dot"></div>Betta Splendens</div>
+                    <div class="aq-fish-chip"><div class="aq-fish-dot"></div>Discus</div>
+                    <div class="aq-fish-chip"><div class="aq-fish-dot"></div>Corydoras</div>
+                    <div class="aq-fish-chip"><div class="aq-fish-dot"></div>Rainbow Fish</div>
+                </div>
+                <a href="catalog.html" class="btn btn-primary" style="margin-top:1.5rem;">Browse Freshwater →</a>
+            </div>
+        </div>
+
+        <!-- Marine -->
+        <div class="aq-type-content" id="aq-marine">
+            <div class="aq-type-img">
+                <img src="https://images.unsplash.com/photo-1583212292454-1fe6229603b7?w=800&q=80" alt="Marine reef aquarium with coral">
+            </div>
+            <div>
+                <span class="section-label">Marine</span>
+                <h3 style="font-size:1.75rem;font-weight:600;color:var(--text-heading);margin-bottom:1rem;">Reef-Keeping Excellence</h3>
+                <p style="font-size:1rem;color:var(--text-muted);line-height:1.7;margin-bottom:1.5rem;">Marine tanks showcase the stunning colors of ocean reef systems. More demanding but extraordinarily rewarding for passionate aquarists.</p>
+                <div class="aq-type-fish-list">
+                    <div class="aq-fish-chip"><div class="aq-fish-dot"></div>Clownfish</div>
+                    <div class="aq-fish-chip"><div class="aq-fish-dot"></div>Blue Tang</div>
+                    <div class="aq-fish-chip"><div class="aq-fish-dot"></div>Mandarin Dragonet</div>
+                    <div class="aq-fish-chip"><div class="aq-fish-dot"></div>Flame Angelfish</div>
+                    <div class="aq-fish-chip"><div class="aq-fish-dot"></div>Royal Gramma</div>
+                    <div class="aq-fish-chip"><div class="aq-fish-dot"></div>Chromis Damsel</div>
+                </div>
+                <a href="catalog.html" class="btn btn-primary" style="margin-top:1.5rem;">Browse Marine →</a>
+            </div>
+        </div>
+
+        <!-- Planted -->
+        <div class="aq-type-content" id="aq-planted">
+            <div class="aq-type-img">
+                <img src="https://images.unsplash.com/photo-1518796745738-41048802f99a?w=800&q=80" alt="Dutch planted aquarium aquascape">
+            </div>
+            <div>
+                <span class="section-label">Planted Tank</span>
+                <h3 style="font-size:1.75rem;font-weight:600;color:var(--text-heading);margin-bottom:1rem;">Living Art Aquascapes</h3>
+                <p style="font-size:1rem;color:var(--text-muted);line-height:1.7;margin-bottom:1.5rem;">Transform your aquarium into a lush underwater garden. Planted tanks create a self-sustaining ecosystem that's both beautiful and beneficial for fish.</p>
+                <div class="aq-type-fish-list">
+                    <div class="aq-fish-chip"><div class="aq-fish-dot"></div>Anubias Nana</div>
+                    <div class="aq-fish-chip"><div class="aq-fish-dot"></div>Java Fern</div>
+                    <div class="aq-fish-chip"><div class="aq-fish-dot"></div>Amazon Sword</div>
+                    <div class="aq-fish-chip"><div class="aq-fish-dot"></div>Monte Carlo</div>
+                    <div class="aq-fish-chip"><div class="aq-fish-dot"></div>Dwarf Hairgrass</div>
+                    <div class="aq-fish-chip"><div class="aq-fish-dot"></div>Rotala Rotundifolia</div>
+                </div>
+                <a href="plants.html" class="btn btn-primary" style="margin-top:1.5rem;">Browse Plants →</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ─── CARE TIPS ──────────────────────────────────── -->
+<section class="section bg-surface">
+    <div class="container">
+        <div class="section-header centered reveal">
+            <span class="section-label">Expertise</span>
+            <h2 class="section-title">Essential Care Tips</h2>
+            <p class="section-desc">From water chemistry to feeding habits — our experts share the knowledge that keeps your fish thriving.</p>
+        </div>
+
+        <div class="care-tip-row reveal">
+            <div class="care-tip-img-wrap">
+                <img src="https://images.unsplash.com/photo-1584464491033-06628f3a6b7b?w=800&q=80" alt="Testing aquarium water quality">
+                <div class="care-tip-num">01</div>
+            </div>
+            <div>
+                <span class="section-label">Water Quality</span>
+                <h3 style="font-size:1.75rem;font-weight:600;color:var(--text-heading);margin-bottom:0.75rem;">Master Your Water Chemistry</h3>
+                <p style="color:var(--text-muted);line-height:1.7;margin-bottom:1rem;">Water parameters are the foundation of a healthy aquarium. Get these right and your fish will flourish naturally.</p>
+                <ul class="care-list">
+                    <li>Test pH, ammonia, nitrite, and nitrate weekly</li>
+                    <li>Perform 20–30% water changes bi-weekly</li>
+                    <li>Use a quality dechlorinator every change</li>
+                    <li>Monitor temperature with a reliable thermometer</li>
+                </ul>
+                <a href="care-guides.html" class="btn btn-secondary" style="margin-top:1.5rem;">Read Full Guide →</a>
+            </div>
+        </div>
+
+        <div class="care-tip-row rev reveal">
+            <div class="care-tip-img-wrap">
+                <img src="https://images.unsplash.com/photo-1620735692151-26a7e0748429?w=800&q=80" alt="Aquarium fish feeding">
+                <div class="care-tip-num">02</div>
+            </div>
+            <div>
+                <span class="section-label">Nutrition</span>
+                <h3 style="font-size:1.75rem;font-weight:600;color:var(--text-heading);margin-bottom:0.75rem;">Balanced Feeding Habits</h3>
+                <p style="color:var(--text-muted);line-height:1.7;margin-bottom:1rem;">Proper nutrition enhances color, boosts immunity, and promotes natural behavior. Less is often more when it comes to feeding.</p>
+                <ul class="care-list">
+                    <li>Feed only what fish can consume in 2–3 minutes</li>
+                    <li>Vary diet between flakes, pellets, and live food</li>
+                    <li>Fast your fish one day per week for gut health</li>
+                    <li>Match food type to species-specific needs</li>
+                </ul>
+                <a href="care-guides.html" class="btn btn-secondary" style="margin-top:1.5rem;">Read Full Guide →</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ─── TESTIMONIALS ───────────────────────────────── -->
+<section class="section" style="background:var(--bg-surface-2);">
+    <div class="container">
+        <div class="section-header centered reveal">
+            <span class="section-label">Community</span>
+            <h2 class="section-title">What Our Aquarists Say</h2>
+            <p class="section-desc">Join thousands of satisfied fish keepers who trust AquaWorld for their aquarium journey.</p>
+        </div>
+
+        <div class="testimonials-grid reveal">
+            <div class="testimonial-card">
+                <div class="testimonial-stars">
+                    <span class="star-fill">★★★★★</span>
+                </div>
+                <p class="testimonial-text">"I ordered six Discus fish and every single one arrived in perfect condition. The packing was incredible — ice packs, pure oxygen, and even stress coat. Absolutely top-tier service!"</p>
+                <div class="testimonial-author">
+                    <div class="testimonial-avatar">RK</div>
+                    <div>
+                        <div class="testimonial-name">Rajan Krishnamurthy</div>
+                        <div class="testimonial-role">Marine Aquarist, Chennai</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="testimonial-card">
+                <div class="testimonial-stars">
+                    <span class="star-fill">★★★★★</span>
+                </div>
+                <p class="testimonial-text">"AquaWorld helped me set up my first saltwater tank from scratch. Their care guides are the best I've found anywhere — detailed, accurate, and written by people who actually keep fish."</p>
+                <div class="testimonial-author">
+                    <div class="testimonial-avatar">PM</div>
+                    <div>
+                        <div class="testimonial-name">Priya Menon</div>
+                        <div class="testimonial-role">Reef Hobbyist, Bangalore</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="testimonial-card">
+                <div class="testimonial-stars">
+                    <span class="star-fill">★★★★★</span>
+                </div>
+                <p class="testimonial-text">"The planted tank starter kit I ordered was exactly what I needed. Beautiful healthy plants, quality substrate, and the light fixture they recommended transformed my tank completely."</p>
+                <div class="testimonial-author">
+                    <div class="testimonial-avatar">AS</div>
+                    <div>
+                        <div class="testimonial-name">Arvind Sharma</div>
+                        <div class="testimonial-role">Aquascape Enthusiast, Mumbai</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ─── CTA BAND ───────────────────────────────────── -->
+<section class="cta-band reveal">
+    <div class="container">
+        <h2 class="cta-band-title">Ready to Start Your Aquarium Journey?</h2>
+        <p class="cta-band-desc">Browse our full catalog of tropical fish, marine species, plants, and equipment — all in one place.</p>
+        <div class="cta-band-actions">
+            <a href="catalog.html" class="btn btn-white btn-xl">Shop Fish Catalog</a>
+            <a href="contact.html" class="btn btn-secondary btn-xl" style="border-color:rgba(255,255,255,0.4);color:#fff;">Special Order Enquiry</a>
+        </div>
+    </div>
+</section>
+
+<!-- ─── NEWSLETTER ─────────────────────────────────── -->
+<section class="newsletter-section">
+    <div class="container">
+        <div class="section-header centered" style="margin-bottom:0;">
+            <span class="section-label">Stay Connected</span>
+            <h2 class="section-title">Get Aquarium Tips & Offers</h2>
+            <p class="section-desc">New arrivals, care guides, and exclusive member discounts — delivered to your inbox weekly.</p>
+            <form onsubmit="event.preventDefault(); alert('Thank you! 🐠 You\'re now subscribed.'); this.reset();" class="newsletter-form" style="margin-top:1.5rem;">
+                <input type="email" placeholder="Enter your email address" class="newsletter-input" required>
+                <button type="submit" class="btn btn-primary">Subscribe</button>
+            </form>
+        </div>
+    </div>
+</section>
+
+<!-- Footer placeholder -->
+<div id="main-footer"></div>
+
+<!-- Scroll to top -->
+<button class="scroll-top-btn" id="scroll-top-btn" aria-label="Scroll to top">
+    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="19" x2="12" y2="5"/><polyline points="5 12 12 5 19 12"/></svg>
+</button>
+
+<script src="components.js"></script>
+<script>
+    // Aquarium type tab switcher
+    function switchAqType(type, btn) {
+        document.querySelectorAll('.aq-tab-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        document.querySelectorAll('.aq-type-content').forEach(c => c.classList.remove('active'));
+        const target = document.getElementById('aq-' + type);
+        if (target) target.classList.add('active');
+    }
+
+    // Stat counter animation — counts up when scrolled into view
+    (function() {
+        const stats = document.querySelectorAll('.stat-number');
+        const targets = [];
+        stats.forEach(el => {
+            const raw = el.textContent.trim();
+            const num = parseFloat(raw.replace(/[^0-9.]/g, ''));
+            const suffix = raw.replace(/[0-9.]/g, '');
+            targets.push({ el, num, suffix, done: false });
+        });
+
+        function animateCount(el, target, suffix) {
+            const duration = 1200;
+            const start = performance.now();
+            el.classList.add('counting');
+            function step(now) {
+                const progress = Math.min((now - start) / duration, 1);
+                const ease = 1 - Math.pow(1 - progress, 4);
+                const val = Math.round(ease * target);
+                el.textContent = val + suffix;
+                if (progress < 1) requestAnimationFrame(step);
+                else { el.textContent = target + suffix; el.classList.remove('counting'); }
+            }
+            requestAnimationFrame(step);
+        }
+
+        const observer = new IntersectionObserver(entries => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    targets.forEach(t => {
+                        if (t.el === entry.target && !t.done) {
+                            t.done = true;
+                            animateCount(t.el, t.num, t.suffix);
+                        }
+                    });
+                }
+            });
+        }, { threshold: 0.5 });
+
+        stats.forEach(el => observer.observe(el));
+    })();
+</script>
+</body>
+</html>

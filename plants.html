@@ -1,0 +1,608 @@
+<!DOCTYPE html>
+<html lang="en" id="root-html">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="AquaWorld Aquatic Plants — Browse our extensive collection of freshwater and planted tank aquatic plants. From beginner-friendly java ferns to expert aquascaping species.">
+    <title>Aquatic Plants | AquaWorld Aquarium Store</title>
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        /* Plants intro section */
+        .plants-intro {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+            margin-bottom: 4rem;
+        }
+
+        .plants-intro-img {
+            border-radius: 1.5rem;
+            overflow: hidden;
+            aspect-ratio: 4/3;
+            box-shadow: var(--shadow-xl);
+        }
+
+        .plants-intro-img img { width: 100%; height: 100%; object-fit: cover; }
+
+        .plants-benefit-list {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        .plants-benefit-item {
+            display: flex;
+            gap: 0.875rem;
+            align-items: flex-start;
+        }
+
+        .plants-benefit-icon {
+            width: 40px; height: 40px;
+            border-radius: 0.75rem;
+            background: var(--clr-primary-xlight);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--clr-primary);
+            flex-shrink: 0;
+        }
+
+        .plants-benefit-text strong {
+            display: block;
+            font-size: 0.9375rem;
+            font-weight: 600;
+            color: var(--text-heading);
+            margin-bottom: 0.125rem;
+        }
+
+        .plants-benefit-text span {
+            font-size: 0.8125rem;
+            color: var(--text-muted);
+        }
+
+        /* Plant card */
+        .plant-card {
+            background: var(--bg-surface);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-xl);
+            overflow: hidden;
+            transition: transform 0.3s, box-shadow 0.3s, border-color 0.2s;
+        }
+
+        .plant-card:hover {
+            transform: translateY(-6px);
+            box-shadow: var(--shadow-lg);
+            border-color: var(--clr-primary);
+        }
+
+        .plant-card-img-wrap {
+            aspect-ratio: 4/3;
+            overflow: hidden;
+            background: var(--bg-surface-2);
+            position: relative;
+        }
+
+        .plant-card-img-wrap img {
+            width: 100%; height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s;
+        }
+
+        .plant-card:hover .plant-card-img-wrap img { transform: scale(1.06); }
+
+        .plant-card-badge {
+            position: absolute;
+            top: 0.75rem; left: 0.75rem;
+        }
+
+        .plant-card-body { padding: 1.25rem; }
+
+        .plant-card-category {
+            font-size: 0.75rem;
+            font-weight: 700;
+            color: var(--clr-primary);
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            margin-bottom: 0.25rem;
+        }
+
+        .plant-card-name {
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--text-heading);
+            margin-bottom: 0.625rem;
+        }
+
+        .plant-specs {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+            margin-bottom: 0.875rem;
+        }
+
+        .plant-spec {
+            font-size: 0.7rem;
+            background: var(--bg-surface-2);
+            border: 1px solid var(--border-color);
+            border-radius: 9999px;
+            padding: 0.175rem 0.625rem;
+            color: var(--text-muted);
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 0.25rem;
+        }
+
+        .plant-card-footer {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 0.5rem;
+            padding-top: 0.875rem;
+            border-top: 1px solid var(--border-color);
+        }
+
+        /* Aquascape guide */
+        .aqscape-steps {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1.5rem;
+            counter-reset: step-counter;
+        }
+
+        .aqscape-step {
+            background: var(--bg-surface);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-xl);
+            padding: 1.5rem;
+            text-align: center;
+            position: relative;
+            counter-increment: step-counter;
+        }
+
+        .aqscape-step::before {
+            content: counter(step-counter);
+            position: absolute;
+            top: -14px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 28px; height: 28px;
+            background: var(--clr-primary);
+            color: #fff;
+            border-radius: 50%;
+            font-size: 0.8125rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .aqscape-step h4 { font-size: 0.9375rem; font-weight: 600; color: var(--text-heading); margin-bottom: 0.5rem; margin-top: 0.25rem; }
+        .aqscape-step p  { font-size: 0.8125rem; color: var(--text-muted); line-height: 1.6; font-weight: 400; }
+
+        /* Lighting guide */
+        .light-guide {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.25rem;
+        }
+
+        .light-card {
+            border-radius: var(--radius-xl);
+            padding: 1.5rem;
+            text-align: center;
+            border: 1px solid var(--border-color);
+        }
+
+        .light-card.low   { background: linear-gradient(135deg, rgba(52,211,153,0.08) 0%, rgba(52,211,153,0.04) 100%); border-color: rgba(52,211,153,0.2); }
+        .light-card.med   { background: linear-gradient(135deg, rgba(251,191,36,0.10) 0%, rgba(251,191,36,0.04) 100%); border-color: rgba(251,191,36,0.2); }
+        .light-card.high  { background: linear-gradient(135deg, rgba(239,68,68,0.10) 0%, rgba(239,68,68,0.04) 100%); border-color: rgba(239,68,68,0.2); }
+
+        .light-dot { width: 40px; height: 40px; border-radius: 50%; margin: 0 auto 1rem; }
+        .light-card.low  .light-dot { background: #34D399; }
+        .light-card.med  .light-dot { background: #FBBF24; }
+        .light-card.high .light-dot { background: #EF4444; }
+
+        .light-card h4 { font-size: 1rem; font-weight: 600; color: var(--text-heading); margin-bottom: 0.5rem; }
+        .light-card p  { font-size: 0.8125rem; color: var(--text-muted); line-height: 1.6; font-weight: 400; }
+        .light-card ul { text-align: left; margin-top: 0.75rem; }
+        .light-card li { font-size: 0.8125rem; color: var(--text-muted); padding: 0.2rem 0; }
+        .light-card li::before { content: '› '; color: var(--clr-primary); }
+
+        @media (max-width: 1024px) {
+            .plants-intro { grid-template-columns: 1fr; gap: 2rem; }
+            .aqscape-steps { grid-template-columns: 1fr 1fr; }
+            .light-guide { grid-template-columns: 1fr; }
+        }
+
+        @media (max-width: 768px) {
+            .aqscape-steps { grid-template-columns: 1fr; }
+            .grid-3 { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+<div id="main-nav"></div>
+
+<!-- Page Hero -->
+<div class="page-hero" style="background:linear-gradient(135deg, #0B4A1A 0%, #0B7B8C 100%);">
+    <div class="container">
+        <div class="breadcrumb">
+            <a href="index.html">Home</a>
+            <span>›</span>
+            <span style="color:#fff;">Aquatic Plants</span>
+        </div>
+        <h1 class="page-hero-title">Aquatic Plants</h1>
+        <p class="page-hero-desc">Transform your aquarium into a lush underwater garden. Choose from 100+ species across all difficulty levels.</p>
+    </div>
+</div>
+
+<!-- ─── INTRO SECTION ─────────────────────────────── -->
+<section class="section bg-surface">
+    <div class="container">
+        <div class="plants-intro reveal">
+            <div class="plants-intro-img">
+                <img src="https://images.unsplash.com/photo-1518796745738-41048802f99a?w=900&q=80" alt="Lush planted aquascape aquarium with green plants and fish">
+            </div>
+            <div>
+                <span class="section-label">Why Live Plants?</span>
+                <h2 class="section-title">Natural Beauty + Real Benefits</h2>
+                <p style="color:var(--text-muted);line-height:1.7;margin-bottom:1.5rem;">Live aquatic plants aren't just decorative — they actively improve water quality, reduce algae growth, and create a natural environment where fish thrive.</p>
+
+                <div class="plants-benefit-list">
+                    <div class="plants-benefit-item">
+                        <div class="plants-benefit-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22V12"/><path d="M12 12C12 7 17 2 17 2s-5 3-5 7"/><path d="M12 12C12 7 7 2 7 2s5 3 5 7"/></svg>
+                        </div>
+                        <div class="plants-benefit-text">
+                            <strong>Natural Oxygenation</strong>
+                            <span>Plants produce oxygen during photosynthesis, naturally enriching tank water.</span>
+                        </div>
+                    </div>
+                    <div class="plants-benefit-item">
+                        <div class="plants-benefit-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>
+                        </div>
+                        <div class="plants-benefit-text">
+                            <strong>Nitrate Absorption</strong>
+                            <span>Living plants consume nitrates, reducing harmful toxins in the water column.</span>
+                        </div>
+                    </div>
+                    <div class="plants-benefit-item">
+                        <div class="plants-benefit-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+                        </div>
+                        <div class="plants-benefit-text">
+                            <strong>Fish Enrichment</strong>
+                            <span>Provide natural hiding spots, breeding grounds, and territory for fish.</span>
+                        </div>
+                    </div>
+                    <div class="plants-benefit-item">
+                        <div class="plants-benefit-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                        </div>
+                        <div class="plants-benefit-text">
+                            <strong>Algae Control</strong>
+                            <span>Healthy plants outcompete unwanted algae by consuming the same nutrients.</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ─── PLANT CATALOG ──────────────────────────────── -->
+<section class="section">
+    <div class="container">
+        <div class="section-header centered reveal">
+            <span class="section-label">Our Collection</span>
+            <h2 class="section-title">Shop Aquatic Plants</h2>
+            <p class="section-desc">Carefully quarantined and pest-free plants, ready to go straight into your aquarium.</p>
+        </div>
+
+        <div class="filter-bar" style="justify-content:center;margin-bottom:2.5rem;" id="plant-filter-bar">
+            <button class="filter-btn active" onclick="filterPlants('all', this)">All Plants</button>
+            <button class="filter-btn" onclick="filterPlants('foreground', this)">Foreground</button>
+            <button class="filter-btn" onclick="filterPlants('midground', this)">Midground</button>
+            <button class="filter-btn" onclick="filterPlants('background', this)">Background</button>
+            <button class="filter-btn" onclick="filterPlants('floating', this)">Floating</button>
+            <button class="filter-btn" onclick="filterPlants('moss', this)">Moss & Fern</button>
+        </div>
+
+        <div class="grid-3 reveal" id="plant-grid">
+
+            <div class="plant-card plant-item" data-category="background">
+                <div class="plant-card-img-wrap">
+                    <img src="https://images.unsplash.com/photo-1518796745738-41048802f99a?w=600&q=80" alt="Amazon Sword plant" loading="lazy">
+                    <div class="plant-card-badge"><span class="badge badge-success">In Stock</span></div>
+                </div>
+                <div class="plant-card-body">
+                    <div class="plant-card-category">Background Plant</div>
+                    <h3 class="plant-card-name">Amazon Sword</h3>
+                    <div class="plant-specs">
+                        <span class="plant-spec">🌿 Easy</span>
+                        <span class="plant-spec">💡 Low–Med</span>
+                        <span class="plant-spec">40–60cm tall</span>
+                    </div>
+                    <div class="plant-card-footer">
+                        <span class="product-price">₹280</span>
+                        <a href="#" class="btn btn-primary btn-sm">Add to Cart</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="plant-card plant-item" data-category="moss">
+                <div class="plant-card-img-wrap">
+                    <img src="https://images.unsplash.com/photo-1559827260-dc66d52bef19?w=600&q=80" alt="Java Moss on driftwood" loading="lazy">
+                    <div class="plant-card-badge"><span class="badge badge-success">In Stock</span></div>
+                </div>
+                <div class="plant-card-body">
+                    <div class="plant-card-category">Moss</div>
+                    <h3 class="plant-card-name">Java Moss</h3>
+                    <div class="plant-specs">
+                        <span class="plant-spec">🌿 Easy</span>
+                        <span class="plant-spec">💡 Any</span>
+                        <span class="plant-spec">Carpeting</span>
+                    </div>
+                    <div class="plant-card-footer">
+                        <span class="product-price">₹150</span>
+                        <a href="#" class="btn btn-primary btn-sm">Add to Cart</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="plant-card plant-item" data-category="foreground">
+                <div class="plant-card-img-wrap">
+                    <img src="https://images.unsplash.com/photo-1524704654690-b56c05c78a00?w=600&q=80" alt="Monte Carlo carpet plant" loading="lazy">
+                    <div class="plant-card-badge"><span class="badge badge-warning">Popular</span></div>
+                </div>
+                <div class="plant-card-body">
+                    <div class="plant-card-category">Foreground Carpet</div>
+                    <h3 class="plant-card-name">Monte Carlo</h3>
+                    <div class="plant-specs">
+                        <span class="plant-spec">⚡ Medium</span>
+                        <span class="plant-spec">💡 Medium–High</span>
+                        <span class="plant-spec">CO2 Helpful</span>
+                    </div>
+                    <div class="plant-card-footer">
+                        <span class="product-price">₹220</span>
+                        <a href="#" class="btn btn-primary btn-sm">Add to Cart</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="plant-card plant-item" data-category="moss">
+                <div class="plant-card-img-wrap">
+                    <img src="https://images.unsplash.com/photo-1565118531796-763e5082d113?w=600&q=80" alt="Anubias nana plant" loading="lazy">
+                    <div class="plant-card-badge"><span class="badge badge-success">In Stock</span></div>
+                </div>
+                <div class="plant-card-body">
+                    <div class="plant-card-category">Rhizome / Fern</div>
+                    <h3 class="plant-card-name">Anubias Nana</h3>
+                    <div class="plant-specs">
+                        <span class="plant-spec">🌿 Easy</span>
+                        <span class="plant-spec">💡 Low</span>
+                        <span class="plant-spec">No CO2 needed</span>
+                    </div>
+                    <div class="plant-card-footer">
+                        <span class="product-price">₹180</span>
+                        <a href="#" class="btn btn-primary btn-sm">Add to Cart</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="plant-card plant-item" data-category="foreground">
+                <div class="plant-card-img-wrap">
+                    <img src="https://images.unsplash.com/photo-1583212292454-1fe6229603b7?w=600&q=80" alt="Dwarf hairgrass carpet" loading="lazy">
+                    <div class="plant-card-badge"><span class="badge badge-warning">Popular</span></div>
+                </div>
+                <div class="plant-card-body">
+                    <div class="plant-card-category">Foreground Carpet</div>
+                    <h3 class="plant-card-name">Dwarf Hairgrass</h3>
+                    <div class="plant-specs">
+                        <span class="plant-spec">⚡ Medium</span>
+                        <span class="plant-spec">💡 High</span>
+                        <span class="plant-spec">CO2 Required</span>
+                    </div>
+                    <div class="plant-card-footer">
+                        <span class="product-price">₹190</span>
+                        <a href="#" class="btn btn-primary btn-sm">Add to Cart</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="plant-card plant-item" data-category="background">
+                <div class="plant-card-img-wrap">
+                    <img src="https://images.unsplash.com/photo-1526649661456-89c7ed4d00b8?w=600&q=80" alt="Rotala Rotundifolia stem plant" loading="lazy">
+                    <div class="plant-card-badge"><span class="badge badge-danger">New</span></div>
+                </div>
+                <div class="plant-card-body">
+                    <div class="plant-card-category">Background Stem</div>
+                    <h3 class="plant-card-name">Rotala Rotundifolia</h3>
+                    <div class="plant-specs">
+                        <span class="plant-spec">🌿 Easy</span>
+                        <span class="plant-spec">💡 Medium</span>
+                        <span class="plant-spec">CO2 Optional</span>
+                    </div>
+                    <div class="plant-card-footer">
+                        <span class="product-price">₹95 per stem</span>
+                        <a href="#" class="btn btn-primary btn-sm">Add to Cart</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="plant-card plant-item" data-category="floating">
+                <div class="plant-card-img-wrap">
+                    <img src="https://images.unsplash.com/photo-1620735692151-26a7e0748429?w=600&q=80" alt="Frogbit floating plant" loading="lazy">
+                    <div class="plant-card-badge"><span class="badge badge-success">In Stock</span></div>
+                </div>
+                <div class="plant-card-body">
+                    <div class="plant-card-category">Floating Plant</div>
+                    <h3 class="plant-card-name">Amazon Frogbit</h3>
+                    <div class="plant-specs">
+                        <span class="plant-spec">🌿 Easy</span>
+                        <span class="plant-spec">💡 Low–Med</span>
+                        <span class="plant-spec">Surface</span>
+                    </div>
+                    <div class="plant-card-footer">
+                        <span class="product-price">₹120</span>
+                        <a href="#" class="btn btn-primary btn-sm">Add to Cart</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="plant-card plant-item" data-category="midground">
+                <div class="plant-card-img-wrap">
+                    <img src="https://images.unsplash.com/photo-1559827260-dc66d52bef19?w=600&q=80" alt="Cryptocoryne wendtii" loading="lazy">
+                    <div class="plant-card-badge"><span class="badge badge-success">In Stock</span></div>
+                </div>
+                <div class="plant-card-body">
+                    <div class="plant-card-category">Midground</div>
+                    <h3 class="plant-card-name">Cryptocoryne Wendtii</h3>
+                    <div class="plant-specs">
+                        <span class="plant-spec">🌿 Easy</span>
+                        <span class="plant-spec">💡 Low–Med</span>
+                        <span class="plant-spec">Rooted</span>
+                    </div>
+                    <div class="plant-card-footer">
+                        <span class="product-price">₹210</span>
+                        <a href="#" class="btn btn-primary btn-sm">Add to Cart</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="plant-card plant-item" data-category="midground">
+                <div class="plant-card-img-wrap">
+                    <img src="https://images.unsplash.com/photo-1518796745738-41048802f99a?w=600&q=80" alt="Java Fern on rock" loading="lazy">
+                    <div class="plant-card-badge"><span class="badge badge-warning">Popular</span></div>
+                </div>
+                <div class="plant-card-body">
+                    <div class="plant-card-category">Rhizome Fern</div>
+                    <h3 class="plant-card-name">Java Fern</h3>
+                    <div class="plant-specs">
+                        <span class="plant-spec">🌿 Easy</span>
+                        <span class="plant-spec">💡 Low</span>
+                        <span class="plant-spec">No CO2</span>
+                    </div>
+                    <div class="plant-card-footer">
+                        <span class="product-price">₹160</span>
+                        <a href="#" class="btn btn-primary btn-sm">Add to Cart</a>
+                    </div>
+                </div>
+            </div>
+
+        </div><!-- end plant grid -->
+
+        <div style="text-align:center;margin-top:2.5rem;">
+            <a href="contact.html" class="btn btn-secondary btn-lg">Request Specific Plant →</a>
+        </div>
+    </div>
+</section>
+
+<!-- ─── LIGHTING GUIDE ─────────────────────────────── -->
+<section class="section bg-surface">
+    <div class="container">
+        <div class="section-header centered reveal">
+            <span class="section-label">Guide</span>
+            <h2 class="section-title">Plant Lighting Requirements</h2>
+            <p class="section-desc">Match your plants to the right light level for healthy, thriving growth.</p>
+        </div>
+
+        <div class="light-guide reveal">
+            <div class="light-card low">
+                <div class="light-dot"></div>
+                <h4>Low Light</h4>
+                <p>Tolerates minimal lighting. Perfect for beginners and low-tech setups without CO2.</p>
+                <ul>
+                    <li>Anubias species</li>
+                    <li>Java Fern</li>
+                    <li>Java Moss</li>
+                    <li>Cryptocoryne</li>
+                    <li>Vallisneria</li>
+                </ul>
+            </div>
+            <div class="light-card med">
+                <div class="light-dot"></div>
+                <h4>Medium Light</h4>
+                <p>Requires moderate lighting. Some species benefit from CO2 supplementation for best growth.</p>
+                <ul>
+                    <li>Amazon Sword</li>
+                    <li>Rotala species</li>
+                    <li>Monte Carlo</li>
+                    <li>Ludwigia</li>
+                    <li>Hygrophila</li>
+                </ul>
+            </div>
+            <div class="light-card high">
+                <div class="light-dot"></div>
+                <h4>High Light</h4>
+                <p>Demands strong lighting and often pressurized CO2. Rewarding for expert aquascapers.</p>
+                <ul>
+                    <li>Hemianthus (HC)</li>
+                    <li>Dwarf Hairgrass</li>
+                    <li>Glossostigma</li>
+                    <li>Eleocharis</li>
+                    <li>Riccia fluitans</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ─── AQUASCAPE SETUP GUIDE ──────────────────────── -->
+<section class="section">
+    <div class="container">
+        <div class="section-header centered reveal">
+            <span class="section-label">Step by Step</span>
+            <h2 class="section-title">Setting Up Your Planted Tank</h2>
+            <p class="section-desc">Follow our simple guide to create a thriving planted aquascape from day one.</p>
+        </div>
+
+        <div class="aqscape-steps reveal">
+            <div class="aqscape-step">
+                <h4>Choose Your Substrate</h4>
+                <p>Nutrient-rich aqua soil or gravel provides the foundation for strong root development.</p>
+            </div>
+            <div class="aqscape-step">
+                <h4>Plan Your Layout</h4>
+                <p>Apply the rule of thirds. Foreground short, midground varied, background tall.</p>
+            </div>
+            <div class="aqscape-step">
+                <h4>Plant & Cycle</h4>
+                <p>Plant densely from the start to outcompete algae. Cycle your tank for 2–4 weeks.</p>
+            </div>
+            <div class="aqscape-step">
+                <h4>Maintain & Trim</h4>
+                <p>Regular trimming and fertilization keep your scape looking pristine and growing healthy.</p>
+            </div>
+        </div>
+
+        <div style="text-align:center;margin-top:3rem;">
+            <a href="care-guides.html" class="btn btn-primary btn-lg">Read Full Aquascape Guide →</a>
+        </div>
+    </div>
+</section>
+
+<div id="main-footer"></div>
+<button class="scroll-top-btn" id="scroll-top-btn" aria-label="Scroll to top">
+    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="19" x2="12" y2="5"/><polyline points="5 12 12 5 19 12"/></svg>
+</button>
+
+<script src="components.js"></script>
+<script>
+    function filterPlants(category, btn) {
+        document.querySelectorAll('#plant-filter-bar .filter-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        document.querySelectorAll('.plant-item').forEach(item => {
+            const cat = item.dataset.category;
+            item.style.display = (category === 'all' || cat === category) ? '' : 'none';
+        });
+    }
+</script>
+</body>
+</html>
