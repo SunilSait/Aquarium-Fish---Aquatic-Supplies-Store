@@ -6,6 +6,9 @@
     <meta name="description" content="AquaWorld Equipment & Accessories — Premium aquarium tanks, canister filters, LED lighting, fish food, and everything you need for a perfect aquarium setup.">
     <title>Equipment & Accessories | AquaWorld Aquarium Store</title>
     <link rel="icon" type="image/svg+xml" href="favicon.svg">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
     <style>
         /* Category hero cards */
@@ -55,7 +58,7 @@
         .cat-hero-card-overlay-inner h3 {
             color: #fff;
             font-size: 1.0625rem;
-            font-weight: 700;
+            font-weight: 600;
             margin-bottom: 0.25rem;
             transition: color 0.3s ease;
         }
@@ -221,7 +224,8 @@
         .buying-guide-img {
             border-radius: 1.25rem;
             overflow: hidden;
-            aspect-ratio: 3/4;
+            height: 320px;
+            max-width: 100%;
             margin-bottom: 1.5rem;
         }
 
@@ -258,15 +262,17 @@
 
         @media (max-width: 1024px) {
             .cat-hero-grid { grid-template-columns: 1fr 1fr; }
-            .eq-card { grid-template-columns: 160px 1fr; }
+            .eq-card { grid-template-columns: 180px 1fr; }
             .buying-guide { grid-template-columns: 1fr; gap: 2rem; }
-            .buying-guide-sticky { position: static; }
+            .buying-guide-sticky { position: static; max-width: 560px; margin: 0 auto; }
+            .buying-guide-img { height: 280px; max-width: 100%; }
         }
 
         @media (max-width: 768px) {
             .cat-hero-grid { grid-template-columns: 1fr 1fr; }
             .eq-card { grid-template-columns: 1fr; }
-            .eq-card-img { height: 200px; }
+            .eq-card-img { height: 260px; }
+            .buying-guide-img { height: 220px; }
         }
 
         @media (max-width: 360px) {
@@ -280,7 +286,7 @@
 <div id="main-nav"></div>
 
 <!-- Page Hero -->
-<div class="page-hero">
+<div class="page-hero page-hero-banner page-hero-equipment">
     <div class="container">
         <div class="breadcrumb">
             <a href="index.html">Home</a>

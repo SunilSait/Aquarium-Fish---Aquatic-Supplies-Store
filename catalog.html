@@ -6,6 +6,9 @@
     <meta name="description" content="AquaWorld Fish Catalog — Browse freshwater, marine, and planted tank fish. Filter by type, care level, and origin. Find your perfect aquarium fish.">
     <title>Fish Catalog | AquaWorld Aquarium Store</title>
     <link rel="icon" type="image/svg+xml" href="favicon.svg">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
     <style>
         .catalog-layout {
@@ -30,7 +33,7 @@
 
         .sidebar-title {
             font-size: 0.75rem;
-            font-weight: 700;
+            font-weight: 600;
             text-transform: uppercase;
             letter-spacing: 0.1em;
             color: var(--text-muted);
@@ -127,10 +130,22 @@
             .catalog-layout { grid-template-columns: 1fr; }
             .catalog-sidebar { position: static; }
             .catalog-grid { grid-template-columns: repeat(2, 1fr); }
+            .catalog-grid .product-card:last-child:nth-child(odd),
+            .catalog-grid .product-card.last-odd-card {
+                grid-column: 1 / -1;
+                justify-self: center;
+                width: 100%;
+                max-width: calc(50% - 0.625rem);
+            }
         }
 
         @media (max-width: 768px) {
             .catalog-grid { grid-template-columns: 1fr; }
+            .catalog-grid .product-card:last-child:nth-child(odd),
+            .catalog-grid .product-card.last-odd-card {
+                max-width: 100%;
+                justify-self: stretch;
+            }
         }
     </style>
 </head>
@@ -139,7 +154,7 @@
 <div id="main-nav"></div>
 
 <!-- Page Hero -->
-<div class="page-hero">
+<div class="page-hero page-hero-banner page-hero-catalog">
     <div class="container">
         <div class="breadcrumb">
             <a href="index.html">Home</a>
@@ -556,7 +571,7 @@
 <section style="padding: 2.5rem 0 4rem;">
     <div class="container">
         <div style="background: var(--bg-surface); border: 1px solid var(--border-color); border-radius: var(--radius-xl); padding: 3rem 2rem; text-align: center; max-width: 800px; margin: 0 auto; box-shadow: var(--shadow-sm);">
-            <h2 style="font-size: 1.75rem; font-weight: 700; color: var(--text-heading); margin-bottom: 0.75rem;">Can't find what you're looking for?</h2>
+            <h2 style="font-size: 1.75rem; font-weight: 600; color: var(--text-heading); margin-bottom: 0.75rem;">Can't find what you're looking for?</h2>
             <p style="font-size: 0.9375rem; color: var(--text-muted); max-width: 520px; margin: 0 auto 1.75rem; line-height: 1.6;">
                 We source rare and exotic species on special order. Contact us with your requirements and we'll locate it for you.
             </p>
@@ -673,7 +688,17 @@
 
         // Re-append sorted elements in DOM
         const noResultsEl = document.getElementById('no-results-msg');
-        items.forEach(item => grid.appendChild(item));
+        items.forEach(item => {
+            item.classList.remove('last-odd-card');
+            grid.appendChild(item);
+        });
+
+        // Find visible cards and mark last odd card
+        const visibleItems = items.filter(item => item.style.display !== 'none');
+        if (visibleItems.length % 2 !== 0 && visibleItems.length > 0) {
+            visibleItems[visibleItems.length - 1].classList.add('last-odd-card');
+        }
+
         if (noResultsEl) {
             grid.appendChild(noResultsEl);
             noResultsEl.style.display = (visibleCount === 0) ? 'block' : 'none';

@@ -15,7 +15,7 @@
             display: flex;
             align-items: center;
             overflow: hidden;
-            background: radial-gradient(circle at 10% 40%, #0d313c 0%, #071a20 55%, #030d10 100%);
+            background: #071a20;
             padding: 4rem 0 5rem;
         }
 
@@ -34,10 +34,9 @@
 
         .hero-fish-visual {
             position: absolute;
-            right: 0;
-            top: 0;
-            bottom: 0;
-            width: 65%;
+            inset: 0;
+            width: 100%;
+            height: 100%;
             overflow: hidden;
             pointer-events: none;
             z-index: 0;
@@ -47,7 +46,7 @@
             width: 100%;
             height: 100%;
             object-fit: cover;
-            object-position: center right;
+            object-position: right center;
             filter: brightness(0.95) saturate(1.15);
         }
 
@@ -58,11 +57,11 @@
             inset: 0;
             background: linear-gradient(to right, 
                 #071a20 0%, 
-                rgba(7, 26, 32, 0.96) 20%, 
-                rgba(7, 26, 32, 0.72) 42%, 
-                rgba(7, 26, 32, 0.25) 70%, 
-                rgba(7, 26, 32, 0.05) 88%,
-                rgba(7, 26, 32, 0.4) 100%
+                rgba(7, 26, 32, 0.98) 25%, 
+                rgba(7, 26, 32, 0.85) 45%, 
+                rgba(7, 26, 32, 0.40) 68%, 
+                rgba(7, 26, 32, 0.05) 86%,
+                rgba(7, 26, 32, 0.35) 100%
             ),
             linear-gradient(to bottom,
                 rgba(7, 26, 32, 0.6) 0%,
@@ -111,7 +110,7 @@
 
         .hero-title-main {
             font-size: clamp(2.6rem, 5.2vw, 4.1rem);
-            font-weight: 800;
+            font-weight: 600;
             line-height: 1.1;
             letter-spacing: -0.03em;
             color: #FFFFFF;
@@ -251,7 +250,7 @@
 
         .floating-card-title {
             font-size: 0.72rem;
-            font-weight: 700;
+            font-weight: 600;
             color: #00E5FF;
             text-transform: uppercase;
             letter-spacing: 0.08em;
@@ -343,7 +342,7 @@
 
         .species-card-3x2-info h4 {
             font-size: 1.125rem;
-            font-weight: 700;
+            font-weight: 600;
             color: #fff;
             margin-bottom: 0.25rem;
             letter-spacing: -0.01em;
@@ -482,22 +481,92 @@
         }
         .wave-top svg { display: block; width: 100%; }
 
+        /* ─── RTL Support for Hero & Index Elements ─── */
+        [dir="rtl"] .hero-home {
+            background: radial-gradient(circle at 90% 40%, #0d313c 0%, #071a20 55%, #030d10 100%);
+        }
+        [dir="rtl"] .hero-home::before {
+            left: auto;
+            right: -10%;
+        }
+        [dir="rtl"] .hero-fish-visual img {
+            object-position: left center;
+        }
+        [dir="rtl"] .hero-fish-visual::after {
+            background: linear-gradient(to left, 
+                #071a20 0%, 
+                rgba(7, 26, 32, 0.98) 25%, 
+                rgba(7, 26, 32, 0.85) 45%, 
+                rgba(7, 26, 32, 0.40) 68%, 
+                rgba(7, 26, 32, 0.05) 86%, 
+                rgba(7, 26, 32, 0.35) 100%
+            ),
+            linear-gradient(to bottom,
+                rgba(7, 26, 32, 0.6) 0%,
+                transparent 15%,
+                transparent 80%,
+                #071a20 100%
+            );
+        }
+        [dir="rtl"] .hero-floating-card-1 {
+            right: auto;
+            left: 5%;
+        }
+        [dir="rtl"] .hero-floating-card-2 {
+            right: auto;
+            left: 18%;
+        }
+        [dir="rtl"] .hero-content {
+            text-align: right;
+        }
+        [dir="rtl"] .hero-description {
+            direction: ltr;
+            text-align: right;
+            unicode-bidi: plaintext;
+        }
+        [dir="rtl"] .btn-hero-primary svg {
+            transform: scaleX(-1);
+        }
+        [dir="rtl"] .species-card-3x2-badge {
+            left: auto;
+            right: 1rem;
+        }
+        [dir="rtl"] .care-tip-num {
+            left: auto;
+            right: 1rem;
+        }
+        [dir="rtl"] .care-tip-row.rev {
+            direction: ltr;
+        }
+        [dir="rtl"] .care-tip-row.rev > * {
+            direction: rtl;
+        }
+
         @media (max-width: 1024px) {
-            .hero-fish-visual { width: 55%; }
             .hero-floating-card { display: none; }
             .featured-grid-3x2 { grid-template-columns: repeat(2, 1fr); }
             .aq-type-content.active { grid-template-columns: 1fr; gap: 2rem; }
             .testimonials-grid { grid-template-columns: 1fr 1fr; }
+            .testimonials-grid .testimonial-card:last-child:nth-child(odd) {
+                grid-column: 1 / -1;
+                justify-self: center;
+                width: 100%;
+                max-width: calc(50% - 0.75rem);
+            }
         }
 
         @media (max-width: 768px) {
-            .hero-fish-visual { width: 100%; opacity: 0.35; }
+            .hero-fish-visual img { opacity: 0.35; object-position: center; }
             .hero-floating-card { display: none; }
             .hero-home { padding: 3.5rem 0 4.5rem; min-height: auto; }
             .hero-title-main { font-size: 2.35rem; }
             .featured-grid-3x2 { grid-template-columns: 1fr; }
             .care-tip-row, .care-tip-row.rev { grid-template-columns: 1fr; direction: ltr; gap: 2rem; }
             .testimonials-grid { grid-template-columns: 1fr; }
+            .testimonials-grid .testimonial-card:last-child:nth-child(odd) {
+                grid-column: auto;
+                max-width: 100%;
+            }
             .aq-type-fish-list { grid-template-columns: 1fr; }
         }
     </style>
@@ -643,7 +712,7 @@
                 <div class="product-card-body">
                     <span class="product-card-category">Marine</span>
                     <h3 class="product-card-name">Ocellaris Clownfish</h3>
-                    <p class="product-card-meta">Origin: Indo-Pacific &bull; Care: Easy</p>
+                    <p class="product-card-meta">Origin: Indo-Pacific Region &bull; Care: Easy</p>
                     <div class="product-card-footer">
                         <span class="product-price">₹1,200</span>
                         <a href="catalog.html" class="btn btn-primary btn-sm">Add to Cart</a>
@@ -805,7 +874,7 @@
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
                 </div>
                 <h3 class="feature-card-title">Live Arrival Guarantee</h3>
-                <p class="feature-card-text">Every fish is guaranteed to arrive alive and healthy, or we replace it — no questions asked.</p>
+                <p class="feature-card-text">Every fish is guaranteed to arrive alive and healthy, or we replace it.</p>
             </div>
 
             <div class="feature-card">
@@ -813,7 +882,7 @@
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>
                 </div>
                 <h3 class="feature-card-title">Expert Aquarist Team</h3>
-                <p class="feature-card-text">Our specialists have decades of combined experience in both freshwater and marine systems.</p>
+                <p class="feature-card-text">Our specialists have decades of combined experience in both freshwater and sea.</p>
             </div>
 
             <div class="feature-card">
@@ -829,7 +898,7 @@
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 9V5a3 3 0 0 0-3-3l-4 9v11h11.28a2 2 0 0 0 2-1.7l1.38-9a2 2 0 0 0-2-2.3z"/><path d="M7 22H4a2 2 0 0 1-2-2v-7a2 2 0 0 1 2-2h3"/></svg>
                 </div>
                 <h3 class="feature-card-title">5-Star Reviews</h3>
-                <p class="feature-card-text">Trusted by over 12,000 aquarium enthusiasts who return to us for every new addition.</p>
+                <p class="feature-card-text">Trusted by over 12,000 aquarium enthusiasts who return to us for addition.</p>
             </div>
         </div>
     </div>
@@ -978,7 +1047,7 @@
                 <div class="testimonial-stars">
                     <span class="star-fill">★★★★★</span>
                 </div>
-                <p class="testimonial-text">"I ordered six Discus fish and every single one arrived in perfect condition. The packing was incredible — ice packs, pure oxygen, and even stress coat. Absolutely top-tier service!"</p>
+                <p class="testimonial-text">"I ordered six Discus fish and every single one arrived in perfect condition. The packing was incredible — ice packs, pure oxygen, and even stress coat."</p>
                 <div class="testimonial-author">
                     <div class="testimonial-avatar">
                         <img src="assets/images/client_robert.png" alt="Rajan Krishnamurthy" loading="lazy">
@@ -994,7 +1063,7 @@
                 <div class="testimonial-stars">
                     <span class="star-fill">★★★★★</span>
                 </div>
-                <p class="testimonial-text">"AquaWorld helped me set up my first saltwater tank from scratch. Their care guides are the best I've found anywhere — detailed, accurate, and written by people who actually keep fish."</p>
+                <p class="testimonial-text">"AquaWorld helped me set up my first saltwater tank from scratch. Their care guides are the best I've found anywhere — detailed, accurate, and written by people."</p>
                 <div class="testimonial-author">
                     <div class="testimonial-avatar">
                         <img src="assets/images/client_ana.png" alt="Priya Menon" loading="lazy">

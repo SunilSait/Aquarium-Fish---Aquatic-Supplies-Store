@@ -6,6 +6,9 @@
     <meta name="description" content="AquaWorld Aquatic Plants — Browse our extensive collection of freshwater and planted tank aquatic plants. From beginner-friendly java ferns to expert aquascaping species.">
     <title>Aquatic Plants | AquaWorld Aquarium Store</title>
     <link rel="icon" type="image/svg+xml" href="favicon.svg">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
     <style>
         /* Plants intro section */
@@ -214,11 +217,13 @@
 
         @media (max-width: 1024px) {
             .plants-intro { grid-template-columns: 1fr; gap: 2rem; }
+            .plants-intro-img { max-width: 560px; margin: 0 auto; height: 320px; aspect-ratio: auto; }
             .aqscape-steps { grid-template-columns: 1fr 1fr; }
             .light-guide { grid-template-columns: 1fr; }
         }
 
         @media (max-width: 768px) {
+            .plants-intro-img { max-width: 100%; height: 240px; }
             .aqscape-steps { grid-template-columns: 1fr; }
             .grid-3 { grid-template-columns: 1fr; }
         }
@@ -255,7 +260,7 @@
 
         .plant-cta-body h3 {
             font-size: clamp(1.35rem, 2.5vw, 1.85rem);
-            font-weight: 700;
+            font-weight: 600;
             color: var(--text-heading);
             margin: 0.75rem 0;
             line-height: 1.3;
@@ -302,6 +307,18 @@
             }
             .plant-cta-body {
                 padding: 2rem 1.5rem;
+                align-items: center;
+                text-align: center;
+            }
+            .plant-cta-actions {
+                justify-content: center;
+                width: 100%;
+            }
+            .plant-cta-actions .btn {
+                width: 100%;
+                max-width: 280px;
+                justify-content: center;
+                text-align: center;
             }
         }
     </style>
@@ -311,7 +328,7 @@
 <div id="main-nav"></div>
 
 <!-- Page Hero -->
-<div class="page-hero" style="background:linear-gradient(135deg, #0B4A1A 0%, #0B7B8C 100%);">
+<div class="page-hero page-hero-banner page-hero-plants">
     <div class="container">
         <div class="breadcrumb">
             <a href="index.html">Home</a>
