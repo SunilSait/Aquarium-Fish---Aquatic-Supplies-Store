@@ -275,9 +275,60 @@
             .buying-guide-img { height: 220px; }
         }
 
+        @media (max-width: 576px) {
+            .cat-hero-grid { grid-template-columns: 1fr; }
+            .cat-hero-card { aspect-ratio: 4/3; min-height: 220px; }
+        }
+
         @media (max-width: 360px) {
             .cat-hero-grid { grid-template-columns: 1fr; }
-            .cat-hero-card { aspect-ratio: 2/1; }
+            .cat-hero-card { aspect-ratio: 4/3; min-height: 220px; }
+        }
+
+        /* Search Box */
+        .eq-search-box {
+            display: flex;
+            align-items: center;
+            gap: 0.625rem;
+            background: var(--bg-surface);
+            border: 1.5px solid var(--border-color);
+            border-radius: var(--radius-full);
+            padding: 0.45rem 1rem;
+            width: 250px;
+            box-shadow: var(--shadow-sm);
+            transition: border-color var(--transition-fast), box-shadow var(--transition-fast), background-color var(--transition-fast);
+        }
+
+        .eq-search-box:focus-within {
+            border-color: var(--clr-primary);
+            box-shadow: 0 0 0 3px var(--clr-primary-xlight), var(--shadow-sm);
+        }
+
+        .eq-search-icon {
+            color: var(--text-muted);
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: color var(--transition-fast);
+        }
+
+        .eq-search-box:focus-within .eq-search-icon {
+            color: var(--clr-primary);
+        }
+
+        .eq-search-box input {
+            border: none;
+            background: transparent;
+            font-family: var(--font-sans);
+            font-size: 0.875rem;
+            color: var(--text-heading);
+            width: 100%;
+            outline: none;
+        }
+
+        .eq-search-box input::placeholder {
+            color: var(--text-placeholder);
         }
     </style>
 </head>
@@ -356,8 +407,14 @@
                 <span class="section-label" id="eq-category-label">Tanks & Aquariums</span>
                 <h2 class="section-title" style="margin-bottom:0;" id="eq-category-title">Premium Glass Tanks</h2>
             </div>
-            <div style="display:flex;align-items:center;gap:0.75rem;">
-                <input type="text" id="eq-search" class="form-input" placeholder="Search equipment..." oninput="searchEq(this.value)" style="width:220px;padding:0.45rem 0.875rem;font-size:0.875rem;">
+            <div class="eq-search-box">
+                <span class="eq-search-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="11" cy="11" r="8"></circle>
+                        <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                    </svg>
+                </span>
+                <input type="text" id="eq-search" placeholder="Search equipment..." oninput="searchEq(this.value)">
             </div>
         </div>
 
@@ -667,10 +724,13 @@
 
 <script src="components.js"></script>
 <script>
+    let activeEqCategory = 'tanks';
+
     function filterEq(category, clickedTile) {
+        activeEqCategory = category;
         // Update active tile
         document.querySelectorAll('.cat-hero-card').forEach(t => t.classList.remove('active-cat'));
-        clickedTile.classList.add('active-cat');
+        if (clickedTile) clickedTile.classList.add('active-cat');
 
         // Category labels
         const labels = {
@@ -680,12 +740,42 @@
             food: ['Food & Nutrition', 'Fish Food & Supplements']
         };
 
-        document.getElementById('eq-category-label').textContent = labels[category][0];
-        document.getElementById('eq-category-title').textContent = labels[category][1];
+        if (labels[category]) {
+            document.getElementById('eq-category-label').textContent = labels[category][0];
+            document.getElementById('eq-category-title').textContent = labels[category][1];
+        }
+
+        const searchInput = document.getElementById('eq-search');
+        if (searchInput && searchInput.value.trim()) {
+            searchEq(searchInput.value);
+            return;
+        }
 
         // Show/hide items
         document.querySelectorAll('.eq-item').forEach(item => {
             item.style.display = item.dataset.category === category ? '' : 'none';
+        });
+    }
+
+    function searchEq(query) {
+        const q = (query || '').trim().toLowerCase();
+        const items = document.querySelectorAll('.eq-item');
+
+        if (!q) {
+            items.forEach(item => {
+                item.style.display = item.dataset.category === activeEqCategory ? '' : 'none';
+            });
+            return;
+        }
+
+        items.forEach(item => {
+            const name = item.querySelector('.eq-card-name')?.textContent.toLowerCase() || '';
+            const brand = item.querySelector('.eq-card-brand')?.textContent.toLowerCase() || '';
+            const desc = item.querySelector('.eq-card-desc')?.textContent.toLowerCase() || '';
+            const specs = item.querySelector('.eq-card-specs')?.textContent.toLowerCase() || '';
+
+            const matches = name.includes(q) || brand.includes(q) || desc.includes(q) || specs.includes(q);
+            item.style.display = matches ? '' : 'none';
         });
     }
 </script>

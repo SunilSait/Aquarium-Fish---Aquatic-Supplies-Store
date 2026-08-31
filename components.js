@@ -59,7 +59,7 @@ function toggleDir() {
 }
 
 /* ─── Logo SVG Helper ────────────────────────────── */
-function getLogoSVG(size = 40) {
+function getLogoSVG(size = 48) {
     return `<img src="logo.svg" alt="AquaWorld Logo" width="${size}" height="${size}" class="nav-logo-img" style="width:${size}px;height:${size}px;object-fit:contain;display:block;flex-shrink:0;" />`;
 }
 
@@ -97,7 +97,7 @@ function injectNav() {
         <div class="nav-inner">
             <!-- Logo -->
             <a href="index.html" class="nav-logo" aria-label="AquaWorld Home">
-                ${getLogoSVG(40)}
+                ${getLogoSVG(48)}
                 <div class="nav-logo-text">
                     <span class="brand-top">AQUA</span>
                     <span class="brand-bottom">WORLD</span>
@@ -195,7 +195,7 @@ function injectFooter() {
                 <!-- Brand -->
                 <div class="footer-brand">
                     <a href="index.html" class="nav-logo footer-logo" aria-label="AquaWorld Home">
-                        ${getLogoSVG(40)}
+                        ${getLogoSVG(48)}
                         <div class="nav-logo-text">
                             <span class="brand-top">AQUA</span>
                             <span class="brand-bottom">WORLD</span>

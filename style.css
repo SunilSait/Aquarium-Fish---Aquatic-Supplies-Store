@@ -369,13 +369,13 @@ html.dark .navbar {
 .nav-logo {
     display: flex;
     align-items: center;
-    gap: 0.625rem;
+    gap: 0.75rem;
     text-decoration: none;
     flex-shrink: 0;
 }
 
 .nav-logo-img {
-    width: 40px; height: 40px;
+    width: 48px; height: 48px;
     object-fit: contain;
     display: block;
     flex-shrink: 0;
@@ -388,7 +388,7 @@ html.dark .navbar {
 }
 
 .brand-top {
-    font-size: 0.9rem;
+    font-size: 1.05rem;
     font-weight: 800;
     color: var(--clr-primary);
     letter-spacing: 0.05em;
@@ -400,10 +400,10 @@ html.dark .brand-top {
 }
 
 .brand-bottom {
-    font-size: 0.65rem;
+    font-size: 0.75rem;
     font-weight: 700;
     color: var(--text-muted);
-    letter-spacing: 0.1em;
+    letter-spacing: 0.12em;
 }
 
 html.dark .brand-bottom {
