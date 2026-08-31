@@ -197,8 +197,8 @@ function injectFooter() {
                     <a href="index.html" class="nav-logo footer-logo" aria-label="AquaWorld Home">
                         ${getLogoSVG(40)}
                         <div class="nav-logo-text">
-                            <span class="brand-top" style="color:#A7E3E9;">AQUA</span>
-                            <span class="brand-bottom" style="color:#6B8E96;">WORLD</span>
+                            <span class="brand-top">AQUA</span>
+                            <span class="brand-bottom">WORLD</span>
                         </div>
                     </a>
                     <p>Your premier destination for tropical fish, aquatic plants, premium equipment, and expert care guidance for every aquarium enthusiast.</p>
