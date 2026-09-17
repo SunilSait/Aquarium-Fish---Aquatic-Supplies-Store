@@ -25,6 +25,7 @@ const ICONS = {
     mapPin: '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>',
     clock: '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>',
     fish: '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6.5 12c.94-3.46 4.94-6 8.5-6 3.56 0 6.06 2.54 7 6-.94 3.47-3.44 6-7 6s-7.56-2.53-8.5-6z"/><path d="M18 12v.5"/><path d="M16 17.93a9.77 9.77 0 0 1 0-11.86"/><path d="M7 10.67C7 8 5.58 5.97 2.73 5.5c-1 3.5-.5 6.5 1.27 8.5 1.58 1.81 4.16 2.5 5 2.5"/></svg>',
+    arrowRight: '<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>',
 };
 
 /* ─── Theme & Direction Init ─────────────────────── */
@@ -238,8 +239,44 @@ function injectFooter() {
                     </ul>
                 </div>
 
+                <!-- Location -->
+                <div class="footer-col footer-col-location">
+                    <h4 class="footer-col-title">Location</h4>
+                    <ul class="footer-location-list">
+                        <li class="footer-location-item">
+                            <span class="footer-location-icon" aria-hidden="true">${ICONS.mapPin}</span>
+                            <div class="footer-location-text">
+                                <span>No. 48, Marine Lines,</span>
+                                <span>Anna Nagar Main, Chennai — 600 040</span>
+                            </div>
+                        </li>
+                        <li class="footer-location-item">
+                            <span class="footer-location-icon" aria-hidden="true">${ICONS.phone}</span>
+                            <div class="footer-location-text">
+                                <a href="tel:+919840012345">+91 98400 12345</a>
+                            </div>
+                        </li>
+                        <li class="footer-location-item">
+                            <span class="footer-location-icon" aria-hidden="true">${ICONS.mail}</span>
+                            <div class="footer-location-text">
+                                <a href="mailto:hello@aquaworld.in">hello@aquaworld.in</a>
+                            </div>
+                        </li>
+                        <li class="footer-location-item">
+                            <span class="footer-location-icon" aria-hidden="true">${ICONS.clock}</span>
+                            <div class="footer-location-text">
+                                <span>9:00 AM – 8:00 PM</span>
+                            </div>
+                        </li>
+                    </ul>
+                    <a href="contact.html" class="footer-location-link">
+                        <span>Get Directions</span>
+                        ${ICONS.arrowRight}
+                    </a>
+                </div>
+
                 <!-- Newsletter -->
-                <div class="footer-col">
+                <div class="footer-col footer-col-newsletter">
                     <div class="footer-newsletter-card">
                         <h4 class="footer-newsletter-title">Stay Updated</h4>
                         <p class="footer-newsletter-desc">Get new arrivals, care tips, and exclusive offers direct to your inbox.</p>
